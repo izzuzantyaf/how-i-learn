@@ -7,6 +7,8 @@ import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedInOutlin
 import ExtensionIcon from '@mui/icons-material/ExtensionOutlined'
 import VerifiedIcon from '@mui/icons-material/VerifiedOutlined'
 
+// just for deploy trigger
+
 export default function Home() {
   return <>
     <Head>
