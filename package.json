@@ -1,8 +1,8 @@
 {
-  "name": "how-i-learn",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "name": "presisi",
+  "version": "0.1.0",
+  "description": "Rekomendasi cara belajar berdasarkan model VARK",
+  "author": "Izzu Zantya Fawwas",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
