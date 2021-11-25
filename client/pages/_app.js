@@ -20,6 +20,7 @@ const myTheme = createTheme({
           borderRadius: '8px',
           boxShadow: 'none',
           textTransform: 'none',
+          fontWeight: 'bold',
         },
       },
     },
