@@ -1,4 +1,7 @@
-import { Button, Container, IconButton, LinearProgress } from '@mui/material'
+import Button from "@mui/material/Button"
+import Container from "@mui/material/Container"
+import IconButton from "@mui/material/IconButton"
+import LinearProgress from "@mui/material/LinearProgress"
 import Head from 'next/head'
 import CloseIcon from '@mui/icons-material/Close'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
@@ -56,6 +59,7 @@ export default function Questionnaire() {
         <div className="answers-choice grid sm:grid-cols-2 gap-4">
           {questions.map((answer, index) =>
             <Button
+              key={index}
               className="answer-item"
               variant={index === 0 ? 'contained' : 'outlined'}
               color={index === 0 ? 'secondary' : 'black'}
