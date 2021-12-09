@@ -6,8 +6,6 @@ import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedInOutlin
 import ExtensionIcon from '@mui/icons-material/ExtensionOutlined'
 import VerifiedIcon from '@mui/icons-material/VerifiedOutlined'
 
-// just for deploy trigger
-
 export default function Home() {
   return <>
     <Head>
@@ -27,11 +25,13 @@ export default function Home() {
           sx={{ flexGrow: 1, fontWeight: 'bold' }}
           className="brand">Presisi</Typography>
         <Button
+          href="/signin"
           variant="outlined"
           color="black"
           sx={{ flexShrink: 0 }}
         >Masuk</Button>
         <Button
+          href="/signup"
           variant="contained"
           sx={{ flexSrink: 0 }}
         >Buat akun</Button>
@@ -45,6 +45,7 @@ export default function Home() {
         </p>
         <p className="pt-8 w-5/6 sm:text-2xl">Sistem rekomendasi cara belajar berdasarkan model VARK menggunakan algoritma Certainty Factor</p>
         <Button
+          href="/questionnaire"
           variant="contained"
           sx={{ marginTop: '2rem' }}
         >Mulai sekarang</Button>
@@ -57,15 +58,15 @@ export default function Home() {
           className="flow-card bg-white py-8 px-4 rounded-2xl shadow-lg flex justify-around items-center relative -top-16 max-w-3xl mx-auto"
         >
           <div className="flow-item space-y-2 text-center">
-            <AssignmentTurnedInIcon color="secondary" />
+            <AssignmentTurnedInIcon color="secondary" fontSize="large" />
             <p className="text-xs md:text-lg">Isi kuesioner</p>
           </div>
           <div className="flow-item space-y-2 text-center">
-            <ExtensionIcon color="secondary" />
+            <ExtensionIcon color="secondary" fontSize="large" />
             <p className="text-xs md:text-lg">Tipe gaya belajar</p>
           </div>
           <div className="flow-item space-y-2 text-center">
-            <VerifiedIcon color="secondary" />
+            <VerifiedIcon color="secondary" fontSize="large" />
             <p className="text-xs md:text-lg">Cara belajar</p>
           </div>
         </div>
@@ -81,7 +82,5 @@ export default function Home() {
         </Box> */}
       </Container>
     </main>
-
-
   </>
 }
