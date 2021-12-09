@@ -51,7 +51,7 @@ const myTheme = createTheme({
 
 function MyApp({ Component, pageProps }) {
   return <>
-    {/* bungkus komponen aplikasi dengan warna tema sendiri */}
+    {/* bungkus komponen aplikasi dengan kustomisasi tema sendiri */}
     <ThemeProvider theme={myTheme}>
       <Component {...pageProps} />
     </ThemeProvider>
