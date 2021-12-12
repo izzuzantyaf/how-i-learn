@@ -1,9 +1,8 @@
 module.exports = {
   // daftarkan semua direktori yang menggunakan tailwind
-  purge: [
+  content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}'],
-  darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       // deklarasi warna saya sendiri
