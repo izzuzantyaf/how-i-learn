@@ -20,7 +20,7 @@ export default function SignIn() {
           <ArrowBackIcon />
         </IconButton>
         {/* form buat input email dan password */}
-        <div className="flex flex-col gap-4 flex-grow self-center justify-center max-w-xs">
+        <div className="flex flex-col gap-4 grow self-center justify-center max-w-xs">
           <div className="text-2xl font-bold">Masuk</div>
           <form action="" method="post" className="flex flex-col gap-4">
             <TextField

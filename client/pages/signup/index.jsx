@@ -19,7 +19,7 @@ export default function SignUp() {
           <ArrowBackIcon />
         </IconButton>
         {/* form buat input nama, email, dan password */}
-        <div className="flex flex-col gap-4 flex-grow self-center justify-center max-w-xs">
+        <div className="flex flex-col gap-4 grow self-center justify-center max-w-xs">
           <div className="text-2xl font-bold">Buat akun</div>
           <form action="" method="post" className="flex flex-col gap-4">
             <TextField

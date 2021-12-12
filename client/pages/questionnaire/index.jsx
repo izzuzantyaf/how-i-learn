@@ -51,7 +51,7 @@ export default function Questionnaire() {
         </div>
 
         {/* pertanyaan */}
-        <div className="question flex-grow flex items-center">
+        <div className="question grow flex items-center">
           Kamu ingin menolong seseorang untuk pergi ke bandara, ke pusat kota, dan ke stasiun kereta api, kamu akan melakukan apa ?
         </div>
 
