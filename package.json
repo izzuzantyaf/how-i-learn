@@ -8,7 +8,12 @@
   ],
   "scripts": {
     "build": "turbo run build",
+    "build:client": "turbo run build --scope=*presisi-client*",
+    "build:server": "turbo run build --scope=*presisi-server*",
+    "heroku-postbuild": "npm run build:server",
     "dev": "turbo run dev --parallel",
+    "dev:client": "turbo run dev --parallel --scope=*presisi-client*",
+    "dev:server": "turbo run dev --parallel --scope=*presisi-server*",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
