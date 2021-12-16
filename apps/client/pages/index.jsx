@@ -1,10 +1,6 @@
 import Head from 'next/head'
-import Button from '@mui/material/Button'
-import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedInOutlined'
-import ExtensionIcon from '@mui/icons-material/ExtensionOutlined'
-import VerifiedIcon from '@mui/icons-material/VerifiedOutlined'
+import { Button, Container, Typography } from '@mui/material'
+import { AssignmentTurnedInOutlined, ExtensionOutlined, VerifiedOutlined } from '@mui/icons-material'
 
 export default function Home() {
   return <>
@@ -14,7 +10,7 @@ export default function Home() {
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
-    <nav className="pt-8 bg-gray-200">
+    <nav className="pt-8 bg-gray-100">
       <Container sx={{
         display: 'flex',
         alignItems: 'center',
@@ -38,7 +34,7 @@ export default function Home() {
       </Container>
     </nav>
 
-    <div className="hero bg-gray-200 pb-32" style={{ borderRadius: '0 0 48px 48px' }}>
+    <div className="hero bg-gray-100 pb-32" style={{ borderRadius: '0 0 48px 48px' }}>
       <Container>
         <p className="font-black w-5/6 text-4xl sm:text-5xl pt-16">
           Temukan cara belajar kamu
@@ -58,15 +54,15 @@ export default function Home() {
           className="flow-card bg-white py-8 px-4 rounded-2xl shadow-lg flex justify-around items-center relative -top-16 max-w-3xl mx-auto"
         >
           <div className="flow-item space-y-2 text-center">
-            <AssignmentTurnedInIcon color="secondary" fontSize="large" />
+            <AssignmentTurnedInOutlined color="secondary" fontSize="large" />
             <p className="text-xs md:text-lg">Isi kuesioner</p>
           </div>
           <div className="flow-item space-y-2 text-center">
-            <ExtensionIcon color="secondary" fontSize="large" />
+            <ExtensionOutlined color="secondary" fontSize="large" />
             <p className="text-xs md:text-lg">Tipe gaya belajar</p>
           </div>
           <div className="flow-item space-y-2 text-center">
-            <VerifiedIcon color="secondary" fontSize="large" />
+            <VerifiedOutlined color="secondary" fontSize="large" />
             <p className="text-xs md:text-lg">Cara belajar</p>
           </div>
         </div>

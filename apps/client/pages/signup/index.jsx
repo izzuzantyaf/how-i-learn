@@ -1,8 +1,6 @@
 import Head from 'next/head'
-import Button from "@mui/material/Button"
-import IconButton from "@mui/material/IconButton"
-import TextField from "@mui/material/TextField"
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { Button, IconButton, TextField } from '@mui/material'
+import { ArrowBack } from '@mui/icons-material'
 
 export default function SignUp() {
   return <>
@@ -16,7 +14,7 @@ export default function SignUp() {
       <div className="container h-full mx-auto px-6 flex flex-col gap-4">
         {/* icon back */}
         <IconButton href="/" sx={{ alignSelf: "flex-start" }}>
-          <ArrowBackIcon />
+          <ArrowBack />
         </IconButton>
         {/* form buat input nama, email, dan password */}
         <div className="flex flex-col gap-4 grow self-center justify-center max-w-xs">

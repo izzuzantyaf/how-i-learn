@@ -1,13 +1,6 @@
-import Button from "@mui/material/Button"
-import Container from "@mui/material/Container"
-import IconButton from "@mui/material/IconButton"
-import LinearProgress from "@mui/material/LinearProgress"
 import Head from 'next/head'
-import CloseIcon from '@mui/icons-material/Close'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import UncheckedIcon from '@mui/icons-material/CheckBoxOutlineBlankOutlined'
-import CheckedIcon from '@mui/icons-material/CheckBoxOutlined'
+import { Button, Container, IconButton, LinearProgress } from '@mui/material'
+import { Close, ArrowForward, ArrowBack, CheckBoxOutlineBlankOutlined, CheckBoxOutlined } from '@mui/icons-material'
 
 export default function Questionnaire() {
   const questions = [
@@ -38,7 +31,7 @@ export default function Questionnaire() {
           <div className="flex justify-between items-center">
             <div className="font-bold">1/16</div>
             <IconButton href="/">
-              <CloseIcon />
+              <Close />
             </IconButton>
           </div>
           <LinearProgress
@@ -63,7 +56,7 @@ export default function Questionnaire() {
               className="answer-item"
               variant={index === 0 ? 'contained' : 'outlined'}
               color={index === 0 ? 'secondary' : 'black'}
-              startIcon={index === 0 ? <CheckedIcon /> : <UncheckedIcon />}
+              startIcon={index === 0 ? <CheckBoxOutlined /> : <CheckBoxOutlineBlankOutlined />}
               disableElevation={true}
               sx={{
                 fontWeight: 'normal',
@@ -77,8 +70,8 @@ export default function Questionnaire() {
 
         {/* navigasi */}
         <div className="flex justify-between items-center">
-          <Button variant="outlined" color="black" startIcon={<ArrowBackIcon fontSize="small" />}>Mundur</Button>
-          <Button variant="contained" endIcon={<ArrowForwardIcon fontSize="small" />}>Lanjut</Button>
+          <Button variant="outlined" color="black" startIcon={<ArrowBack fontSize="small" />}>Mundur</Button>
+          <Button variant="contained" endIcon={<ArrowForward fontSize="small" />}>Lanjut</Button>
         </div>
       </Container>
     </div>
