@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "question": "Kamu ingin menolong seseorang untuk pergi ke bandara, ke pusat kota, dan ke stasiun kereta api, kamu akan melakukan apa ?",
+    "answerChoices": {
+      "visual": "Menggambar atau menunjukkan atau memberikan peta",
+      "auditory": "Menjelaskan arah secara lisan",
+      "read/write": "Menulis arah",
+      "kinesthetic": "Pergi dengannya"
+    }
+  },
+  {
+    "id": 2,
+    "question": "Di sebuah web ada sebuah video yang menunjukkan bagaimana cara membuat grafik yang baik, ada orang yang berbicara, ada beberapa daftar, dan ada beberapa daftar yang harus dilakukan, dan beberapa diagram. Apa yang harus kamu lakukan ?",
+    "answerChoices": {
+      "visual": "Melihat diagram saja",
+      "auditory": "Mendengarkan",
+      "read/write": "Membaca kalimat – kalimat saja",
+      "kinesthetic": "Menontonnya"
+    }
+  },
+  {
+    "id": 3,
+    "question": "Kamu merencanakan liburan bersama teman-teman, kamu ingin teman-teman merespon rencana kamu, apa yang akan kamu lakukan ?",
+    "answerChoices": {
+      "visual": "Menggunakan peta untuk melihatkan kepada mereka tempat yang indah",
+      "auditory": "Menelepon, sms atau email kepada mereka",
+      "read/write": "Memberi mereka brosur tentang tempat itu",
+      "kinesthetic": "Menjelaskan beberapa garis besar yang akan mereka alami"
+    }
+  },
+  {
+    "id": 4,
+    "question": "Kamu ingin memasak sesuatu untuk seseorang, apa yang akan kamu lakukan ?",
+    "answerChoices": {
+      "visual": "Lihat di internet dan buku – buku masakan",
+      "auditory": "Meminta saran teman",
+      "read/write": "Menggunakan bantuan resep",
+      "kinesthetic": "Memasak sesuatu yang kamu tahu tanpa resep"
+    }
+  },
+  {
+    "id": 5,
+    "question": "Sebuah grup wisatawan ingin belajar tentang kehidupan di wilayah kamu, apa yang akan kamu lakukan ?",
+    "answerChoices": {
+      "visual": "Menunjukkan peta dan gambar-gambar di internet",
+      "auditory": "Berbicara dan menyusun informasi tentang itu",
+      "read/write": "Memberikan buku petunjuk tentang kehidupan area itu",
+      "kinesthetic": "Mengajak mereka terjun kesana"
+    }
+  },
+  {
+    "id": 6,
+    "question": "Kamu ingin membeli sebuah kamera digital atau ponsel dengan bermacam-macam harga, keputusan apa yang akan kamu ambil ?",
+    "answerChoices": {
+      "visual": "Melihat bagus tidaknya desain",
+      "auditory": "Mendengarkan penjelasan dari penjual",
+      "read/write": "Membaca secara detail atau mengecek lewat internet",
+      "kinesthetic": "Mencoba atau mengecek terlebih dahulu"
+    }
+  },
+  {
+    "id": 7,
+    "question": "Apakah kamu ingat tentang bagaimana kamu belajar sesuatu yang baru. Hindari gerakan secara langsung seperti mengendarai sepeda, kamu akan belajar dari siapa ?",
+    "answerChoices": {
+      "visual": "Dari diagram, peta atau bagan untuk melihat petunjuknya",
+      "auditory": "Mendengarkan penjelasan dari seseorang dan bertanya",
+      "read/write": "Melihat dari buku petunjuk atau manual",
+      "kinesthetic": "Hanya nonton"
+    }
+  },
+  {
+    "id": 8,
+    "question": "Kamu punya masalah dengan perasaan kamu, apa yang ingin dokter bantu untuk kamu ?",
+    "answerChoices": {
+      "visual": "Menunjukkan diagram atau bagian -bagian mana yang salah",
+      "auditory": "Menjelaskan di mana letak kesalahannya",
+      "read/write": "Memberikan sesuatu untuk kamu baca dan menjelaskan apa yang salah",
+      "kinesthetic": "Menggunakan suatu alat dan menunjukan apa yang salah"
+    }
+  },
+  {
+    "id": 9,
+    "question": "Kamu ingin belajar program baru, keterampilan atau game di komputer. Apa yang akan kamu lakukan ?",
+    "answerChoices": {
+      "visual": "Mengikuti petunjuk dari buku",
+      "auditory": "Berbicara dengan orang yang tahu tentang program itu",
+      "read/write": "Membaca petunjuknya",
+      "kinesthetic": "Menggunakan internet"
+    }
+  },
+  {
+    "id": 10,
+    "question": "Saya menyukai situs yang mempunyai ?",
+    "answerChoices": {
+      "visual": "Dengan desain yang menarik dan bagian-bagiannya",
+      "auditory": "Dari web yang bisa mendengarkan musik, dari radio atau wawancara",
+      "read/write": "Penjelasan yang sangat menarik dari daftar dan keterangan",
+      "kinesthetic": "Sesuatu yang gampang dibuka dan dicoba"
+    }
+  },
+  {
+    "id": 11,
+    "question": "Kalau melihat harga, keputusan apa yang akan mempengaruhi kamu untuk membeli buku nonfiksi ?",
+    "answerChoices": {
+      "visual": "Dari penampilannya",
+      "auditory": "Dari teman yang merekomendasi",
+      "read/write": "Dari bagian – bagian yang gampang dibaca",
+      "kinesthetic": "Dari kisah nyata, pengalaman dan contoh"
+    }
+  },
+  {
+    "id": 12,
+    "question": "Kamu menggunakan sebuah buku, cd, dan situs untuk belajar pengambilan foto dengan kamera digital yang baru. Apa yang ingin kamu tanya ?",
+    "answerChoices": {
+      "visual": "Petunjuk langsung dari kamera dan bagian-bagiannya",
+      "auditory": "Kesempatan untuk bertanya dan berbicara tentang gambar-gambar di kamera",
+      "read/write": "Kamu membaca dan menulis dari petunjuk-petunjuk tentang apa yang akan kamu lakukan",
+      "kinesthetic": "Contoh-contoh foto yang bagus"
+    }
+  },
+  {
+    "id": 13,
+    "question": "Kamu memilih untuk menjadi guru atau menjadi pembawa acara. Kamu akan melihat dari siapa ?",
+    "answerChoices": {
+      "visual": "Dari diagram, bagan atau grafik",
+      "auditory": "Atau akan melakukan tanya jawab, berbicara, atau dari diskusi grup, atau dari tamu",
+      "read/write": "Kamu akan langsung membaca buku",
+      "kinesthetic": "Belajar secara langsung"
+    }
+  },
+  {
+    "id": 14,
+    "question": "Kamu telah selesai mengikuti kejuaraan atau tes yang menginginkan hasilnya. Hasil apa yang kamu inginkan ?",
+    "answerChoices": {
+      "visual": "Melihat dari grafik hasil yang telah kamu terima",
+      "auditory": "Dari seseorang yang ikut ujian bersama kamu",
+      "read/write": "Menggunakan penjelasan dari hasilnya",
+      "kinesthetic": "Menggunakan contoh dari apa yang telah kamu lakukan"
+    }
+  },
+  {
+    "id": 15,
+    "question": "Kamu akan memilih makanan di restoran atau cafe. Apa yang akan kamu lakukan ?",
+    "answerChoices": {
+      "visual": "Melihat orang lain makan apa atau melihat gambar menu",
+      "auditory": "Mendengarkan yang pelayan dan teman kamu tawarkan",
+      "read/write": "Memilih dari menu",
+      "kinesthetic": "Memilih sesuatu yang telah kamu makan sebelumnya"
+    }
+  },
+  {
+    "id": 16,
+    "question": "Kamu akan membuat pidato yang penting di sebuah konferensi atau wawancara pekerjaan. Apa yang akan kamu lakukan ?",
+    "answerChoices": {
+      "visual": "Membuat diagram dan grafik yang akan membantu menjelaskan sesuatu",
+      "auditory": "Menulis poin – poin penting dan menghafal",
+      "read/write": "Menulis ulang dan membacanya berulang-ulang",
+      "kinesthetic": "Mengumpulkan contoh-contoh dan cerita agar mudah presentasi"
+    }
+  }
+]
