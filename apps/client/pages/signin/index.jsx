@@ -1,6 +1,8 @@
 import Head from 'next/head'
-import { Button, IconButton, TextField } from '@mui/material'
-import { ArrowBack } from '@mui/icons-material'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import TextField from '@mui/material/TextField'
+import ArrowBack from '@mui/icons-material/ArrowBack'
 
 export default function SignIn() {
 

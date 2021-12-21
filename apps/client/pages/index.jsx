@@ -1,6 +1,10 @@
 import Head from 'next/head'
-import { Button, Container, Typography } from '@mui/material'
-import { AssignmentTurnedInOutlined, ExtensionOutlined, VerifiedOutlined } from '@mui/icons-material'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import AssignmentTurnedInOutlined from '@mui/icons-material/AssignmentTurnedInOutlined'
+import ExtensionOutlined from '@mui/icons-material/ExtensionOutlined'
+import VerifiedOutlined from '@mui/icons-material/VerifiedOutlined'
 
 export default function Home() {
   return <>
@@ -22,13 +26,13 @@ export default function Home() {
           className="brand">Presisi</Typography>
         <Button
           href="/signin"
-          variant="outlined"
-          color="black"
+          variant="contained"
           sx={{ flexShrink: 0 }}
         >Masuk</Button>
         <Button
           href="/signup"
-          variant="contained"
+          color="black"
+          variant="outlined"
           sx={{ flexSrink: 0 }}
         >Buat akun</Button>
       </Container>
@@ -44,7 +48,7 @@ export default function Home() {
           href="/questionnaire"
           variant="contained"
           sx={{ marginTop: '2rem' }}
-        >Mulai sekarang</Button>
+        >Coba sekarang</Button>
       </Container>
     </div>
 
