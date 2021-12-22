@@ -11,8 +11,8 @@ export class Questionnaire {
   @Prop()
   question: string;
 
-  @Prop({ type: Object })
-  answerChoices;
+  @Prop()
+  answerChoices: any[];
 }
 
 export const QuestionnaireSchema = SchemaFactory.createForClass(Questionnaire);
