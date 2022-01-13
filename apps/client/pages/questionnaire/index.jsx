@@ -1,25 +1,29 @@
 import Head from "next/head";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import IconButton from "@mui/material/IconButton";
-import LinearProgress from "@mui/material/LinearProgress";
+// import IconButton from "@mui/material/IconButton";
+// import LinearProgress from "@mui/material/LinearProgress";
 import Slider from "@mui/material/Slider";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import Close from "@mui/icons-material/Close";
-import ArrowForward from "@mui/icons-material/ArrowForward";
-import ArrowBack from "@mui/icons-material/ArrowBack";
+// import Close from "@mui/icons-material/Close";
+// import ArrowForward from "@mui/icons-material/ArrowForward";
+// import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useEffect, useState } from "react";
+import { useRef } from "react";
 // import CheckBoxOutlineBlankOutlined from '@mui/icons-material/CheckBoxOutlineBlankOutlined'
 // import CheckBoxOutlined from '@mui/icons-material/CheckBoxOutlined'
 
+// ambil data dari server, dilakukan hanya pada saat build
 export async function getStaticProps(ctx) {
   const questionnaire = await fetch(
-    "https://dev-presisi-server.herokuapp.com/api/questionnaires"
-  ).then((res) => res.json());
+    process.env.NEXT_PUBLIC_API_BASEURL + "/questionnaires"
+  )
+    .then((res) => res.json())
+    .catch((err) => console.error(err));
 
   return {
     props: {
@@ -51,17 +55,51 @@ export async function getStaticProps(ctx) {
 }
 
 export default function Questionnaire({ questionnaire, sliderMarks }) {
-  const [counter, setCounter] = useState(0);
-  const [name, setName] = useState("");
-  // const [respondent, setRespondent] = useState({});
+  const respondent = useRef({});
+  const answeringProgress = useRef(
+    questionnaire.map((q) => {
+      return {
+        visual: sliderMarks[Math.floor(Math.random() * 4)].value,
+        auditory: sliderMarks[Math.floor(Math.random() * 4)].value,
+        readWrite: sliderMarks[Math.floor(Math.random() * 4)].value,
+        kinesthetic: sliderMarks[Math.floor(Math.random() * 4)].value,
+      };
+    })
+  );
 
-  function liftName(name) {
-    setName(name);
-  }
+  const submitAnswers = async (respondent, answers) => {
+    const questionnaireAnswers = questionnaire.map((question, index) => {
+      question.answerChoices = question.answerChoices.map((answer) => {
+        answer.userCf = answers[index][answer.type];
+        return answer;
+      });
+      return question;
+    });
+
+    const payload = {
+      respondent,
+      questionnaireAnswers,
+    };
+
+    await fetch(
+      process.env.NEXT_PUBLIC_API_BASEURL + "/questionnaires/submit-answers",
+      {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      }
+    )
+      .then((res) => res.json())
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [counter]);
+    // window.scrollTo(0, 0);
+    console.log(answeringProgress.current);
+  }, [answeringProgress]);
 
   return (
     <>
@@ -85,79 +123,48 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
             paddingY: "1.5rem",
           }}
         >
-          <FormDialogue liftName={liftName} />
+          <FormDialogue respondent={respondent} />
 
-          <ProgressOverview
-            counter={counter}
-            totalQuestion={questionnaire.length}
-          />
-
-          <div className="grow flex flex-col lg:px-6">
-            <Question question={questionnaire[counter].question} />
-            <AnswerChoices
-              answerChoices={questionnaire[counter].answerChoices}
-              sliderMarks={sliderMarks}
-            />
+          <div className="flex flex-col gap-8 lg:gap-16">
+            {questionnaire.map((qaPair, index) => (
+              <QuestionAndAnswer
+                key={index}
+                index={index}
+                qaPair={qaPair}
+                sliderMarks={sliderMarks}
+                answeringProgress={answeringProgress}
+              />
+            ))}
           </div>
 
-          {/* navigasi */}
-          <div className="flex justify-between items-center">
-            <Button
-              variant="outlined"
-              color="black"
-              startIcon={<ArrowBack fontSize="small" />}
-              onClick={counter > 0 ? () => setCounter(counter - 1) : () => {}}
-              disabled={counter === 0}
-            >
-              Mundur
-            </Button>
-
-            <Button
-              variant="contained"
-              endIcon={<ArrowForward fontSize="small" />}
-              // disabled={true}
-              onClick={
-                counter < questionnaire.length - 1
-                  ? () => setCounter(counter + 1)
-                  : () => {}
-              }
-            >
-              Lanjut
-            </Button>
-          </div>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{
+              alignSelf: "end",
+            }}
+            // menyimpan jawaban user ketika tombol submit ditekan
+            onClick={() => {
+              submitAnswers(respondent.current, answeringProgress.current);
+            }}
+          >
+            Submit
+          </Button>
         </Container>
       </div>
     </>
   );
 }
 
-function ProgressOverview({ counter, totalQuestion }) {
-  return (
-    <div>
-      <div className="flex justify-between items-center">
-        <div className="font-bold">{`${counter + 1}/${totalQuestion}`}</div>
-        <IconButton href="/">
-          <Close />
-        </IconButton>
-      </div>
-      <LinearProgress
-        variant="determinate"
-        value={(100 / 16) * (counter + 1)}
-        sx={{
-          height: "12px",
-          borderRadius: "6px",
-        }}
-      />
-    </div>
-  );
-}
-
-function FormDialogue({ liftName }) {
+function FormDialogue({ respondent }) {
   const [isDialogueOpen, setIsDialogueOpen] = useState(true);
   const [name, setName] = useState("");
-  const handleClose = () => {
-    setIsDialogueOpen(false);
-  };
+  const [major, setMajor] = useState("");
+  const [age, setAge] = useState(null);
+  const [university, setUniversity] = useState("");
+
+  const closeDialogue = () => setIsDialogueOpen(false);
+
   return (
     <Dialog
       open={isDialogueOpen}
@@ -172,7 +179,7 @@ function FormDialogue({ liftName }) {
           margin="dense"
           id="name"
           name="name"
-          label="Nama kamu"
+          label="Nama"
           type="text"
           maxLength="200"
           fullWidth
@@ -180,18 +187,58 @@ function FormDialogue({ liftName }) {
           size="small"
           onChange={(e) => setName(e.target.value)}
         />
+        <TextField
+          margin="dense"
+          id="university"
+          name="university"
+          label="Universitas"
+          type="text"
+          maxLength="100"
+          fullWidth
+          variant="outlined"
+          size="small"
+          onChange={(e) => setUniversity(e.target.value)}
+        />
+        <TextField
+          margin="dense"
+          id="major"
+          name="major"
+          label="Jurusan kuliah"
+          type="text"
+          maxLength="100"
+          fullWidth
+          variant="outlined"
+          size="small"
+          onChange={(e) => setMajor(e.target.value)}
+        />
+        <TextField
+          margin="dense"
+          id="age"
+          name="age"
+          label="Umur"
+          type="number"
+          min="0"
+          max="150"
+          fullWidth
+          variant="outlined"
+          size="small"
+          onChange={(e) => setAge(e.target.value)}
+        />
       </DialogContent>
       <DialogActions>
         <Button href="/" color="black">
           Batal
         </Button>
         <Button
-          onClick={() => {
-            handleClose();
-            liftName(name);
-          }}
           variant="contained"
-          disabled={name == false ? true : false}
+          onClick={() => {
+            closeDialogue();
+            respondent.current.name = name;
+            respondent.current.university = university;
+            respondent.current.major = major;
+            respondent.current.age = age;
+          }}
+          disabled={name == "" || major == "" || age == null ? true : false}
         >
           OK
         </Button>
@@ -200,47 +247,53 @@ function FormDialogue({ liftName }) {
   );
 }
 
-function Question({ question }) {
-  return <div className="question py-8 grow flex items-center">{question}</div>;
-}
+function QuestionAndAnswer({
+  index: questionIndex,
+  qaPair: { question, answerChoices },
+  sliderMarks,
+  answeringProgress,
+}) {
+  const updateAnsweringProgress = ({ questionIndex, answerType, value }) =>
+    (answeringProgress.current[questionIndex][answerType] = value);
 
-function AnswerChoices({ answerChoices, sliderMarks }) {
   return (
-    <div className="answers-choice grid lg:grid-cols-2 gap-4 lg:gap-20">
-      {answerChoices.map(({ answer }, index) => (
-        <div
-          key={index}
-          className="answer-item font-bold"
-          // variant={index === 0 ? 'outlined' : 'outlined'}
-          // color={index === 0 ? 'black' : 'black'}
-          // startIcon={index === 0 ? <CheckBoxOutlined /> : <CheckBoxOutlineBlankOutlined />}
-          // disableElevation={true}
-          // disableRipple={true}
-          // sx={{
-          //   fontWeight: 'bold',
-          //   justifyContent: 'start',
-          //   textAlign: 'left',
-          //   paddingY: '1rem',
-          //   paddingX: '1rem',
-          //   gap: '0.5rem',
-          // }}
-        >
-          <div className="flex flex-col grow">
-            {answer}
+    <>
+      <div className="number text-3xl font-bold">{questionIndex + 1}</div>
+      <div className="question flex items-center py-8">{question}</div>
+      <div className="answers-choice grid items-stretch lg:grid-cols-2 gap-4 lg:gap-16">
+        {answerChoices.map(({ answer, type }, index) => (
+          <div
+            key={index}
+            className="answer-item font-bold flex flex-col grow"
+            // variant={index === 0 ? 'outlined' : 'outlined'}
+            // color={index === 0 ? 'black' : 'black'}
+            // startIcon={index === 0 ? <CheckBoxOutlined /> : <CheckBoxOutlineBlankOutlined />}
+            // disableElevation={true}
+            // disableRipple={true}
+            // sx={{
+            //   fontWeight: 'bold',
+            //   justifyContent: 'start',
+            //   textAlign: 'left',
+            //   paddingY: '1rem',
+            //   paddingX: '1rem',
+            //   gap: '0.5rem',
+            // }}
+          >
+            <div className="grow">{answer}</div>
             <div className="px-4">
               <Slider
                 aria-label="Restricted values"
                 color="secondary"
                 min={0}
                 max={1}
-                defaultValue={0}
                 valueLabelDisplay="auto"
                 valueLabelFormat={(value) =>
                   sliderMarks[
-                    sliderMarks.findIndex((mark, index) => mark.value === value)
+                    sliderMarks.findIndex((mark) => mark.value === value)
                   ].label
                 }
                 // getAriaValueText={valuetext}
+                // defaultValue={sliderMarks[Math.floor(Math.random() * 4)].value}
                 step={null}
                 marks={sliderMarks.map(({ value, label }, index) => ({
                   value,
@@ -249,11 +302,18 @@ function AnswerChoices({ answerChoices, sliderMarks }) {
                       ? label
                       : "",
                 }))}
+                onChange={(e) => {
+                  updateAnsweringProgress({
+                    questionIndex,
+                    answerType: type,
+                    value: e.target.value,
+                  });
+                }}
               />
             </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </>
   );
 }
