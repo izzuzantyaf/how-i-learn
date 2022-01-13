@@ -11,6 +11,10 @@ import {
   RespondentAnswer,
   RespondentAnswerSchema,
 } from './schemas/respondent-answer.schema';
+import {
+  LearningMethodRecommendation,
+  LearningMethodRecommendationSchema,
+} from './schemas/learningMethodRecommendation';
 
 @Module({
   imports: [
@@ -18,6 +22,10 @@ import {
       { name: Questionnaire.name, schema: QuestionnaireSchema },
       { name: Respondent.name, schema: RespondentSchema },
       { name: RespondentAnswer.name, schema: RespondentAnswerSchema },
+      {
+        name: LearningMethodRecommendation.name,
+        schema: LearningMethodRecommendationSchema,
+      },
     ]),
   ],
   providers: [QuestionnairesService],

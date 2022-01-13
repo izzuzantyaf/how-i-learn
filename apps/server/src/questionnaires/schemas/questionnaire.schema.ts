@@ -6,7 +6,7 @@ export type QuestionnaireDocument = Questionnaire & Document;
 @Schema()
 export class Questionnaire {
   @Prop()
-  id: number;
+  code: string;
 
   @Prop()
   question: string;

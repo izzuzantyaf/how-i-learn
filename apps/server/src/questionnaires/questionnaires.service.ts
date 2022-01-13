@@ -3,6 +3,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { StoreAnswersDto } from './dto/store-answers.dto';
 import {
+  LearningMethodRecommendation,
+  LearningMethodRecommendationDocument,
+} from './schemas/learningMethodRecommendation';
+import {
   Questionnaire,
   QuestionnaireDocument,
 } from './schemas/questionnaire.schema';
@@ -22,28 +26,101 @@ export class QuestionnairesService {
     private respondentModel: Model<RespondentDocument>,
     @InjectModel(RespondentAnswer.name)
     private respondentAnswerModel: Model<RespondentAnswerDocument>,
+    @InjectModel(LearningMethodRecommendation.name)
+    private learningMethodRecommendationModel: Model<LearningMethodRecommendationDocument>,
   ) {}
 
   // ambil semua soal kuesioner
-  async findAll(): Promise<Questionnaire[]> {
+  async findAll() {
     return await this.questionnaireModel.find().exec();
   }
 
   // simpan jawaban kuesioner
   async storeAnswers(storeAnswerDto: StoreAnswersDto) {
     const { respondent, questionnaireAnswers } = storeAnswerDto;
-    // simpan data responden ke database
-    const storedRespondent = await this.respondentModel.create({
-      name: respondent.name,
-      university: respondent.university,
-      major: respondent.major,
-      age: respondent.age,
-    });
-    // simpan data jawaban responden ke database
-    const storedRespondentAnswer = await this.respondentAnswerModel.create({
+
+    // menghitung CF tiap tipe gaya belajar
+    const learningTypesResult = this.scoreLearningTypes(questionnaireAnswers);
+
+    // menentukan tipe gaya belajar yang paling cocok
+    const bestLearningType = this.findTheBestLearningType(learningTypesResult);
+
+    // memilih rekomendasi cara belajar yang sesuai berdasarkan tipe gaya belajar
+    const learningMethodRecommendations = await this.recommendLearningMethods(
+      bestLearningType,
+    );
+
+    // menyimpan data responden ke database
+    respondent.learningTypes = learningTypesResult;
+    respondent.bestLearningType = bestLearningType;
+    respondent.learningMethodRecommendations = learningMethodRecommendations;
+    const storedRespondent = await this.respondentModel.create(respondent);
+
+    // menyimpan data jawaban responden ke database
+    await this.respondentAnswerModel.create({
       respondentId: storedRespondent._id,
       questionnaireAnswers: questionnaireAnswers,
     });
-    return { storedRespondent, storedRespondentAnswer };
+
+    return { result: storedRespondent };
+  }
+
+  private scoreLearningTypes(questionnaireAnswers: any[]): object {
+    const visual: number = this.calculateLearningTypeCf(
+      questionnaireAnswers,
+      'visual',
+    );
+    const auditory: number = this.calculateLearningTypeCf(
+      questionnaireAnswers,
+      'auditory',
+    );
+    const readWrite: number = this.calculateLearningTypeCf(
+      questionnaireAnswers,
+      'readWrite',
+    );
+    const kinesthetic: number = this.calculateLearningTypeCf(
+      questionnaireAnswers,
+      'kinesthetic',
+    );
+
+    return { visual, auditory, readWrite, kinesthetic };
+  }
+
+  private calculateLearningTypeCf(
+    questionnaireAnswers: any[],
+    type: string,
+  ): number {
+    // menghitung cf kombinasi (CF user * CF expert)
+    const combinationCfs: number[] = questionnaireAnswers.map((question) => {
+      const answer = question.answerChoices.filter(
+        (answer) => answer.type == type,
+      )[0];
+      return answer.userCf * answer.expertCf;
+    });
+    // menghitung CF final
+    let oldCf = combinationCfs[0];
+    for (let i = 1; i < combinationCfs.length; i++) {
+      oldCf = oldCf + combinationCfs[i] * (1 - oldCf);
+    }
+    return oldCf;
+  }
+
+  private findTheBestLearningType(learningTypesResult: object): string {
+    let maxCf = 0;
+    let bestLearningType: string;
+    for (const key in learningTypesResult) {
+      if (learningTypesResult[key] > maxCf) {
+        maxCf = learningTypesResult[key];
+        bestLearningType = key;
+      }
+    }
+    return bestLearningType;
+  }
+
+  private async recommendLearningMethods(bestLearningType: string) {
+    // memilih rekomendasi cara belajar
+    return await this.learningMethodRecommendationModel
+      .find({ type: bestLearningType })
+      .exec();
   }
 }

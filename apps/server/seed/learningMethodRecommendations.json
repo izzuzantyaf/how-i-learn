@@ -1,0 +1,130 @@
+[
+  {
+    "type": "visual",
+    "method": "Membaca diagram, mindmap, chart"
+  },
+  {
+    "type": "visual",
+    "method": "Mengubah tulisan menjadi diagram, mindmap, chart"
+  },
+  {
+    "type": "visual",
+    "method": "Tulisan berwarna"
+  },
+  {
+    "type": "visual",
+    "method": "Menggunakan font bervariasi"
+  },
+  {
+    "type": "visual",
+    "method": "Catatan dengan tata letak yang bagus"
+  },
+  {
+    "type": "visual",
+    "method": "Catatan dengan desain yang menarik"
+  },
+  {
+    "type": "visual",
+    "method": "Animasi"
+  },
+  {
+    "type": "visual",
+    "method": "Gambar ilustrasi"
+  },
+  {
+    "type": "auditory",
+    "method": "Debat"
+  },
+  {
+    "type": "auditory",
+    "method": "Diskusi"
+  },
+  {
+    "type": "auditory",
+    "method": "Mendengarkan podcast"
+  },
+  {
+    "type": "auditory",
+    "method": "Belajar sambil mendengarkan backsound"
+  },
+  {
+    "type": "auditory",
+    "method": "Seminar/webinar"
+  },
+  {
+    "type": "auditory",
+    "method": "Audio book"
+  },
+  {
+    "type": "auditory",
+    "method": "Cerita"
+  },
+  {
+    "type": "auditory",
+    "method": "Membaca nyaring"
+  },
+  {
+    "type": "readWrite",
+    "method": "Membaca buku"
+  },
+  {
+    "type": "readWrite",
+    "method": "Mencatat"
+  },
+  {
+    "type": "readWrite",
+    "method": "Merangkum"
+  },
+  {
+    "type": "readWrite",
+    "method": "Parafrasa"
+  },
+  {
+    "type": "readWrite",
+    "method": "Mendeskripsikan grafik menjadi tulisan"
+  },
+  {
+    "type": "readWrite",
+    "method": "Menggunakan heading dan list"
+  },
+  {
+    "type": "readWrite",
+    "method": "Membuat glosarium"
+  },
+  {
+    "type": "readWrite",
+    "method": "Mencetak materi belajar digital"
+  },
+  {
+    "type": "kinesthetic",
+    "method": "Belajar dengan menggunakan contoh di kehidupan nyata"
+  },
+  {
+    "type": "kinesthetic",
+    "method": "Demonstrasi"
+  },
+  {
+    "type": "kinesthetic",
+    "method": "Aktivitas fisik"
+  },
+  {
+    "type": "kinesthetic",
+    "method": "Mengajar orang lain"
+  },
+  {
+    "type": "kinesthetic",
+    "method": "Trial and error"
+  },
+  {
+    "type": "kinesthetic",
+    "method": "Belajar di luar ruangan"
+  },
+  {
+    "type": "kinesthetic",
+    "method": "Bertanya ke orang lain"
+  },
+  {
+    "type": "kinesthetic",
+    "method": "Merancang hal baru"
+  }
+]
