@@ -1,13 +1,18 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { StoreAnswersDto } from './dto/store-answers.dto';
 import { QuestionnairesService } from './questionnaires.service';
-import { Questionnaire } from './schemas/questionnaire.schema';
 
 @Controller('api/questionnaires')
 export class QuestionnairesController {
   constructor(private readonly questionnairesServices: QuestionnairesService) {}
 
   @Get()
-  async findAll(): Promise<Questionnaire[]> {
-    return await this.questionnairesServices.findAll();
+  findAll() {
+    return this.questionnairesServices.findAll();
+  }
+
+  @Post('submit-answers')
+  submitAnswers(@Body() storeAnswerDto: StoreAnswersDto) {
+    return this.questionnairesServices.storeAnswers(storeAnswerDto);
   }
 }

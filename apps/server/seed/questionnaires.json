@@ -1,283 +1,480 @@
 [
   {
-    "id": 1,
+    "code": "Q1",
     "question": "Kamu ingin menolong seseorang untuk pergi ke bandara, ke pusat kota, dan ke stasiun kereta api, kamu akan melakukan apa ?",
     "answerChoices": [
       {
+        "code": "V1",
         "type": "visual",
+        "expertCf": 1,
         "answer": "Menggambar atau menunjukkan atau memberikan peta"
       },
-      { "type": "auditory", "answer": "Menjelaskan arah secara lisan" },
-      { "type": "read/write", "answer": "Menulis arah" },
-      { "type": "kinesthetic", "answer": "Pergi dengannya" }
+      {
+        "code": "A1",
+        "type": "auditory",
+        "expertCf": 0.95,
+        "answer": "Menjelaskan arah secara lisan"
+      },
+      {
+        "code": "R1",
+        "type": "readWrite",
+        "expertCf": 1,
+        "answer": "Menulis arah"
+      },
+      {
+        "code": "K1",
+        "type": "kinesthetic",
+        "expertCf": 1,
+        "answer": "Pergi dengannya"
+      }
     ]
   },
   {
-    "id": 2,
-    "question": "Di sebuah web ada sebuah video yang menunjukkan bagaimana cara membuat grafik yang baik, ada orang yang berbicara, ada beberapa daftar, dan ada beberapa daftar yang harus dilakukan, dan beberapa diagram. Apa yang harus kamu lakukan ?",
+    "code": "Q2",
+    "question": "Di sebuah web ada sebuah video yang menunjukkan bagaimana cara membuat grafik yang baik, ada orang yang berbicara, ada beberapa daftar yang harus dilakukan, dan beberapa diagram. Apa yang akan kamu lakukan ?",
     "answerChoices": [
-      { "type": "visual", "answer": "Melihat diagram saja" },
-      { "type": "auditory", "answer": "Mendengarkan" },
-      { "type": "read/write", "answer": "Membaca kalimat – kalimat saja" },
-      { "type": "kinesthetic", "answer": "Menontonnya" }
+      {
+        "code": "V2",
+        "type": "visual",
+        "expertCf": 1,
+        "answer": "Melihat diagram saja"
+      },
+      {
+        "code": "A2",
+        "type": "auditory",
+        "expertCf": 1,
+        "answer": "Mendengarkan"
+      },
+      {
+        "code": "R2",
+        "type": "readWrite",
+        "expertCf": 1,
+        "answer": "Membaca kalimat – kalimat saja"
+      },
+      {
+        "code": "K2",
+        "type": "kinesthetic",
+        "expertCf": 1,
+        "answer": "Menontonnya"
+      }
     ]
   },
   {
-    "id": 3,
+    "code": "Q3",
     "question": "Kamu merencanakan liburan bersama teman-teman, kamu ingin teman-teman merespon rencana kamu, apa yang akan kamu lakukan ?",
     "answerChoices": [
       {
+        "code": "V3",
         "type": "visual",
+        "expertCf": 0.9,
         "answer": "Menggunakan peta untuk melihatkan kepada mereka tempat yang indah"
       },
       {
+        "code": "A3",
         "type": "auditory",
+        "expertCf": 0.89,
         "answer": "Menelepon, sms atau email kepada mereka"
       },
       {
-        "type": "read/write",
+        "code": "R3",
+        "type": "readWrite",
+        "expertCf": 1,
         "answer": "Memberi mereka brosur tentang tempat itu"
       },
       {
+        "code": "K3",
         "type": "kinesthetic",
+        "expertCf": 1,
         "answer": "Menjelaskan beberapa garis besar yang akan mereka alami"
       }
     ]
   },
   {
-    "id": 4,
+    "code": "Q4",
     "question": "Kamu ingin memasak sesuatu untuk seseorang, apa yang akan kamu lakukan ?",
     "answerChoices": [
       {
+        "code": "V4",
         "type": "visual",
+        "expertCf": 1,
         "answer": "Lihat di internet dan buku – buku masakan"
       },
-      { "type": "auditory", "answer": "Meminta saran teman" },
-      { "type": "read/write", "answer": "Menggunakan bantuan resep" },
       {
+        "code": "A4",
+        "type": "auditory",
+        "expertCf": 0.95,
+        "answer": "Meminta saran teman"
+      },
+      {
+        "code": "R4",
+        "type": "readWrite",
+        "expertCf": 1,
+        "answer": "Menggunakan bantuan resep"
+      },
+      {
+        "code": "K4",
         "type": "kinesthetic",
+        "expertCf": 1,
         "answer": "Memasak sesuatu yang kamu tahu tanpa resep"
       }
     ]
   },
   {
-    "id": 5,
+    "code": "Q5",
     "question": "Sebuah grup wisatawan ingin belajar tentang kehidupan di wilayah kamu, apa yang akan kamu lakukan ?",
     "answerChoices": [
       {
+        "code": "V5",
         "type": "visual",
+        "expertCf": 1,
         "answer": "Menunjukkan peta dan gambar-gambar di internet"
       },
       {
+        "code": "A5",
         "type": "auditory",
+        "expertCf": 1,
         "answer": "Berbicara dan menyusun informasi tentang itu"
       },
       {
-        "type": "read/write",
+        "code": "R5",
+        "type": "readWrite",
+        "expertCf": 1,
         "answer": "Memberikan buku petunjuk tentang kehidupan area itu"
       },
-      { "type": "kinesthetic", "answer": "Mengajak mereka terjun kesana" }
+      {
+        "code": "K5",
+        "type": "kinesthetic",
+        "expertCf": 1,
+        "answer": "Mengajak mereka terjun kesana"
+      }
     ]
   },
   {
-    "id": 6,
+    "code": "Q6",
     "question": "Kamu ingin membeli sebuah kamera digital atau ponsel dengan bermacam-macam harga, keputusan apa yang akan kamu ambil ?",
     "answerChoices": [
-      { "type": "visual", "answer": "Melihat bagus tidaknya desain" },
-      { "type": "auditory", "answer": "Mendengarkan penjelasan dari penjual" },
       {
-        "type": "read/write",
+        "code": "V6",
+        "type": "visual",
+        "expertCf": 1,
+        "answer": "Melihat bagus tidaknya desain"
+      },
+      {
+        "code": "A6",
+        "type": "auditory",
+        "expertCf": 1,
+        "answer": "Mendengarkan penjelasan dari penjual"
+      },
+      {
+        "code": "R6",
+        "type": "readWrite",
+        "expertCf": 1,
         "answer": "Membaca secara detail atau mengecek lewat internet"
       },
       {
+        "code": "K6",
         "type": "kinesthetic",
+        "expertCf": 1,
         "answer": "Mencoba atau mengecek terlebih dahulu"
       }
     ]
   },
   {
-    "id": 7,
+    "code": "Q7",
     "question": "Apakah kamu ingat tentang bagaimana kamu belajar sesuatu yang baru. Hindari gerakan secara langsung seperti mengendarai sepeda, kamu akan belajar dari siapa ?",
     "answerChoices": [
       {
+        "code": "V7",
         "type": "visual",
+        "expertCf": 1,
         "answer": "Dari diagram, peta atau bagan untuk melihat petunjuknya"
       },
       {
+        "code": "A7",
         "type": "auditory",
+        "expertCf": 1,
         "answer": "Mendengarkan penjelasan dari seseorang dan bertanya"
       },
       {
-        "type": "read/write",
+        "code": "R7",
+        "type": "readWrite",
+        "expertCf": 1,
         "answer": "Melihat dari buku petunjuk atau manual"
       },
-      { "type": "kinesthetic", "answer": "Hanya nonton" }
+      {
+        "code": "K7",
+        "type": "kinesthetic",
+        "expertCf": 0.8,
+        "answer": "Hanya nonton"
+      }
     ]
   },
   {
-    "id": 8,
+    "code": "Q8",
     "question": "Kamu punya masalah dengan perasaan kamu, apa yang ingin dokter bantu untuk kamu ?",
     "answerChoices": [
       {
+        "code": "V8",
         "type": "visual",
+        "expertCf": 1,
         "answer": "Menunjukkan diagram atau bagian -bagian mana yang salah"
       },
       {
+        "code": "A8",
         "type": "auditory",
+        "expertCf": 1,
         "answer": "Menjelaskan di mana letak kesalahannya"
       },
       {
-        "type": "read/write",
+        "code": "R8",
+        "type": "readWrite",
+        "expertCf": 1,
         "answer": "Memberikan sesuatu untuk kamu baca dan menjelaskan apa yang salah"
       },
       {
+        "code": "K8",
         "type": "kinesthetic",
+        "expertCf": 1,
         "answer": "Menggunakan suatu alat dan menunjukan apa yang salah"
       }
     ]
   },
   {
-    "id": 9,
+    "code": "Q9",
     "question": "Kamu ingin belajar program baru, keterampilan atau game di komputer. Apa yang akan kamu lakukan ?",
     "answerChoices": [
-      { "type": "visual", "answer": "Mengikuti petunjuk dari buku" },
       {
+        "code": "V9",
+        "type": "visual",
+        "expertCf": 1,
+        "answer": "Mengikuti petunjuk dari buku"
+      },
+      {
+        "code": "A9",
         "type": "auditory",
+        "expertCf": 1,
         "answer": "Berbicara dengan orang yang tahu tentang program itu"
       },
-      { "type": "read/write", "answer": "Membaca petunjuknya" },
-      { "type": "kinesthetic", "answer": "Menggunakan internet" }
+      {
+        "code": "R9",
+        "type": "readWrite",
+        "expertCf": 1,
+        "answer": "Membaca petunjuknya"
+      },
+      {
+        "code": "K9",
+        "type": "kinesthetic",
+        "expertCf": 1,
+        "answer": "Menggunakan internet"
+      }
     ]
   },
   {
-    "id": 10,
+    "code": "Q10",
     "question": "Saya menyukai situs yang mempunyai ?",
     "answerChoices": [
       {
+        "code": "V10",
         "type": "visual",
+        "expertCf": 1,
         "answer": "Dengan desain yang menarik dan bagian-bagiannya"
       },
       {
+        "code": "A10",
         "type": "auditory",
+        "expertCf": 1,
         "answer": "Dari web yang bisa mendengarkan musik, dari radio atau wawancara"
       },
       {
-        "type": "read/write",
+        "code": "R10",
+        "type": "readWrite",
+        "expertCf": 0.9,
         "answer": "Penjelasan yang sangat menarik dari daftar dan keterangan"
       },
       {
+        "code": "K10",
         "type": "kinesthetic",
+        "expertCf": 1,
         "answer": "Sesuatu yang gampang dibuka dan dicoba"
       }
     ]
   },
   {
-    "id": 11,
+    "code": "Q11",
     "question": "Kalau melihat harga, keputusan apa yang akan mempengaruhi kamu untuk membeli buku nonfiksi ?",
     "answerChoices": [
-      { "type": "visual", "answer": "Dari penampilannya" },
-      { "type": "auditory", "answer": "Dari teman yang merekomendasi" },
       {
-        "type": "read/write",
+        "code": "V11",
+        "type": "visual",
+        "expertCf": 1,
+        "answer": "Dari penampilannya"
+      },
+      {
+        "code": "A11",
+        "type": "auditory",
+        "expertCf": 1,
+        "answer": "Dari teman yang merekomendasi"
+      },
+      {
+        "code": "R11",
+        "type": "readWrite",
+        "expertCf": 1,
         "answer": "Dari bagian – bagian yang gampang dibaca"
       },
       {
+        "code": "K11",
         "type": "kinesthetic",
+        "expertCf": 1,
         "answer": "Dari kisah nyata, pengalaman dan contoh"
       }
     ]
   },
   {
-    "id": 12,
+    "code": "Q12",
     "question": "Kamu menggunakan sebuah buku, cd, dan situs untuk belajar pengambilan foto dengan kamera digital yang baru. Apa yang ingin kamu tanya ?",
     "answerChoices": [
       {
+        "code": "V12",
         "type": "visual",
+        "expertCf": 1,
         "answer": "Petunjuk langsung dari kamera dan bagian-bagiannya"
       },
       {
+        "code": "A12",
         "type": "auditory",
+        "expertCf": 1,
         "answer": "Kesempatan untuk bertanya dan berbicara tentang gambar-gambar di kamera"
       },
       {
-        "type": "read/write",
+        "code": "R12",
+        "type": "readWrite",
+        "expertCf": 1,
         "answer": "Kamu membaca dan menulis dari petunjuk-petunjuk tentang apa yang akan kamu lakukan"
       },
-      { "type": "kinesthetic", "answer": "Contoh-contoh foto yang bagus" }
+      {
+        "code": "K12",
+        "type": "kinesthetic",
+        "expertCf": 1,
+        "answer": "Contoh-contoh foto yang bagus"
+      }
     ]
   },
   {
-    "id": 13,
+    "code": "Q13",
     "question": "Kamu memilih untuk menjadi guru atau menjadi pembawa acara. Kamu akan melihat dari siapa ?",
     "answerChoices": [
-      { "type": "visual", "answer": "Dari diagram, bagan atau grafik" },
       {
+        "code": "V13",
+        "type": "visual",
+        "expertCf": 0.9,
+        "answer": "Dari diagram, bagan atau grafik"
+      },
+      {
+        "code": "A13",
         "type": "auditory",
+        "expertCf": 1,
         "answer": "Atau akan melakukan tanya jawab, berbicara, atau dari diskusi grup, atau dari tamu"
       },
-      { "type": "read/write", "answer": "Kamu akan langsung membaca buku" },
-      { "type": "kinesthetic", "answer": "Belajar secara langsung" }
+      {
+        "code": "R13",
+        "type": "readWrite",
+        "expertCf": 1,
+        "answer": "Kamu akan langsung membaca buku"
+      },
+      {
+        "code": "K13",
+        "type": "kinesthetic",
+        "expertCf": 1,
+        "answer": "Belajar secara langsung"
+      }
     ]
   },
   {
-    "id": 14,
+    "code": "Q14",
     "question": "Kamu telah selesai mengikuti kejuaraan atau tes yang menginginkan hasilnya. Hasil apa yang kamu inginkan ?",
     "answerChoices": [
       {
+        "code": "V14",
         "type": "visual",
+        "expertCf": 1,
         "answer": "Melihat dari grafik hasil yang telah kamu terima"
       },
       {
+        "code": "A14",
         "type": "auditory",
+        "expertCf": 1,
         "answer": "Dari seseorang yang ikut ujian bersama kamu"
       },
       {
-        "type": "read/write",
+        "code": "R14",
+        "type": "readWrite",
+        "expertCf": 1,
         "answer": "Menggunakan penjelasan dari hasilnya"
       },
       {
+        "code": "K14",
         "type": "kinesthetic",
+        "expertCf": 1,
         "answer": "Menggunakan contoh dari apa yang telah kamu lakukan"
       }
     ]
   },
   {
-    "id": 15,
+    "code": "Q15",
     "question": "Kamu akan memilih makanan di restoran atau cafe. Apa yang akan kamu lakukan ?",
     "answerChoices": [
       {
+        "code": "V15",
         "type": "visual",
+        "expertCf": 1,
         "answer": "Melihat orang lain makan apa atau melihat gambar menu"
       },
       {
+        "code": "A15",
         "type": "auditory",
+        "expertCf": 1,
         "answer": "Mendengarkan yang pelayan dan teman kamu tawarkan"
       },
-      { "type": "read/write", "answer": "Memilih dari menu" },
       {
+        "code": "R15",
+        "type": "readWrite",
+        "expertCf": 1,
+        "answer": "Memilih dari menu"
+      },
+      {
+        "code": "K15",
         "type": "kinesthetic",
+        "expertCf": 1,
         "answer": "Memilih sesuatu yang telah kamu makan sebelumnya"
       }
     ]
   },
   {
-    "id": 16,
+    "code": "Q16",
     "question": "Kamu akan membuat pidato yang penting di sebuah konferensi atau wawancara pekerjaan. Apa yang akan kamu lakukan ?",
     "answerChoices": [
       {
+        "code": "V16",
         "type": "visual",
+        "expertCf": 1,
         "answer": "Membuat diagram dan grafik yang akan membantu menjelaskan sesuatu"
       },
       {
+        "code": "A16",
         "type": "auditory",
+        "expertCf": 0.9,
         "answer": "Menulis poin – poin penting dan menghafal"
       },
       {
-        "type": "read/write",
+        "code": "R16",
+        "type": "readWrite",
+        "expertCf": 1,
         "answer": "Menulis ulang dan membacanya berulang-ulang"
       },
       {
+        "code": "K16",
         "type": "kinesthetic",
+        "expertCf": 1,
         "answer": "Mengumpulkan contoh-contoh dan cerita agar mudah presentasi"
       }
     ]
