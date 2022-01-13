@@ -17,7 +17,7 @@ import { useRef } from "react";
 // import CheckBoxOutlineBlankOutlined from '@mui/icons-material/CheckBoxOutlineBlankOutlined'
 // import CheckBoxOutlined from '@mui/icons-material/CheckBoxOutlined'
 
-// ambil data dari server, dilakukan hanya pada saat build
+// mengambil data dari server, dilakukan hanya pada saat build
 export async function getStaticProps(ctx) {
   const questionnaire = await fetch(
     process.env.NEXT_PUBLIC_API_BASEURL + "/questionnaires"
@@ -93,7 +93,11 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
       }
     )
       .then((res) => res.json())
-      .catch((err) => console.log(err));
+      .then((data) => console.log(data))
+      .catch((err) => console.error(err))
+      .finally(() => {
+        window.location.href = "https://forms.gle/9AHUJt2FhPQWqLLu9";
+      });
   };
 
   useEffect(() => {
