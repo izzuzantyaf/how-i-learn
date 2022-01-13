@@ -96,7 +96,7 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
       .then((data) => console.log(data))
       .catch((err) => console.error(err))
       .finally(() => {
-        window.location.href = "https://forms.gle/9AHUJt2FhPQWqLLu9";
+        window.location.replace("https://forms.gle/9AHUJt2FhPQWqLLu9");
       });
   };
 
