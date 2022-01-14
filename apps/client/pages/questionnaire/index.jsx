@@ -59,10 +59,10 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
   const answeringProgress = useRef(
     questionnaire.map((q) => {
       return {
-        visual: sliderMarks[Math.floor(Math.random() * 4)].value,
-        auditory: sliderMarks[Math.floor(Math.random() * 4)].value,
-        readWrite: sliderMarks[Math.floor(Math.random() * 4)].value,
-        kinesthetic: sliderMarks[Math.floor(Math.random() * 4)].value,
+        visual: 0,
+        auditory: 0,
+        readWrite: 0,
+        kinesthetic: 0,
       };
     })
   );
@@ -93,7 +93,7 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
       }
     )
       .then((res) => res.json())
-      .then((data) => console.log(data))
+      // .then((data) => console.log(data))
       .catch((err) => console.error(err))
       .finally(() => {
         window.location.replace("https://forms.gle/9AHUJt2FhPQWqLLu9");
@@ -101,9 +101,9 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
   };
 
   useEffect(() => {
-    // window.scrollTo(0, 0);
-    console.log(answeringProgress.current);
-  }, [answeringProgress]);
+    window.scrollTo(0, 0);
+    // console.log(answeringProgress.current);
+  }, []);
 
   return (
     <>
