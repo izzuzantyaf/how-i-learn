@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Button from "@mui/material/Button";
+// import LoadingButton from "@mui/lab/LoadingButton";
 import Container from "@mui/material/Container";
 // import IconButton from "@mui/material/IconButton";
 // import LinearProgress from "@mui/material/LinearProgress";
@@ -66,6 +67,7 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
       };
     })
   );
+  const [isSubmiting, setIsSubmiting] = useState(false);
 
   const submitAnswers = async (respondent, answers) => {
     const questionnaireAnswers = questionnaire.map((question, index) => {
@@ -81,7 +83,7 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
       questionnaireAnswers,
     };
 
-    await fetch(
+    return await fetch(
       process.env.NEXT_PUBLIC_API_BASEURL + "/questionnaires/submit-answers",
       {
         method: "POST",
@@ -94,10 +96,7 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
     )
       .then((res) => res.json())
       // .then((data) => console.log(data))
-      .catch((err) => console.error(err))
-      .finally(() => {
-        window.location.replace("https://forms.gle/9AHUJt2FhPQWqLLu9");
-      });
+      .catch((err) => console.error(err));
   };
 
   useEffect(() => {
@@ -157,12 +156,20 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
             sx={{
               alignSelf: "end",
             }}
+            disabled={isSubmiting}
             // menyimpan jawaban user ketika tombol submit ditekan
-            onClick={() => {
-              submitAnswers(respondent.current, answeringProgress.current);
+            onClick={async () => {
+              setIsSubmiting(true);
+              await submitAnswers(
+                respondent.current,
+                answeringProgress.current
+              ).then(() => {
+                setIsSubmiting(false);
+              });
+              window.location.href = "https://forms.gle/9AHUJt2FhPQWqLLu9";
             }}
           >
-            Submit
+            {isSubmiting ? "Menyimpan..." : "Submit"}
           </Button>
         </Container>
       </div>
