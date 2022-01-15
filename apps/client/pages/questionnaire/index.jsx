@@ -129,6 +129,16 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
         >
           <FormDialogue respondent={respondent} />
 
+          <div className="guide bg-yellow-100 rounded-lg py-4 px-6 text-yellow-700">
+            <div className="font-bold text-2xl">Panduan</div>
+            <ol className="mt-4">
+              1. Berikan nilai pada jawaban yang sesuai dengan kamu dengan cara
+              menggeser slider
+            </ol>
+            <ol>2. Kamu boleh memilih lebih dari 1 jawaban</ol>
+            <ol>3. Jika tidak ingin memilih suatu jawaban, biarkan saja</ol>
+          </div>
+
           <div className="flex flex-col gap-8 lg:gap-16">
             {questionnaire.map((qaPair, index) => (
               <QuestionAndAnswer
