@@ -15,6 +15,7 @@ import {
   RespondentAnswerDocument,
 } from './schemas/respondent-answer.schema';
 import { Respondent, RespondentDocument } from './schemas/respondent.schema';
+import * as mongoose from 'mongoose';
 
 @Injectable()
 export class QuestionnairesService {
@@ -43,22 +44,23 @@ export class QuestionnairesService {
     const learningTypesResult = this.scoreLearningTypes(questionnaireAnswers);
 
     // menentukan tipe gaya belajar yang paling cocok
-    const bestLearningType = this.findTheBestLearningType(learningTypesResult);
+    const bestLearningTypes = this.findTheBestLearningType(learningTypesResult);
 
     // memilih rekomendasi cara belajar yang sesuai berdasarkan tipe gaya belajar
     const learningMethodRecommendations = await this.recommendLearningMethods(
-      bestLearningType,
+      bestLearningTypes,
     );
 
     // menyimpan data responden ke database
+    respondent._id = new mongoose.Types.ObjectId();
     respondent.learningTypes = learningTypesResult;
-    respondent.bestLearningType = bestLearningType;
+    respondent.bestLearningTypes = bestLearningTypes;
     respondent.learningMethodRecommendations = learningMethodRecommendations;
     const storedRespondent = await this.respondentModel.create(respondent);
 
     // menyimpan data jawaban responden ke database
     await this.respondentAnswerModel.create({
-      respondentId: storedRespondent._id,
+      respondent_id: respondent._id,
       questionnaireAnswers: questionnaireAnswers,
     });
 
@@ -105,22 +107,26 @@ export class QuestionnairesService {
     return oldCf;
   }
 
-  private findTheBestLearningType(learningTypesResult: object): string {
-    let maxCf = 0;
-    let bestLearningType: string;
+  private findTheBestLearningType(learningTypesResult: object): string[] {
+    const cfs: number[] = [];
     for (const key in learningTypesResult) {
-      if (learningTypesResult[key] > maxCf) {
-        maxCf = learningTypesResult[key];
-        bestLearningType = key;
+      cfs.push(learningTypesResult[key]);
+    }
+    const maxCf = Math.max(...cfs);
+    const bestLearningTypes: string[] = [];
+    for (const key in learningTypesResult) {
+      if (learningTypesResult[key] === maxCf) {
+        bestLearningTypes.push(key);
       }
     }
-    return bestLearningType;
+
+    return bestLearningTypes;
   }
 
-  private async recommendLearningMethods(bestLearningType: string) {
+  private async recommendLearningMethods(bestLearningTypes: string[]) {
     // memilih rekomendasi cara belajar
     return await this.learningMethodRecommendationModel
-      .find({ type: bestLearningType })
+      .find({ type: bestLearningTypes })
       .exec();
   }
 }

@@ -6,7 +6,7 @@ export type RespondentAnswerDocument = RespondentAnswer & Document;
 @Schema()
 export class RespondentAnswer {
   @Prop()
-  respondentId: string;
+  respondent_id: string;
 
   @Prop()
   questionnaireAnswers: any[];

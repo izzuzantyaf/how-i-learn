@@ -1,11 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { LearningMethodRecommendation } from './learningMethodRecommendation';
+import { Document, Schema as MongoSchema } from 'mongoose';
 
 export type RespondentDocument = Respondent & Document;
 
 @Schema()
 export class Respondent {
+  @Prop({ type: MongoSchema.Types.ObjectId })
+  _id;
   @Prop()
   name: string;
   @Prop()
@@ -17,7 +18,7 @@ export class Respondent {
   @Prop({ type: Object })
   learningTypes;
   @Prop()
-  bestLearningType: string;
+  bestLearningTypes: string[];
   @Prop({ type: Array })
   learningMethodRecommendations;
 }

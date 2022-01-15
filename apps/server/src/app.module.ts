@@ -5,6 +5,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { QuestionnairesModule } from './questionnaires/questionnaires.module';
+import { PlaygroundController } from './playground/playground.controller';
+import { PlaygroundModule } from './playground/playground.module';
 
 @Module({
   // setiap module yang dibuat wajib didaftarkan ke dalam imports agar bisa digunakan
@@ -15,8 +17,9 @@ import { QuestionnairesModule } from './questionnaires/questionnaires.module';
     // MongooseModule dipakai untuk interaksi ke database
     MongooseModule.forRoot(process.env.MONGO_URI),
     QuestionnairesModule,
+    PlaygroundModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, PlaygroundController],
   providers: [AppService],
 })
 // eslint-disable-next-line prettier/prettier
