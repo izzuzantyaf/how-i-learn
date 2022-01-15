@@ -206,6 +206,7 @@ function FormDialogue({ respondent }) {
           fullWidth
           variant="outlined"
           size="small"
+          color="secondary"
           onChange={(e) => setName(e.target.value)}
         />
         <TextField
@@ -218,6 +219,7 @@ function FormDialogue({ respondent }) {
           fullWidth
           variant="outlined"
           size="small"
+          color="secondary"
           onChange={(e) => setUniversity(e.target.value)}
         />
         <TextField
@@ -230,6 +232,7 @@ function FormDialogue({ respondent }) {
           fullWidth
           variant="outlined"
           size="small"
+          color="secondary"
           onChange={(e) => setMajor(e.target.value)}
         />
         <TextField
@@ -243,6 +246,7 @@ function FormDialogue({ respondent }) {
           fullWidth
           variant="outlined"
           size="small"
+          color="secondary"
           onChange={(e) => setAge(e.target.value)}
         />
       </DialogContent>
