@@ -1,5 +1,5 @@
 import { IsArray, IsObject } from 'class-validator';
-import { Respondent } from '../schemas/respondent.schema';
+import { Respondent } from '../../../schemas/respondent.schema';
 
 export class StoreAnswersDto {
   @IsObject()

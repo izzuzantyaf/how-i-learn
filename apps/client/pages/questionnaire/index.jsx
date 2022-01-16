@@ -15,6 +15,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 // import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useEffect, useState } from "react";
 import { useRef } from "react";
+import useLocalStorage from "../../hooks/useLocalStorage";
 // import CheckBoxOutlineBlankOutlined from '@mui/icons-material/CheckBoxOutlineBlankOutlined'
 // import CheckBoxOutlined from '@mui/icons-material/CheckBoxOutlined'
 
@@ -69,6 +70,8 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
   );
   const [isSubmiting, setIsSubmiting] = useState(false);
 
+  const [result, setResult] = useLocalStorage("result", {});
+
   const submitAnswers = async (respondent, answers) => {
     const questionnaireAnswers = questionnaire.map((question, index) => {
       question.answerChoices = question.answerChoices.map((answer) => {
@@ -115,64 +118,64 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div>
-        <Container
+      <Container
+        sx={{
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+          minHeight: "100vh",
+          paddingY: "1.5rem",
+        }}
+      >
+        <FormDialogue respondent={respondent} />
+
+        <div className="guide bg-yellow-100 rounded-lg py-4 px-6 text-yellow-700">
+          <div className="font-bold text-2xl">Panduan</div>
+          <ol className="mt-4">
+            1. Berikan nilai pada jawaban yang sesuai dengan kamu dengan cara
+            menggeser slider
+          </ol>
+          <ol>2. Kamu boleh memilih lebih dari 1 jawaban</ol>
+          <ol>3. Jika tidak ingin memilih suatu jawaban, biarkan saja</ol>
+        </div>
+
+        <div className="flex flex-col gap-8 lg:gap-16">
+          {questionnaire.map((qaPair, index) => (
+            <QuestionAndAnswer
+              key={index}
+              index={index}
+              qaPair={qaPair}
+              sliderMarks={sliderMarks}
+              answeringProgress={answeringProgress}
+            />
+          ))}
+        </div>
+
+        <Button
+          variant="contained"
+          size="large"
           sx={{
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-            minHeight: "100vh",
-            paddingY: "1.5rem",
+            alignSelf: "end",
+          }}
+          disabled={isSubmiting}
+          // menyimpan jawaban user ketika tombol submit ditekan
+          onClick={async () => {
+            setIsSubmiting(true);
+            await submitAnswers(
+              respondent.current,
+              answeringProgress.current
+            ).then((data) => {
+              setResult(data.result);
+              setIsSubmiting(false);
+            });
+            // window.location.href = "https://forms.gle/9AHUJt2FhPQWqLLu9";
+            window.location.href = window.location.origin + "/result";
           }}
         >
-          <FormDialogue respondent={respondent} />
-
-          <div className="guide bg-yellow-100 rounded-lg py-4 px-6 text-yellow-700">
-            <div className="font-bold text-2xl">Panduan</div>
-            <ol className="mt-4">
-              1. Berikan nilai pada jawaban yang sesuai dengan kamu dengan cara
-              menggeser slider
-            </ol>
-            <ol>2. Kamu boleh memilih lebih dari 1 jawaban</ol>
-            <ol>3. Jika tidak ingin memilih suatu jawaban, biarkan saja</ol>
-          </div>
-
-          <div className="flex flex-col gap-8 lg:gap-16">
-            {questionnaire.map((qaPair, index) => (
-              <QuestionAndAnswer
-                key={index}
-                index={index}
-                qaPair={qaPair}
-                sliderMarks={sliderMarks}
-                answeringProgress={answeringProgress}
-              />
-            ))}
-          </div>
-
-          <Button
-            variant="contained"
-            size="large"
-            sx={{
-              alignSelf: "end",
-            }}
-            disabled={isSubmiting}
-            // menyimpan jawaban user ketika tombol submit ditekan
-            onClick={async () => {
-              setIsSubmiting(true);
-              await submitAnswers(
-                respondent.current,
-                answeringProgress.current
-              ).then(() => {
-                setIsSubmiting(false);
-              });
-              window.location.href = "https://forms.gle/9AHUJt2FhPQWqLLu9";
-            }}
-          >
-            {isSubmiting ? "Menyimpan..." : "Submit"}
-          </Button>
-        </Container>
-      </div>
+          {isSubmiting ? "Menyimpan..." : "Submit"}
+        </Button>
+      </Container>
     </>
   );
 }
@@ -318,7 +321,6 @@ function QuestionAndAnswer({
                   ].label
                 }
                 // getAriaValueText={valuetext}
-                // defaultValue={sliderMarks[Math.floor(Math.random() * 4)].value}
                 step={null}
                 marks={sliderMarks.map(({ value, label }, index) => ({
                   value,

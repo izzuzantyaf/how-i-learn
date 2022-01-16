@@ -5,7 +5,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { QuestionnairesModule } from './questionnaires/questionnaires.module';
-import { PlaygroundController } from './playground/playground.controller';
 import { PlaygroundModule } from './playground/playground.module';
 
 @Module({
@@ -19,7 +18,7 @@ import { PlaygroundModule } from './playground/playground.module';
     QuestionnairesModule,
     PlaygroundModule,
   ],
-  controllers: [AppController, PlaygroundController],
+  controllers: [AppController],
   providers: [AppService],
 })
 // eslint-disable-next-line prettier/prettier
