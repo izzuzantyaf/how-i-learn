@@ -5,16 +5,19 @@ import { StoreAnswersDto } from './dto/store-answers.dto';
 import {
   LearningMethodRecommendation,
   LearningMethodRecommendationDocument,
-} from './schemas/learningMethodRecommendation';
+} from '../../schemas/learningMethodRecommendation';
 import {
   Questionnaire,
   QuestionnaireDocument,
-} from './schemas/questionnaire.schema';
+} from '../../schemas/questionnaire.schema';
 import {
   RespondentAnswer,
   RespondentAnswerDocument,
-} from './schemas/respondent-answer.schema';
-import { Respondent, RespondentDocument } from './schemas/respondent.schema';
+} from '../../schemas/respondent-answer.schema';
+import {
+  Respondent,
+  RespondentDocument,
+} from '../../schemas/respondent.schema';
 import * as mongoose from 'mongoose';
 
 @Injectable()

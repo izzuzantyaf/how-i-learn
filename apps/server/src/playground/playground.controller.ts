@@ -1,4 +1,12 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { PlaygroundService } from './playground.service';
 
-@Controller('playground')
-export class PlaygroundController {}
+@Controller('api/playground')
+export class PlaygroundController {
+  constructor(private readonly playgroundService: PlaygroundService) {}
+
+  @Get('respondents')
+  findAll() {
+    return this.playgroundService.findAll();
+  }
+}

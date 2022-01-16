@@ -5,16 +5,16 @@ import { QuestionnairesController } from './questionnaires.controller';
 import {
   Questionnaire,
   QuestionnaireSchema,
-} from './schemas/questionnaire.schema';
-import { Respondent, RespondentSchema } from './schemas/respondent.schema';
+} from '../../schemas/questionnaire.schema';
+import { Respondent, RespondentSchema } from '../../schemas/respondent.schema';
 import {
   RespondentAnswer,
   RespondentAnswerSchema,
-} from './schemas/respondent-answer.schema';
+} from '../../schemas/respondent-answer.schema';
 import {
   LearningMethodRecommendation,
   LearningMethodRecommendationSchema,
-} from './schemas/learningMethodRecommendation';
+} from '../../schemas/learningMethodRecommendation';
 
 @Module({
   imports: [
