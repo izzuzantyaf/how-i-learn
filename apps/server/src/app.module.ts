@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { QuestionnairesModule } from './questionnaires/questionnaires.module';
 import { PlaygroundModule } from './playground/playground.module';
+import { MemberModule } from './member/member.module';
 
 @Module({
   // setiap module yang dibuat wajib didaftarkan ke dalam imports agar bisa digunakan
@@ -17,6 +18,7 @@ import { PlaygroundModule } from './playground/playground.module';
     MongooseModule.forRoot(process.env.MONGO_URI),
     QuestionnairesModule,
     PlaygroundModule,
+    MemberModule,
   ],
   controllers: [AppController],
   providers: [AppService],
