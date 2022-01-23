@@ -2,13 +2,10 @@ import Head from "next/head";
 
 export async function getServerSideProps(ctx) {
   let respondents = await fetch(
-    process.env.NEXT_PUBLIC_API_BASEURL + "/playground/respondents"
+    process.env.NEXT_PUBLIC_APP_API_BASEURL + "/respondents"
   )
     .then((res) => res.json())
-    .catch((err) => {
-      console.error(err);
-      return err;
-    });
+    .catch((err) => err);
 
   const processedRespondents = respondents.map(
     ({

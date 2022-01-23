@@ -25,7 +25,7 @@ export async function getStaticProps(ctx) {
     process.env.NEXT_PUBLIC_API_BASEURL + "/questionnaires"
   )
     .then((res) => res.json())
-    .catch((err) => console.error(err));
+    .catch((err) => err);
 
   return {
     props: {
@@ -33,23 +33,23 @@ export async function getStaticProps(ctx) {
       sliderMarks: [
         {
           value: 0,
-          label: "Tidak akan",
+          label: "Tidak",
         },
         {
-          value: 0.25,
-          label: "Mungkin tidak",
+          value: 0.2,
+          label: "Sedikit yakin",
         },
         {
-          value: 0.5,
-          label: "Mungkin",
+          value: 0.4,
+          label: "Cukup yakin",
         },
         {
-          value: 0.75,
-          label: "Mungkin iya",
+          value: 0.6,
+          label: "Yakin",
         },
         {
-          value: 1,
-          label: "Pasti",
+          value: 0.8,
+          label: "Sangat yakin",
         },
       ],
     },
@@ -133,8 +133,8 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
         <div className="guide bg-yellow-100 rounded-lg py-4 px-6 text-yellow-700">
           <div className="font-bold text-2xl">Panduan</div>
           <ol className="mt-4">
-            1. Berikan nilai pada jawaban yang sesuai dengan kamu dengan cara
-            menggeser slider
+            1. Berikan nilai tingkat keyakinanmu pada jawaban yang sesuai dengan
+            kamu dengan cara menggeser slider
           </ol>
           <ol>2. Kamu boleh memilih lebih dari 1 jawaban</ol>
           <ol>3. Jika tidak ingin memilih suatu jawaban, biarkan saja</ol>
@@ -169,7 +169,6 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
               setResult(data.result);
               setIsSubmiting(false);
             });
-            // window.location.href = "https://forms.gle/9AHUJt2FhPQWqLLu9";
             window.location.href = window.location.origin + "/result";
           }}
         >
@@ -313,7 +312,7 @@ function QuestionAndAnswer({
                 aria-label="Restricted values"
                 color="secondary"
                 min={0}
-                max={1}
+                max={0.8}
                 valueLabelDisplay="auto"
                 valueLabelFormat={(value) =>
                   sliderMarks[
