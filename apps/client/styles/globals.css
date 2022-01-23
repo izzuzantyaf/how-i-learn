@@ -1,0 +1,6 @@
+@import './fonts.css';
+@import './tailwind.css';
+
+body{
+  font-family: "Nunito Sans", sans-serif, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
