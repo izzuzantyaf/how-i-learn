@@ -63,7 +63,8 @@ export class QuestionnairesService {
 
     // menyimpan data jawaban responden ke database
     await this.respondentAnswerModel.create({
-      respondent_id: respondent._id,
+      _id: new mongoose.Types.ObjectId(),
+      respondent: respondent._id,
       questionnaireAnswers: questionnaireAnswers,
     });
 
