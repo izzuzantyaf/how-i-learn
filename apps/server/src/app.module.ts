@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { QuestionnairesModule } from './questionnaires/questionnaires.module';
 import { PlaygroundModule } from './playground/playground.module';
 import { MemberModule } from './member/member.module';
+import { RespondentModule } from './respondent/respondent.module';
 
 @Module({
   // setiap module yang dibuat wajib didaftarkan ke dalam imports agar bisa digunakan
@@ -19,6 +20,7 @@ import { MemberModule } from './member/member.module';
     QuestionnairesModule,
     PlaygroundModule,
     MemberModule,
+    RespondentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

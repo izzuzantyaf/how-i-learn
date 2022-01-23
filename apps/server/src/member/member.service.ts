@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Member, MemberDocument } from 'schemas/member.schema';
+import { Member, MemberDocument } from '../../schemas/member.schema';
 
 @Injectable()
 export class MemberService {
