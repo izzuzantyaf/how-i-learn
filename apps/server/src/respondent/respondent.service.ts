@@ -92,10 +92,16 @@ export class RespondentService {
       },
     );
 
-    // fix the stupid javascript floating point number
+    // convert to percent
     for (const key in learningTypesPoint) {
-      learningTypesPoint[key] = parseFloat(learningTypesPoint[key].toFixed(2));
+      learningTypesPoint[key] /= 12.8;
+      learningTypesPoint[key] = parseFloat(learningTypesPoint[key].toFixed(10));
     }
+
+    // fix the stupid javascript floating point number
+    // for (const key in learningTypesPoint) {
+    //   learningTypesPoint[key] = parseFloat(learningTypesPoint[key].toFixed(2));
+    // }
 
     return learningTypesPoint;
   }
