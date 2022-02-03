@@ -55,7 +55,7 @@ export class QuestionnairesService {
     );
 
     // menyimpan data responden ke database
-    respondent._id = new mongoose.Types.ObjectId();
+    // respondent._id = new mongoose.Types.ObjectId();
     respondent.learningTypes = learningTypesResult;
     respondent.bestLearningTypes = bestLearningTypes;
     respondent.learningMethodRecommendations = learningMethodRecommendations;
