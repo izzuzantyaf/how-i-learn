@@ -18,7 +18,13 @@ import {
   Respondent,
   RespondentDocument,
 } from '../../schemas/respondent.schema';
+import {
+  MemberAnswer,
+  MemberAnswerDocument,
+} from '../../schemas/member-answer.schema';
+import { Member, MemberDocument } from '../../schemas/member.schema';
 import * as mongoose from 'mongoose';
+import { StoreAnswersMemberDto } from './dto/store-answers-member.dto';
 
 @Injectable()
 export class QuestionnairesService {
@@ -30,6 +36,10 @@ export class QuestionnairesService {
     private respondentModel: Model<RespondentDocument>,
     @InjectModel(RespondentAnswer.name)
     private respondentAnswerModel: Model<RespondentAnswerDocument>,
+    @InjectModel(Member.name)
+    private memberModel: Model<MemberDocument>,
+    @InjectModel(MemberAnswer.name)
+    private memberAnswerModel: Model<MemberAnswerDocument>,
     @InjectModel(LearningMethodRecommendation.name)
     private learningMethodRecommendationModel: Model<LearningMethodRecommendationDocument>,
   ) {}
@@ -37,6 +47,52 @@ export class QuestionnairesService {
   // ambil semua soal kuesioner
   async findAll() {
     return await this.questionnaireModel.find().exec();
+  }
+
+  // simpan jawaban kuesioner
+  async storeAnswersMember(storeAnswerMemberDto: StoreAnswersMemberDto) {
+    const { member, questionnaireAnswers } = storeAnswerMemberDto;
+
+    // menghitung CF final tiap tipe gaya belajar
+    const learningTypesResult = this.scoreLearningTypes(questionnaireAnswers);
+
+    // menentukan tipe gaya belajar yang paling cocok
+    const bestLearningTypes = this.findTheBestLearningType(learningTypesResult);
+
+    // memilih rekomendasi cara belajar yang sesuai berdasarkan tipe gaya belajar
+    const learningMethodRecommendations = await this.recommendLearningMethods(
+      bestLearningTypes,
+    );
+
+    // menyimpan data member ke database
+    const updatedMember = await this.memberModel
+      .findByIdAndUpdate(
+        member._id,
+        {
+          learningTypes: learningTypesResult,
+          bestLearningTypes,
+          learningMethodRecommendations,
+        },
+        {
+          new: true,
+        },
+      )
+      .exec();
+
+    // menyimpan data jawaban member ke database
+    await this.memberAnswerModel
+      .findOneAndUpdate(
+        {
+          member: updatedMember._id,
+        },
+        { questionnaireAnswers },
+        {
+          upsert: true,
+        },
+      )
+      .exec();
+
+    return { result: updatedMember };
   }
 
   // simpan jawaban kuesioner

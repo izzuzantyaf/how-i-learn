@@ -114,7 +114,7 @@ export default function ProfileEdit() {
 
   const logout = () => {
     window.localStorage.removeItem("member");
-    window.location.reload();
+    window.location.href = window.location.origin;
   };
 
   return (

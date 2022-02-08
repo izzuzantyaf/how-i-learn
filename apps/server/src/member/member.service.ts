@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Member, MemberDocument } from 'schemas/member.schema';
 import DeleteDto from './dto/delete.dto';
 import SignInDto from './dto/signin.dto';
@@ -24,6 +24,7 @@ export class MemberService {
       return { type: 'error', message: 'Email sudah terdaftar' };
     else {
       const storedMember = await this.memberModel.create({
+        _id: new Types.ObjectId(),
         name: signUpDto.name,
         email: signUpDto.email,
         password: signUpDto.password,

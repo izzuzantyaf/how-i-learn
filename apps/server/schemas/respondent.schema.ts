@@ -9,12 +9,12 @@ export class Respondent {
   // _id;
   @Prop()
   name: string;
-  @Prop()
-  university: string;
-  @Prop()
-  major: string;
-  @Prop()
-  age: number;
+  // @Prop()
+  // university: string;
+  // @Prop()
+  // major: string;
+  // @Prop()
+  // age: number;
   @Prop({ type: Object })
   learningTypes;
   @Prop({ type: [String] })

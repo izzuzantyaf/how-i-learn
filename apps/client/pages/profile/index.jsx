@@ -18,7 +18,7 @@ export default function Profile() {
 
   const logout = () => {
     window.localStorage.removeItem("member");
-    window.location.href = window.location.origin + "/signin";
+    window.location.href = window.location.origin;
   };
 
   return (
@@ -68,7 +68,32 @@ export default function Profile() {
         </div>
 
         {member?.bestLearningTypes && member?.learningMethodRecommendations ? (
-          <div>ada</div>
+          <>
+            <div className="font-bold text-xl mt-4">Tipe gaya belajar kamu</div>
+            <div className="best-learning-type font-black capitalize text-2xl lg:text-3xl text-center bg-gray-50 text-secondary py-8 rounded-lg">
+              {member.bestLearningTypes
+                ?.join(", ")
+                .replaceAll("readWrite", "Read/write")}
+            </div>
+
+            <div className="font-bold text-xl mt-8">
+              Rekomendasi cara belajar
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              {member.learningMethodRecommendations?.map((lm, index) => (
+                <div key={index} className="shadow rounded-lg border p-4">
+                  <div className="font-bold">{lm.method}</div>
+                  <div className="capitalize">
+                    {lm.type == "readWrite" ? "Read/write" : lm.type}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <Button variant="contained" href="/questionnaire">
+              Tes ulang
+            </Button>
+          </>
         ) : (
           <div>
             Kamu belum punya rekomendasi cara belajar,{" "}
