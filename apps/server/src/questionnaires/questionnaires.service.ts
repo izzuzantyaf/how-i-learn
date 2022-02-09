@@ -46,7 +46,7 @@ export class QuestionnairesService {
 
   // ambil semua soal kuesioner
   async findAll() {
-    return await this.questionnaireModel.find().sort({ code: 'asc' }).exec();
+    return await this.questionnaireModel.find().sort({ order: 'asc' }).exec();
   }
 
   // simpan jawaban kuesioner
