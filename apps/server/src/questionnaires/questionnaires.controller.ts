@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
+import { StoreAnswersMemberDto } from './dto/store-answers-member.dto';
 import { StoreAnswersDto } from './dto/store-answers.dto';
 import { QuestionnairesService } from './questionnaires.service';
 
@@ -14,5 +15,10 @@ export class QuestionnairesController {
   @Post('submit-answers')
   submitAnswers(@Body() storeAnswerDto: StoreAnswersDto) {
     return this.questionnairesServices.storeAnswers(storeAnswerDto);
+  }
+
+  @Post('submit-answers-member')
+  submitAnswersMember(@Body() storeAnswerMemberDto: StoreAnswersMemberDto) {
+    return this.questionnairesServices.storeAnswersMember(storeAnswerMemberDto);
   }
 }

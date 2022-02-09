@@ -11,6 +11,11 @@ import {
   RespondentAnswer,
   RespondentAnswerSchema,
 } from '../../schemas/respondent-answer.schema';
+import { Member, MemberSchema } from '../../schemas/member.schema';
+import {
+  MemberAnswer,
+  MemberAnswerSchema,
+} from '../../schemas/member-answer.schema';
 import {
   LearningMethodRecommendation,
   LearningMethodRecommendationSchema,
@@ -22,6 +27,8 @@ import {
       { name: Questionnaire.name, schema: QuestionnaireSchema },
       { name: Respondent.name, schema: RespondentSchema },
       { name: RespondentAnswer.name, schema: RespondentAnswerSchema },
+      { name: Member.name, schema: MemberSchema },
+      { name: MemberAnswer.name, schema: MemberAnswerSchema },
       {
         name: LearningMethodRecommendation.name,
         schema: LearningMethodRecommendationSchema,

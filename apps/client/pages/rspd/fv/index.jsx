@@ -8,22 +8,10 @@ export default function Rspd() {
   useEffect(() => {
     const fetchRespondents = async () => {
       let respondents = await fetch(
-        process.env.NEXT_PUBLIC_APP_API_BASEURL + '/respondents'
+        process.env.NEXT_PUBLIC_APP_API_BASEURL + '/respondents/validation'
       )
         .then(res => res.json())
         .catch(err => err);
-
-      respondents = respondents.map(
-        ({ name, learningTypes, bestLearningTypes }) => {
-          return {
-            name,
-            ...learningTypes,
-            bestLearningTypesCode: bestLearningTypes
-              .map(bestLearningType => bestLearningType.at(0).toUpperCase())
-              .join(''),
-          };
-        }
-      );
 
       setRespondents(respondents);
     };
@@ -55,7 +43,12 @@ export default function Rspd() {
                 <td>Auditory</td>
                 <td>Read/write</td>
                 <td>Kinesthetic</td>
-                <td>Tipe gaya belajar</td>
+                <td>Hasil (pakar)</td>
+                <td>Visual</td>
+                <td>Auditory</td>
+                <td>Read/write</td>
+                <td>Kinesthetic</td>
+                <td>Hasil (aplikasi)</td>
               </tr>
             </thead>
             <tbody>
@@ -63,22 +56,36 @@ export default function Rspd() {
                 (
                   {
                     name,
-                    visual,
-                    auditory,
-                    readWrite,
-                    kinesthetic,
-                    bestLearningTypesCode,
+                    learningTypesPoint: {
+                      visual: visualPoint,
+                      auditory: auditoryPoint,
+                      readWrite: readWritePoint,
+                      kinesthetic: kinestheticPoint,
+                    },
+                    bestLearningTypesCodeBasedOnPoint,
+                    learningTypesFinalCf: {
+                      visual: visualFinalCf,
+                      auditory: auditoryFinalCf,
+                      readWrite: readWriteFinalCf,
+                      kinesthetic: kinestheticFinalCf,
+                    },
+                    bestLearningTypesCodeBasedOnFinalCf,
                   },
                   index
                 ) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{name}</td>
-                    <td>{visual}</td>
-                    <td>{auditory}</td>
-                    <td>{readWrite}</td>
-                    <td>{kinesthetic}</td>
-                    <td>{bestLearningTypesCode}</td>
+                    <td>{visualPoint}</td>
+                    <td>{auditoryPoint}</td>
+                    <td>{readWritePoint}</td>
+                    <td>{kinestheticPoint}</td>
+                    <td>{bestLearningTypesCodeBasedOnPoint}</td>
+                    <td>{visualFinalCf}</td>
+                    <td>{auditoryFinalCf}</td>
+                    <td>{readWriteFinalCf}</td>
+                    <td>{kinestheticFinalCf}</td>
+                    <td>{bestLearningTypesCodeBasedOnFinalCf}</td>
                   </tr>
                 )
               )}

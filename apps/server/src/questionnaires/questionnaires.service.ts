@@ -18,7 +18,13 @@ import {
   Respondent,
   RespondentDocument,
 } from '../../schemas/respondent.schema';
+import {
+  MemberAnswer,
+  MemberAnswerDocument,
+} from '../../schemas/member-answer.schema';
+import { Member, MemberDocument } from '../../schemas/member.schema';
 import * as mongoose from 'mongoose';
+import { StoreAnswersMemberDto } from './dto/store-answers-member.dto';
 
 @Injectable()
 export class QuestionnairesService {
@@ -30,6 +36,10 @@ export class QuestionnairesService {
     private respondentModel: Model<RespondentDocument>,
     @InjectModel(RespondentAnswer.name)
     private respondentAnswerModel: Model<RespondentAnswerDocument>,
+    @InjectModel(Member.name)
+    private memberModel: Model<MemberDocument>,
+    @InjectModel(MemberAnswer.name)
+    private memberAnswerModel: Model<MemberAnswerDocument>,
     @InjectModel(LearningMethodRecommendation.name)
     private learningMethodRecommendationModel: Model<LearningMethodRecommendationDocument>,
   ) {}
@@ -40,10 +50,56 @@ export class QuestionnairesService {
   }
 
   // simpan jawaban kuesioner
+  async storeAnswersMember(storeAnswerMemberDto: StoreAnswersMemberDto) {
+    const { member, questionnaireAnswers } = storeAnswerMemberDto;
+
+    // menghitung CF final tiap tipe gaya belajar
+    const learningTypesResult = this.scoreLearningTypes(questionnaireAnswers);
+
+    // menentukan tipe gaya belajar yang paling cocok
+    const bestLearningTypes = this.findTheBestLearningType(learningTypesResult);
+
+    // memilih rekomendasi cara belajar yang sesuai berdasarkan tipe gaya belajar
+    const learningMethodRecommendations = await this.recommendLearningMethods(
+      bestLearningTypes,
+    );
+
+    // menyimpan data member ke database
+    const updatedMember = await this.memberModel
+      .findByIdAndUpdate(
+        member._id,
+        {
+          learningTypes: learningTypesResult,
+          bestLearningTypes,
+          learningMethodRecommendations,
+        },
+        {
+          new: true,
+        },
+      )
+      .exec();
+
+    // menyimpan data jawaban member ke database
+    await this.memberAnswerModel
+      .findOneAndUpdate(
+        {
+          member: updatedMember._id,
+        },
+        { questionnaireAnswers },
+        {
+          upsert: true,
+        },
+      )
+      .exec();
+
+    return { result: updatedMember };
+  }
+
+  // simpan jawaban kuesioner
   async storeAnswers(storeAnswerDto: StoreAnswersDto) {
     const { respondent, questionnaireAnswers } = storeAnswerDto;
 
-    // menghitung CF tiap tipe gaya belajar
+    // menghitung CF final tiap tipe gaya belajar
     const learningTypesResult = this.scoreLearningTypes(questionnaireAnswers);
 
     // menentukan tipe gaya belajar yang paling cocok
@@ -55,7 +111,7 @@ export class QuestionnairesService {
     );
 
     // menyimpan data responden ke database
-    respondent._id = new mongoose.Types.ObjectId();
+    // respondent._id = new mongoose.Types.ObjectId();
     respondent.learningTypes = learningTypesResult;
     respondent.bestLearningTypes = bestLearningTypes;
     respondent.learningMethodRecommendations = learningMethodRecommendations;
@@ -64,38 +120,31 @@ export class QuestionnairesService {
     // menyimpan data jawaban responden ke database
     await this.respondentAnswerModel.create({
       _id: new mongoose.Types.ObjectId(),
-      respondent: respondent._id,
+      respondent: storedRespondent._id,
       questionnaireAnswers: questionnaireAnswers,
     });
 
     return { result: storedRespondent };
   }
 
-  private scoreLearningTypes(questionnaireAnswers: any[]): object {
-    const visual: number = this.calculateLearningTypeCf(
-      questionnaireAnswers,
-      'visual',
-    );
-    const auditory: number = this.calculateLearningTypeCf(
-      questionnaireAnswers,
-      'auditory',
-    );
-    const readWrite: number = this.calculateLearningTypeCf(
-      questionnaireAnswers,
-      'readWrite',
-    );
-    const kinesthetic: number = this.calculateLearningTypeCf(
-      questionnaireAnswers,
-      'kinesthetic',
-    );
+  scoreLearningTypes(questionnaireAnswers: any[]) {
+    const learningTypesFinalCF = {
+      visual: 0,
+      auditory: 0,
+      readWrite: 0,
+      kinesthetic: 0,
+    };
+    for (const key in learningTypesFinalCF) {
+      learningTypesFinalCF[key] = this.calculateLearningTypeCf(
+        questionnaireAnswers,
+        key,
+      );
+    }
 
-    return { visual, auditory, readWrite, kinesthetic };
+    return learningTypesFinalCF;
   }
 
-  private calculateLearningTypeCf(
-    questionnaireAnswers: any[],
-    type: string,
-  ): number {
+  calculateLearningTypeCf(questionnaireAnswers: any[], type: string) {
     // menghitung cf kombinasi (CF user * CF expert)
     const combinationCfs: number[] = questionnaireAnswers.map((question) => {
       const answer = question.answerChoices.filter(
@@ -111,11 +160,9 @@ export class QuestionnairesService {
     return oldCf;
   }
 
-  private findTheBestLearningType(learningTypesResult: object): string[] {
-    const cfs: number[] = [];
-    for (const key in learningTypesResult) {
-      cfs.push(learningTypesResult[key]);
-    }
+  findTheBestLearningType(learningTypesResult: object) {
+    const cfs: number[] = Object.values(learningTypesResult);
+
     const maxCf = Math.max(...cfs);
     const bestLearningTypes: string[] = [];
     for (const key in learningTypesResult) {
@@ -127,7 +174,7 @@ export class QuestionnairesService {
     return bestLearningTypes;
   }
 
-  private async recommendLearningMethods(bestLearningTypes: string[]) {
+  async recommendLearningMethods(bestLearningTypes: string[]) {
     // memilih rekomendasi cara belajar
     return await this.learningMethodRecommendationModel
       .find({ type: bestLearningTypes })

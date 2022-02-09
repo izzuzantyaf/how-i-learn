@@ -9,4 +9,9 @@ export class RespondentController {
   async findAll() {
     return await this.respondentService.findAll();
   }
+
+  @Get('validation')
+  async findAllWithPoints() {
+    return await this.respondentService.findAllWithPoints();
+  }
 }

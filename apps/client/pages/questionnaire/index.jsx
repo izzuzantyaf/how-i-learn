@@ -24,8 +24,8 @@ export async function getStaticProps(ctx) {
   const questionnaire = await fetch(
     process.env.NEXT_PUBLIC_API_BASEURL + "/questionnaires"
   )
-    .then((res) => res.json())
-    .catch((err) => err);
+    .then(res => res.json())
+    .catch(err => err);
 
   return {
     props: {
@@ -59,7 +59,7 @@ export async function getStaticProps(ctx) {
 export default function Questionnaire({ questionnaire, sliderMarks }) {
   const respondent = useRef({});
   const answeringProgress = useRef(
-    questionnaire.map((q) => {
+    questionnaire.map(q => {
       return {
         visual: 0,
         auditory: 0,
@@ -71,10 +71,11 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
   const [isSubmiting, setIsSubmiting] = useState(false);
 
   const [result, setResult] = useLocalStorage("result", {});
+  const [member, setMember] = useLocalStorage("member", null);
 
   const submitAnswers = async (respondent, answers) => {
     const questionnaireAnswers = questionnaire.map((question, index) => {
-      question.answerChoices = question.answerChoices.map((answer) => {
+      question.answerChoices = question.answerChoices.map(answer => {
         answer.userCf = answers[index][answer.type];
         return answer;
       });
@@ -97,14 +98,47 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
         body: JSON.stringify(payload),
       }
     )
-      .then((res) => res.json())
+      .then(res => res.json())
       // .then((data) => console.log(data))
-      .catch((err) => console.error(err));
+      .catch(err => console.error(err));
+  };
+
+  const submitAnswersMember = async (member, answers) => {
+    const questionnaireAnswers = questionnaire.map((question, index) => {
+      question.answerChoices = question.answerChoices.map(answer => {
+        answer.userCf = answers[index][answer.type];
+        return answer;
+      });
+      return question;
+    });
+
+    const payload = {
+      member,
+      questionnaireAnswers,
+    };
+
+    return await fetch(
+      process.env.NEXT_PUBLIC_API_BASEURL +
+        "/questionnaires/submit-answers-member",
+      {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      }
+    )
+      .then(res => res.json())
+      // .then((data) => console.log(data))
+      .catch(err => console.error(err));
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
     // console.log(answeringProgress.current);
+    if (window.localStorage.getItem("member"))
+      setMember(JSON.parse(window.localStorage.getItem("member")));
   }, []);
 
   return (
@@ -128,7 +162,7 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
           paddingY: "1.5rem",
         }}
       >
-        <FormDialogue respondent={respondent} />
+        {!member ? <FormDialogue respondent={respondent} /> : null}
 
         <div className="guide bg-yellow-100 rounded-lg py-4 px-6 text-yellow-700">
           <div className="font-bold text-2xl">Panduan</div>
@@ -162,13 +196,21 @@ export default function Questionnaire({ questionnaire, sliderMarks }) {
           // menyimpan jawaban user ketika tombol submit ditekan
           onClick={async () => {
             setIsSubmiting(true);
-            await submitAnswers(
-              respondent.current,
-              answeringProgress.current
-            ).then((data) => {
-              setResult(data.result);
-              setIsSubmiting(false);
-            });
+            if (member)
+              await submitAnswersMember(member, answeringProgress.current).then(
+                data => {
+                  setResult(data.result);
+                  setMember(data.result);
+                }
+              );
+            else
+              await submitAnswers(
+                respondent.current,
+                answeringProgress.current
+              ).then(data => {
+                setResult(data.result);
+              });
+            setIsSubmiting(false);
             window.location.href = window.location.origin + "/result";
           }}
         >
@@ -189,29 +231,30 @@ function FormDialogue({ respondent }) {
   const closeDialogue = () => setIsDialogueOpen(false);
 
   return (
-    <Dialog
-      open={isDialogueOpen}
-      // onClose={handleClose}
-      // onBackdropClick={() => {}}
-      // maxWidth="xs"
-    >
-      <DialogTitle sx={{ fontWeight: "bold" }}>Data responden</DialogTitle>
-      <DialogContent>
-        <TextField
-          autoFocus
-          margin="dense"
-          id="name"
-          name="name"
-          label="Nama"
-          type="text"
-          maxLength="200"
-          fullWidth
-          variant="outlined"
-          size="small"
-          color="secondary"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <TextField
+    <>
+      <Dialog
+        open={isDialogueOpen}
+        // onClose={handleClose}
+        // onBackdropClick={() => {}}
+        // maxWidth="xs"
+      >
+        <DialogTitle sx={{ fontWeight: "bold" }}>Data responden</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            name="name"
+            label="Nama"
+            type="text"
+            maxLength="200"
+            fullWidth
+            variant="outlined"
+            size="small"
+            color="secondary"
+            onChange={e => setName(e.target.value)}
+          />
+          {/* <TextField
           margin="dense"
           id="university"
           name="university"
@@ -250,27 +293,30 @@ function FormDialogue({ respondent }) {
           size="small"
           color="secondary"
           onChange={(e) => setAge(e.target.value)}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button href="/" color="black">
-          Batal
-        </Button>
-        <Button
-          variant="contained"
-          onClick={() => {
-            closeDialogue();
-            respondent.current.name = name;
-            respondent.current.university = university;
-            respondent.current.major = major;
-            respondent.current.age = age;
-          }}
-          disabled={name == "" || major == "" || age == null ? true : false}
-        >
-          OK
-        </Button>
-      </DialogActions>
-    </Dialog>
+        /> */}
+        </DialogContent>
+        <DialogActions>
+          <Button href="/" color="black">
+            Batal
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => {
+              closeDialogue();
+              respondent.current.name = name;
+              respondent.current.university = university;
+              respondent.current.major = major;
+              respondent.current.age = age;
+            }}
+            disabled={
+              name == "" /*|| major == "" || age == null*/ ? true : false
+            }
+          >
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 }
 
@@ -314,9 +360,9 @@ function QuestionAndAnswer({
                 min={0}
                 max={0.8}
                 valueLabelDisplay="auto"
-                valueLabelFormat={(value) =>
+                valueLabelFormat={value =>
                   sliderMarks[
-                    sliderMarks.findIndex((mark) => mark.value === value)
+                    sliderMarks.findIndex(mark => mark.value === value)
                   ].label
                 }
                 // getAriaValueText={valuetext}
@@ -328,7 +374,7 @@ function QuestionAndAnswer({
                       ? label
                       : "",
                 }))}
-                onChange={(e) => {
+                onChange={e => {
                   updateAnsweringProgress({
                     questionIndex,
                     answerType: type,
