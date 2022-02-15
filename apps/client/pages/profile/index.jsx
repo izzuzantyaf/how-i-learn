@@ -3,6 +3,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import LogoutOutlined from "@mui/icons-material/LogoutOutlined";
 import EditOutlined from "@mui/icons-material/EditOutlined";
+import HomeOutlined from "@mui/icons-material/HomeOutlined";
 import { useEffect, useState } from "react";
 
 export default function Profile() {
@@ -43,6 +44,15 @@ export default function Profile() {
         }}
       >
         <div className="flex justify-end gap-4">
+          <Button
+            variant="outlined"
+            href="/"
+            startIcon={<HomeOutlined />}
+            sx={{ alignSelf: "end" }}
+          >
+            Home
+          </Button>
+
           <Button
             variant="contained"
             href="/profile/edit"
