@@ -81,15 +81,28 @@ describe('UserController', () => {
     });
   });
 
+  describe('update()', () => {
+    let storedUser: User;
+    beforeAll(async () => {
+      const fakeUser = createFakeUser();
+      storedUser = (await controller.create(fakeUser)).data;
+    });
+    it('harus berhasil update user', async () => {});
+    it('harus gagal update user karena id tidak valid');
+    it('harus gagal karena nama melebihi batas maksimum');
+    it('harus gagal karena email tidak valid');
+    it('harus gagal karena password tidak sesuai syarat');
+  });
+
   describe('delete()', () => {
-    let userId: string;
+    let userId: string | number;
     beforeAll(async () => {
       const storedfakeUser = (await controller.create(createFakeUser()))
         .data as User;
-      userId = storedfakeUser._id;
+      userId = storedfakeUser.id;
     });
     it(`harus berhasil menghapus user dan return object bertipe ${SuccessfulResponse.name}`, async () => {
-      const response = await controller.delete(userId);
+      const response = await controller.delete(userId as string);
       expect(response).toBeInstanceOf(SuccessfulResponse);
     });
     it('harus gagal menghapus user karena id tidak valid', async () => {

@@ -1,6 +1,19 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
-import { ApiBody, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { CreateUserDto } from 'src/core/dtos/user.dto';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { CreateUserDto, UpdateUserDto } from 'src/core/dtos/user.dto';
 import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { User } from 'src/core/entities/user.entity';
 import { UserService } from 'src/use-cases/user/user.service';
@@ -36,6 +49,22 @@ export class UserController {
   async getAll() {
     const users = await this.userService.getAll();
     return new SuccessfulResponse('Sukses', users);
+  }
+
+  @Put()
+  @ApiBody({
+    type: UpdateUserDto,
+    description: 'Mengupdate user',
+    examples: {
+      user: {
+        value: { ...fakeUser, name: 'Jane Doe' },
+      },
+    },
+  })
+  @ApiOkResponse({ type: User })
+  async update(@Body() updateUserDto: UpdateUserDto) {
+    const updatedUser = await this.userService.update(updateUserDto);
+    return new SuccessfulResponse('Profil berhasil diupdate', updatedUser);
   }
 
   @Delete(':id')

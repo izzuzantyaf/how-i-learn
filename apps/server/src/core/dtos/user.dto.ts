@@ -10,9 +10,12 @@ export class CreateUserDto {
 }
 
 export class UpdateUserDto {
-  _id: string;
-  id: number;
+  @ApiProperty()
+  id: number | string;
+  @ApiProperty()
   name?: string;
+  @ApiProperty()
   email?: string;
+  @ApiProperty()
   password?: string;
 }
