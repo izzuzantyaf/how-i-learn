@@ -79,7 +79,7 @@ export class UserService {
     if (isEmpty(deletedUser)) {
       this.logger.log(
         `User deletion failed ${JSON.stringify({
-          id: deletedUser.id,
+          userId: deletedUser.id,
         })}`,
       );
       throw new BadRequestException(new ErrorResponse('Akun gagal dihapus'));
