@@ -17,6 +17,7 @@ import { CreateUserDto, UpdateUserDto } from 'src/core/dtos/user.dto';
 import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { User } from 'src/core/entities/user.entity';
 import { UserService } from 'src/use-cases/user/user.service';
+import { Logger } from '@nestjs/common/services';
 
 const fakeUser = {
   name: 'John Doe',
@@ -27,6 +28,8 @@ const fakeUser = {
 @ApiTags('user')
 @Controller('api/user')
 export class UserController {
+  private readonly logger = new Logger(UserController.name);
+
   constructor(private readonly userService: UserService) {}
 
   @Post()
@@ -41,6 +44,9 @@ export class UserController {
   })
   @ApiCreatedResponse({ type: User })
   async create(@Body() createUserDto: CreateUserDto) {
+    this.logger.debug(
+      `createUserDto ${JSON.stringify(createUserDto, undefined, 2)}`,
+    );
     const storedUser = await this.userService.create(createUserDto);
     return new SuccessfulResponse('Registrasi berhasil', storedUser);
   }
@@ -63,6 +69,9 @@ export class UserController {
   })
   @ApiOkResponse({ type: User })
   async update(@Body() updateUserDto: UpdateUserDto) {
+    this.logger.debug(
+      `updateUserDto ${JSON.stringify(updateUserDto, undefined, 2)}`,
+    );
     const updatedUser = await this.userService.update(updateUserDto);
     return new SuccessfulResponse('Profil berhasil diupdate', updatedUser);
   }

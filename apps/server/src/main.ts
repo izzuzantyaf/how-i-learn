@@ -5,6 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: true,
+    logger: process.env.NODE_ENV === 'production' ? ['log'] : ['debug'],
   });
   // if (process.env.NODE_ENV === 'development')
   //   app.useGlobalGuards(new JwtAuthGuard());

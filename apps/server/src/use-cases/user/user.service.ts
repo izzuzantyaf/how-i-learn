@@ -32,14 +32,19 @@ export class UserService {
     if (isNotEmpty(existingUser)) {
       this.logger.log(
         `Email is already registered to user ${JSON.stringify({
-          id: existingUser.id,
+          userId: existingUser.id,
         })}`,
       );
       throw new ConflictException(new ErrorResponse('Email sudah terdaftar'));
     }
     await newUser.hashPassword();
     const storedUser = await this.dataService.user.create(newUser);
-    this.logger.log(`User created ${JSON.stringify({ id: storedUser.id })}`);
+    this.logger.debug(
+      `Stored user ${JSON.stringify(storedUser, undefined, 2)}`,
+    );
+    this.logger.log(
+      `User created ${JSON.stringify({ userId: storedUser.id })}`,
+    );
     return storedUser;
   }
 
@@ -56,10 +61,16 @@ export class UserService {
         new ErrorResponse('Data user tidak valid', errors),
       );
     }
+    await user.hashPassword();
     const updatedUser = await this.dataService.user.update(
       user as UpdateUserDto,
     );
-    this.logger.log(`User updated ${JSON.stringify({ user: updatedUser.id })}`);
+    this.logger.debug(
+      `Updated user ${JSON.stringify(updatedUser, undefined, 2)}`,
+    );
+    this.logger.log(
+      `User updated ${JSON.stringify({ userId: updatedUser.id })}`,
+    );
     return updatedUser;
   }
 
@@ -91,7 +102,6 @@ export class UserService {
       );
       throw new BadRequestException(new ErrorResponse('Login gagal'));
     }
-    this.logger.log(`User signin success ${JSON.stringify({ user: user.id })}`);
     return user;
   }
 }
