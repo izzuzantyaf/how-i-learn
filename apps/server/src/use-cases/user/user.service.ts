@@ -3,9 +3,10 @@ import {
   ConflictException,
   Injectable,
   Logger,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { isEmpty, isNotEmpty } from 'class-validator';
-import { CreateUserDto, UpdateUserDto } from 'src/core/dtos/user.dto';
+import { CreateUserDto, UpdateUserDto } from 'src/use-cases/user/dto/user.dto';
 import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { DataServiceService } from 'src/database/data-service.service';
 import { UserFactoryService } from './user-factory.service';
@@ -20,10 +21,18 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
+    this.logger.debug(
+      `createUserDto ${JSON.stringify(createUserDto, undefined, 2)}`,
+    );
     const newUser = this.userFactory.create(createUserDto);
     const errors = newUser.validateProps();
     if (isNotEmpty(errors)) {
-      this.logger.log(`User data is not valid ${JSON.stringify(errors)}`);
+      this.logger.debug(
+        `User data is not valid ${JSON.stringify(errors, undefined, 2)}`,
+      );
+      this.logger.log(
+        `User creation failed ${JSON.stringify({ name: createUserDto.name })}`,
+      );
       throw new BadRequestException(
         new ErrorResponse('Data tidak valid', { errors }),
       );
@@ -34,6 +43,9 @@ export class UserService {
         `Email is already registered to user ${JSON.stringify({
           userId: existingUser.id,
         })}`,
+      );
+      this.logger.log(
+        `User creation failed ${JSON.stringify({ name: createUserDto.name })}`,
       );
       throw new ConflictException(new ErrorResponse('Email sudah terdaftar'));
     }
@@ -53,10 +65,18 @@ export class UserService {
   }
 
   async update(updateUserDto: UpdateUserDto) {
+    this.logger.debug(
+      `updateUserDto ${JSON.stringify(updateUserDto, undefined, 2)}`,
+    );
     const user = this.userFactory.create(updateUserDto);
     const errors = user.validateProps();
     if (isNotEmpty(errors)) {
-      this.logger.log(`User data is not valid ${JSON.stringify(errors)}`);
+      this.logger.debug(
+        `User data is not valid ${JSON.stringify(errors, undefined, 2)}`,
+      );
+      this.logger.log(
+        `User update failed ${JSON.stringify({ userId: updateUserDto.id })}`,
+      );
       throw new BadRequestException(
         new ErrorResponse('Data user tidak valid', errors),
       );
@@ -79,28 +99,33 @@ export class UserService {
     if (isEmpty(deletedUser)) {
       this.logger.log(
         `User deletion failed ${JSON.stringify({
-          userId: deletedUser.id,
+          userId: id,
         })}`,
       );
       throw new BadRequestException(new ErrorResponse('Akun gagal dihapus'));
     }
+    this.logger.log(
+      `User deleted ${JSON.stringify({ userId: deletedUser.id })}`,
+    );
     return deletedUser;
   }
 
-  async validateUser(email: string, password: string) {
+  async checkUserCredentials(email: string, password: string) {
     const user = await this.dataService.user.findByEmail(email);
+    this.logger.debug(
+      `User with email ${email} ${JSON.stringify(user, undefined, 2)}`,
+    );
     if (isEmpty(user)) {
-      this.logger.log(
-        `User signin failed ${JSON.stringify({ user: user.id })}`,
-      );
-      throw new BadRequestException(new ErrorResponse('Login gagal'));
+      this.logger.log('User credentials invalid');
+      throw new UnauthorizedException(new ErrorResponse('Login gagal'));
     }
     const isPasswordMatch = await user.verifyPassword(password);
+    this.logger.debug(
+      `Password match ${JSON.stringify({ isPasswordMatch }, undefined, 2)}`,
+    );
     if (!isPasswordMatch) {
-      this.logger.log(
-        `User signin failed ${JSON.stringify({ user: user.id })}`,
-      );
-      throw new BadRequestException(new ErrorResponse('Login gagal'));
+      this.logger.log('User credentials invalid');
+      throw new UnauthorizedException(new ErrorResponse('Login gagal'));
     }
     return user;
   }

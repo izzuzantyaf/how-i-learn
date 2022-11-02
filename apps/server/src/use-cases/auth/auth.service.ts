@@ -1,8 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { UserService } from '../user/user.service';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '@prisma/client';
 import { Logger } from '@nestjs/common/services';
+import { ErrorResponse } from 'src/core/dtos/response.dto';
+import { isJWT } from 'class-validator';
+import { UserService } from '../user/user.service';
+import { User } from '../user/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -14,12 +16,13 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string) {
-    return await this.userService.validateUser(email, password);
+    return this.userService.checkUserCredentials(email, password);
   }
 
-  async signin(user: User) {
-    delete user.password;
-    const payload: Omit<User, 'password'> = user;
+  async signin(email: string, password: string) {
+    const validatedUser = await this.validateUser(email, password);
+    delete validatedUser.password;
+    const payload: Omit<User, 'password'> = validatedUser;
     this.logger.debug(`Payload ${JSON.stringify(payload, undefined, 2)}`);
     const access_token = this.jwtService.sign(
       { ...payload },
@@ -31,7 +34,7 @@ export class AuthService {
       `Access token ${JSON.stringify({ access_token }, undefined, 2)}`,
     );
     this.logger.log(
-      `User signin successfully ${JSON.stringify({ userId: user.id })}`,
+      `User signin success ${JSON.stringify({ userId: validatedUser.id })}`,
     );
     return {
       access_token,
@@ -46,6 +49,9 @@ export class AuthService {
         2,
       )}`,
     );
+    if (!isJWT(accessToken)) {
+      throw new UnauthorizedException(new ErrorResponse('Token tidak valid'));
+    }
     const decodedPayload = this.jwtService.verify(accessToken, {
       secret: process.env.JWT_SECRET,
     });

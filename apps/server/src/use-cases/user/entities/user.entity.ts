@@ -97,8 +97,8 @@ export class User {
   }
 
   /**
-   * Determine all properties are satisfy the validation rule or not
-   * @returns True if all properties are satisfy the validation rule
+   * Do validation to all properties against the validation rules
+   * @returns True if all properties are satisfy the validation rules
    */
   validateProps() {
     const validationResults = [
@@ -124,7 +124,7 @@ export class User {
   }
 
   /**
-   * Compare user's password against user's password in the database
+   * Compare user password against user password in the database
    * @param passwordToBeVerified Plain text password intended to be verified
    * @returns True if plain text password is matched
    */

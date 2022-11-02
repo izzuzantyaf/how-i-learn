@@ -1,9 +1,9 @@
-import { User, UserDocument } from '../../../core/entities/user.entity';
-import { MongoGenericRepository } from './mongo-generic.repo';
+import { User, UserDocument } from '../entities/user.entity';
+import { MongoGenericRepository } from '../../../database/mongo/repos/mongo-generic.repo';
 import { Model } from 'mongoose';
 import { isEmpty } from 'class-validator';
-import { IUserRepo } from 'src/core/interfaces/user-repo.interface';
-import { UpdateUserDto } from 'src/core/dtos/user.dto';
+import { IUserRepo } from 'src/use-cases/user/interfaces/user-repo.interface';
+import { UpdateUserDto } from 'src/use-cases/user/dto/user.dto';
 
 export class UserMongoRepository
   extends MongoGenericRepository<User>

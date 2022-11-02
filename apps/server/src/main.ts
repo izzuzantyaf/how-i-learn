@@ -7,8 +7,6 @@ async function bootstrap() {
     cors: true,
     logger: process.env.NODE_ENV === 'production' ? ['log'] : ['debug'],
   });
-  // if (process.env.NODE_ENV === 'development')
-  //   app.useGlobalGuards(new JwtAuthGuard());
   if (process.env.NODE_ENV !== 'production') {
     const config = new DocumentBuilder()
       .setTitle('Presisi app OpenAPI')

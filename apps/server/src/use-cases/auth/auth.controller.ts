@@ -26,16 +26,16 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   async signin(@Request() req) {
     this.logger.debug(`Request.body ${JSON.stringify(req.body, undefined, 2)}`);
-    this.logger.debug(
-      `Request.user ${JSON.stringify({ user: req.user }, undefined, 2)}`,
+    const { access_token } = await this.authService.signin(
+      req.body.username,
+      req.body.password,
     );
-    const { access_token } = await this.authService.signin(req.user);
     return new SuccessfulResponse('Login berhasil', { access_token });
   }
 
   @Get('verify')
   @UseGuards(JwtAuthGuard)
-  async profile(@Request() req) {
+  async verify(@Request() req) {
     this.logger.debug(
       `Request.headers.authorization ${JSON.stringify(
         {

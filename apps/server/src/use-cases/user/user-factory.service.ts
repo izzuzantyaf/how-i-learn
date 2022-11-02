@@ -1,4 +1,7 @@
-import { User, UserConstructorProps } from 'src/core/entities/user.entity';
+import {
+  User,
+  UserConstructorProps,
+} from 'src/use-cases/user/entities/user.entity';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
