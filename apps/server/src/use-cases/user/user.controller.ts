@@ -72,7 +72,7 @@ export class UserController {
 
   @Delete(':id')
   async delete(@Param('id') id: string) {
-    await this.userService.delete(id);
+    await this.userService.delete(parseInt(id));
     return new SuccessfulResponse('Akun berhasil dihapus');
   }
 }

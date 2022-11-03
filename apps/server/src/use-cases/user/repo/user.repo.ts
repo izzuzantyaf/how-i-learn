@@ -20,9 +20,9 @@ export class UserRepository implements IUserRepo {
     return (await this.prisma.user.findMany()).map((user) => new User(user));
   }
 
-  async findById(id: number | string): Promise<User | null> {
+  async findById(id: number): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
-      where: { id: parseInt(id as string) },
+      where: { id },
     });
     return isNotEmpty(user) ? new User(user) : null;
   }
@@ -52,11 +52,11 @@ export class UserRepository implements IUserRepo {
     return isNotEmpty(updatedUser) ? new User(updatedUser) : null;
   }
 
-  async deleteById(id: number | string): Promise<User | null> {
+  async deleteById(id: number): Promise<User | null> {
     let deletedUser;
     try {
       deletedUser = await this.prisma.user.delete({
-        where: { id: parseInt(id as string) },
+        where: { id },
       });
     } catch (error) {
       this.logger.debug(error);

@@ -94,7 +94,7 @@ export class UserService {
     return updatedUser;
   }
 
-  async delete(id: string) {
+  async delete(id: number) {
     const deletedUser = await this.dataService.user.deleteById(id);
     if (isEmpty(deletedUser)) {
       this.logger.log(

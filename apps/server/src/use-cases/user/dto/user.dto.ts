@@ -11,7 +11,7 @@ export class CreateUserDto {
 
 export class UpdateUserDto {
   @ApiProperty()
-  id: number | string;
+  id: number;
   @ApiProperty()
   name?: string;
   @ApiProperty()

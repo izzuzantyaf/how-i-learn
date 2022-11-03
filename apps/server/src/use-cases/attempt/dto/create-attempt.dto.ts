@@ -1,1 +1,3 @@
-export class CreateAttemptDto {}
+export class CreateAttemptDto {
+  user_id?: string;
+}

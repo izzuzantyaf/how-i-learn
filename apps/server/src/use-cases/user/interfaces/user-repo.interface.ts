@@ -15,7 +15,7 @@ export interface IUserRepo {
    * Find a user by id
    * @param id User id
    */
-  findById(id: number | string): Promise<User | null>;
+  findById(id: number): Promise<User | null>;
   /**
    * Find a user by email
    * @param email User email
@@ -30,7 +30,7 @@ export interface IUserRepo {
    * Delete a user by id
    * @param id User id
    */
-  deleteById(id: number | string): Promise<User | null>;
+  deleteById(id: number): Promise<User | null>;
   /**
    * Delete a user by email
    * @param email User email

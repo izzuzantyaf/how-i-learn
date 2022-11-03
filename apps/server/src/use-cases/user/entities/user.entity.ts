@@ -5,8 +5,6 @@ import { Document } from 'mongoose';
 import {
   isEmail,
   isEmpty,
-  isMongoId,
-  isNotEmpty,
   isNotEmptyObject,
   isObject,
   isString,
@@ -18,16 +16,12 @@ import { ApiHideProperty } from '@nestjs/swagger';
 export type UserDocument = User & Document;
 
 export type UserConstructorProps = Partial<
-  Pick<
-    User,
-    '_id' | 'id' | 'name' | 'email' | 'password' | 'created_at' | 'updated_at'
-  >
+  Pick<User, 'id' | 'name' | 'email' | 'password' | 'created_at' | 'updated_at'>
 >;
 
 @Schema({ timestamps: true })
 export class User {
-  id?: number | string; // id or general database identifier
-  _id?: string; // id for MongoDB database
+  id?: number; // id or general database identifier
   @Prop({ required: true })
   name: string;
   @Exclude()
@@ -40,17 +34,8 @@ export class User {
   readonly updated_at?: Date | string;
 
   constructor(props?: UserConstructorProps) {
-    const { _id, id, name, email, password, created_at, updated_at } = props;
-    if (isMongoId(id)) {
-      this._id = id as string;
-      this.id = id;
-    } else {
-      this.id = id;
-    }
-    if (isNotEmpty(_id)) {
-      this._id = _id;
-      this.id = _id;
-    }
+    const { id, name, email, password, created_at, updated_at } = props;
+    this.id = id;
     this.name = name;
     this.email = email;
     this.password = password;
