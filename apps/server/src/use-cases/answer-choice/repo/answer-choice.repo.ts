@@ -4,8 +4,8 @@ import { AnswerChoice } from '../entities/answer-choice.entity';
 import { IAnswerChoiceRepo } from '../interfaces/answer-choice-repo.interface';
 
 @Injectable()
-export class AnswerChoiceRepo implements IAnswerChoiceRepo {
-  private readonly logger = new Logger(AnswerChoiceRepo.name);
+export class AnswerChoiceRepository implements IAnswerChoiceRepo {
+  private readonly logger = new Logger(AnswerChoiceRepository.name);
 
   constructor(private prisma: PrismaClientService) {}
 

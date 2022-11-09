@@ -1,7 +1,5 @@
 import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
 import {
   isEmail,
   isEmpty,
@@ -13,34 +11,22 @@ import {
 } from 'class-validator';
 import { ApiHideProperty } from '@nestjs/swagger';
 
-export type UserDocument = User & Document;
-
 export type UserConstructorProps = Partial<
   Pick<User, 'id' | 'name' | 'email' | 'password' | 'created_at' | 'updated_at'>
 >;
 
-@Schema({ timestamps: true })
 export class User {
   id?: number; // id or general database identifier
-  @Prop({ required: true })
   name: string;
   @Exclude()
-  @Prop({ required: true, unique: true })
   email: string;
   @ApiHideProperty()
-  @Prop({ required: true })
   password: string;
-  readonly created_at?: Date | string;
-  readonly updated_at?: Date | string;
+  created_at?: Date | string;
+  updated_at?: Date | string;
 
   constructor(props?: UserConstructorProps) {
-    const { id, name, email, password, created_at, updated_at } = props;
-    this.id = id;
-    this.name = name;
-    this.email = email;
-    this.password = password;
-    this.created_at = created_at ? new Date(created_at) : undefined;
-    this.updated_at = updated_at ? new Date(updated_at) : undefined;
+    Object.assign(this, props);
   }
 
   /**
@@ -109,7 +95,7 @@ export class User {
   }
 
   /**
-   * Compare user password against user password in the database
+   * Compare user plain password against the hashed password
    * @param passwordToBeVerified Plain text password intended to be verified
    * @returns True if plain text password is matched
    */
@@ -117,5 +103,3 @@ export class User {
     return await bcrypt.compare(passwordToBeVerified, this.password);
   }
 }
-
-export const UserSchema = SchemaFactory.createForClass(User);

@@ -14,7 +14,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CreateUserDto, UpdateUserDto } from 'src/use-cases/user/dto/user.dto';
-import { SuccessfulResponse } from 'src/core/dtos/response.dto';
+import { SuccessfulResponse } from 'src/lib/api-response';
 import { User } from 'src/use-cases/user/entities/user.entity';
 import { UserService } from 'src/use-cases/user/user.service';
 import { Logger } from '@nestjs/common/services';
@@ -26,7 +26,7 @@ const fakeUser = {
 };
 
 @ApiTags('user')
-@Controller('api/user')
+@Controller('api/users')
 export class UserController {
   private readonly logger = new Logger(UserController.name);
 

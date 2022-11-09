@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Logger } from '@nestjs/common/services';
-import { ErrorResponse } from 'src/core/dtos/response.dto';
+import { ErrorResponse } from 'src/lib/api-response';
 import { isJWT } from 'class-validator';
 import { UserService } from '../user/user.service';
 import { User } from '../user/entities/user.entity';

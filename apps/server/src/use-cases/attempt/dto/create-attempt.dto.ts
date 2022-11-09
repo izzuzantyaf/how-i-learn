@@ -1,3 +1,3 @@
 export class CreateAttemptDto {
-  user_id?: string;
+  user_id?: number;
 }

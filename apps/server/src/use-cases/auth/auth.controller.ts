@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { Logger } from '@nestjs/common/services';
 import { ApiTags } from '@nestjs/swagger';
-import { SuccessfulResponse } from 'src/core/dtos/response.dto';
+import { SuccessfulResponse } from 'src/lib/api-response';
 import { AuthService } from 'src/use-cases/auth/auth.service';
 import { JwtAuthGuard } from 'src/use-cases/auth/guards/jwt-auth.guard';
 import { LocalAuthGuard } from 'src/use-cases/auth/guards/local-auth-guard';

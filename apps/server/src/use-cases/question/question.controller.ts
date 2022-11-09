@@ -10,9 +10,9 @@ import {
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
-import { SuccessfulResponse } from 'src/core/dtos/response.dto';
+import { SuccessfulResponse } from 'src/lib/api-response';
 
-@Controller('api/question')
+@Controller('api/questions')
 export class QuestionController {
   constructor(private readonly questionService: QuestionService) {}
 

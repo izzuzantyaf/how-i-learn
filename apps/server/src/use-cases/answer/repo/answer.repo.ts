@@ -5,13 +5,24 @@ import { Answer } from '../entities/answer.entity';
 import { IAnswerRepo } from '../interfaces/answer-repo.interface';
 
 @Injectable()
-export class AnswerRepo implements IAnswerRepo {
-  private readonly logger = new Logger(AnswerRepo.name);
+export class AnswerRepository implements IAnswerRepo {
+  private readonly logger = new Logger(AnswerRepository.name);
 
   constructor(private prisma: PrismaClientService) {}
 
-  async createMany(data: CreateAnswerDto[]): Promise<Answer[]> {
-    const storedAnswers = await this.prisma.answer.createMany({ data });
-    throw new Error('Method not implemented.');
+  async createMany(data: CreateAnswerDto[]): Promise<Answer[] | number> {
+    const storedAnswers = await this.prisma.answer
+      .createMany({ data })
+      .then((result) => {
+        this.logger.debug(
+          `Answers stored ${JSON.stringify({ count: result.count })}`,
+        );
+        return result;
+      })
+      .catch((error) => {
+        this.logger.debug(`Storing answers failed ${JSON.stringify(error)}`);
+        return undefined;
+      });
+    return storedAnswers?.count;
   }
 }

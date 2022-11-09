@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { isEmpty, isNotEmpty } from 'class-validator';
 import { CreateUserDto, UpdateUserDto } from 'src/use-cases/user/dto/user.dto';
-import { ErrorResponse } from 'src/core/dtos/response.dto';
+import { ErrorResponse } from 'src/lib/api-response';
 import { DataServiceService } from 'src/database/data-service.service';
 import { UserFactoryService } from './user-factory.service';
 

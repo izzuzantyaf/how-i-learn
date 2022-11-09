@@ -1,6 +1,5 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { isNotEmpty } from 'class-validator';
-import { ErrorResponse } from 'src/core/dtos/response.dto';
 import { PrismaClientService } from 'src/database/prisma/prisma-client.service';
 import { CreateAttemptDto } from '../dto/create-attempt.dto';
 import { Attempt } from '../entities/attempt.entity';
@@ -13,20 +12,26 @@ export class AttemptRepository implements IAttemptRepo {
   constructor(private prisma: PrismaClientService) {}
 
   async create(data: CreateAttemptDto): Promise<Attempt> {
-    let createdAttempt;
-    try {
-      createdAttempt = await this.prisma.attempt.create({
+    const createdAttempt = await this.prisma.attempt
+      .create({
         data: {
-          user_id: parseInt(data.user_id as string),
+          user_id: data.user_id,
         },
+      })
+      .then((result) => {
+        this.logger.log(
+          `Attempt stored ${JSON.stringify({
+            id: result.id,
+            user_id: data.user_id,
+          })}`,
+        );
+        return result;
+      })
+      .catch((error) => {
+        this.logger.error(`Storing attempt failed ${JSON.stringify(error)}`);
+        throw error;
       });
-    } catch (error) {
-      this.logger.debug(error);
-      throw new BadRequestException(
-        new ErrorResponse('Attempt creation failed'),
-      );
-    }
-    return isNotEmpty(createdAttempt) ? new Attempt(createdAttempt) : null;
+    return new Attempt(createdAttempt);
   }
 
   async findById(id: string | number): Promise<Attempt> {

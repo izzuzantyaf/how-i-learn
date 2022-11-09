@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SuccessfulResponse } from 'src/core/dtos/response.dto';
+import { SuccessfulResponse } from 'src/lib/api-response';
 import { Question } from './entities/question.entity';
 import { QuestionController } from './question.controller';
 import { QuestionModule } from './question.module';

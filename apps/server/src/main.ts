@@ -4,7 +4,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    cors: true,
+    cors: true, //* enable CORS, so that the frontend can access the API
     logger: process.env.NODE_ENV === 'production' ? ['log'] : ['debug'],
   });
   if (process.env.NODE_ENV !== 'production') {

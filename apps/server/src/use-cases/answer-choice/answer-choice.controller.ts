@@ -1,9 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { AnswerChoiceService } from './answer-choice.service';
 import { CreateAnswerChoiceDto } from './dto/create-answer-choice.dto';
 import { UpdateAnswerChoiceDto } from './dto/update-answer-choice.dto';
 
-@Controller('answer-choice')
+@Controller('api/answer-choices')
 export class AnswerChoiceController {
   constructor(private readonly answerChoiceService: AnswerChoiceService) {}
 
@@ -23,7 +31,10 @@ export class AnswerChoiceController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAnswerChoiceDto: UpdateAnswerChoiceDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateAnswerChoiceDto: UpdateAnswerChoiceDto,
+  ) {
     return this.answerChoiceService.update(+id, updateAnswerChoiceDto);
   }
 

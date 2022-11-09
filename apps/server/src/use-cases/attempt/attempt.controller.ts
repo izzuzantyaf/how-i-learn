@@ -7,25 +7,17 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { SuccessfulResponse } from 'src/core/dtos/response.dto';
 import { AttemptService } from './attempt.service';
-import { AttemptSubmitDto } from './dto/attempt-submit.dto';
 import { CreateAttemptDto } from './dto/create-attempt.dto';
 import { UpdateAttemptDto } from './dto/update-attempt.dto';
 
-@Controller('api/attempt')
+@Controller('api/attempts')
 export class AttemptController {
   constructor(private readonly attemptService: AttemptService) {}
 
   @Post()
   async create(@Body() createAttemptDto: CreateAttemptDto) {
-    const createdAttempt = await this.attemptService.create(createAttemptDto);
-    return createdAttempt;
-  }
-
-  @Get('submit')
-  async submit(@Body() attemptSubmitDto: AttemptSubmitDto) {
-    return;
+    return await this.attemptService.create(createAttemptDto);
   }
 
   @Get()

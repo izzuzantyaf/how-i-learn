@@ -1,15 +1,31 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
+import { SuccessfulResponse } from 'src/lib/api-response';
 import { AnswerService } from './answer.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
+import { SubmitAnswerDto } from './dto/submit-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
 
-@Controller('answer')
+@Controller('api/answers')
 export class AnswerController {
   constructor(private readonly answerService: AnswerService) {}
 
   @Post()
   create(@Body() createAnswerDto: CreateAnswerDto) {
     return this.answerService.create(createAnswerDto);
+  }
+
+  @Post('submit')
+  async submit(@Body() submitAnswerDto: SubmitAnswerDto) {
+    const result = await this.answerService.submit(submitAnswerDto);
+    return new SuccessfulResponse('Jawaban berhasil disimpan', result);
   }
 
   @Get()
