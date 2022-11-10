@@ -3,7 +3,6 @@ import { SuccessfulResponse } from 'src/lib/api-response';
 import { LearningRecommendation } from '../learning-recommendation/entities/learning-recommendation.entity';
 import { AnswerController } from './answer.controller';
 import { AnswerModule } from './answer.module';
-import { SubmitAnswerDto } from './dto/submit-answer.dto';
 
 describe('AnswerController', () => {
   let controller: AnswerController;
@@ -483,9 +482,7 @@ describe('AnswerController', () => {
     };
 
     it(`should return object instance of ${SuccessfulResponse.name} when user_id is present`, async () => {
-      const result = await controller.submit(
-        submitAnswerDto as SubmitAnswerDto,
-      );
+      const result = await controller.submit(submitAnswerDto);
       expect(result).toBeInstanceOf(SuccessfulResponse);
       const { bestLearningStyle, learningRecommendations } = result.data;
       expect(typeof bestLearningStyle === 'string').toBeTruthy();
@@ -499,7 +496,7 @@ describe('AnswerController', () => {
       const result = await controller.submit({
         ...submitAnswerDto,
         user_id: undefined,
-      } as SubmitAnswerDto);
+      });
       expect(result).toBeInstanceOf(SuccessfulResponse);
       const { bestLearningStyle, learningRecommendations } = result.data;
       expect(typeof bestLearningStyle === 'string').toBeTruthy();
