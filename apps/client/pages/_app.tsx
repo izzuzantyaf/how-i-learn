@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
           components: {
             Button: {
               defaultProps: {
-                size: "sm",
+                size: "md",
                 radius: "md",
               },
             },
