@@ -1,6 +1,7 @@
 import { Button } from "@mantine/core";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import heroPic from "../public/img/Saly-25.png";
 
 export default function HomePage() {
@@ -17,19 +18,23 @@ export default function HomePage() {
 
       <header className="px-[16px] py-[16px]">
         <div className="my-container flex items-center">
-          <h1 className="text-2xl font-medium">Presisi</h1>
+          <Link href="/" className="brand text-2xl font-black text-gray-500">
+            Presisi
+          </Link>
           <div className="spacer grow"></div>
-          <Button className="mr-[16px]" variant="outline">
+          <Button className="mr-[16px]" variant="light">
             Masuk
           </Button>
-          <Button>Buat akun</Button>
+          <Link href="/signup">
+            <Button>Buat akun</Button>
+          </Link>
         </div>
       </header>
 
       <section className="hero px-[16px] mt-[48px]">
-        <div className="my-container grid sm:grid-cols-2 gap-4">
-          <div className="headline ">
-            <h1 className="hero-title font-extrabold text-4xl md:text-5xl">
+        <div className="my-container grid sm:grid-cols-2 gap-12">
+          <div className="headline">
+            <h1 className="hero-title font-extrabold text-4xl lg:text-5xl">
               Temukan cara belajar terbaik untukmu
             </h1>
             <p className="description mt-[24px] text-gray-500 text-xl">
@@ -38,13 +43,13 @@ export default function HomePage() {
             </p>
             <Button className="mt-[32px]">Coba sekarang</Button>
           </div>
-          <div className="illustration hidden sm:block self-center">
+          <div className="illustration self-center order1">
             <Image src={heroPic} alt="Hero section image"></Image>
           </div>
         </div>
       </section>
 
-      <footer className="px-[16px] mt-[64px]">
+      <footer className="px-[16px] mt-[64px] mb-[32px]">
         <div className="my-container text-center text-gray-500">
           Created by{" "}
           <a
