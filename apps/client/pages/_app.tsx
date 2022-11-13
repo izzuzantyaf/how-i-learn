@@ -1,6 +1,9 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { MantineProvider } from "@mantine/core";
+import { Inter } from "@next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -8,7 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <MantineProvider
         withGlobalStyles
         theme={{
-          primaryColor: "yellow",
+          primaryColor: "orange",
           components: {
             Button: {
               defaultProps: {
@@ -19,7 +22,9 @@ export default function App({ Component, pageProps }: AppProps) {
           },
         }}
       >
-        <Component {...pageProps} />
+        <main className={inter.className}>
+          <Component {...pageProps} />
+        </main>
       </MantineProvider>
     </>
   );

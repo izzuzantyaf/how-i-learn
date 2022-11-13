@@ -37,3 +37,16 @@ video {
   max-width: 100%;
   height: auto;
 }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+/* Normalize CSS end */
+
+/* My styles */
+@layer base {
+  .my-container {
+    @apply container mx-auto sm:max-w-screen-sm md:max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-xl;
+  }
+}

@@ -4,6 +4,7 @@ specifiers:
   '@emotion/react': ^11.10.5
   '@mantine/core': ^5.7.1
   '@mantine/hooks': ^5.7.1
+  '@next/font': ^13.0.3
   '@types/node': 18.11.9
   '@types/react': 18.0.25
   '@types/react-dom': 18.0.8
@@ -21,6 +22,7 @@ dependencies:
   '@emotion/react': 11.10.5_fan5qbzahqtxlm5dzefqlqx5ia
   '@mantine/core': 5.7.1_etrvyeh76ry4n4cxjc37hheh7y
   '@mantine/hooks': 5.7.1_react@18.2.0
+  '@next/font': 13.0.3
   '@types/node': 18.11.9
   '@types/react': 18.0.25
   '@types/react-dom': 18.0.8
@@ -334,6 +336,10 @@ packages:
     resolution: {integrity: sha512-W+fIIIaFU7Kct7Okx91C7XDRGolv/w2RUenX2yZFeeNVcuVzDIKUcNmckrYbYcwrNQUSXmtwrs3g8xwast0YtA==}
     dependencies:
       glob: 7.1.7
+    dev: false
+
+  /@next/font/13.0.3:
+    resolution: {integrity: sha512-J3bZooNyhzhRshEJZlc4Kagfx6f8LQkPdCsP0nZm63dAUaoeMaQRidFFhbL68WZ3S5XleVfpGYypZuBSyJqYtw==}
     dev: false
 
   /@next/swc-android-arm-eabi/13.0.2:
