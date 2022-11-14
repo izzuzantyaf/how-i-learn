@@ -41,7 +41,9 @@ export default function HomePage() {
               Sistem rekomendasi cara belajar berdasarkan model VARK menggunakan
               algoritma Certainty Factor
             </p>
-            <Button className="mt-[32px]">Coba sekarang</Button>
+            <Link href="/quiz">
+              <Button className="mt-[32px]">Coba sekarang</Button>
+            </Link>
           </div>
           <div className="illustration self-center order1">
             <Image src={heroPic} alt="Hero section image"></Image>

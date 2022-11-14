@@ -4,7 +4,7 @@ import { IUserRepo } from 'src/use-cases/user/interfaces/user-repo.interface';
 import { User } from 'src/use-cases/user/entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from 'src/use-cases/user/dto/user.dto';
 import { isNotEmpty } from 'class-validator';
-import { Prisma } from '@prisma/client';
+// import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UserRepository implements IUserRepo {
@@ -44,7 +44,7 @@ export class UserRepository implements IUserRepo {
         where: {
           id: newUser.id as number,
         },
-        data: newUser as Prisma.UserUpdateInput,
+        data: newUser,
       });
     } catch (error) {
       this.logger.debug(error);
