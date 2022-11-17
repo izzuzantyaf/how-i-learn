@@ -28,8 +28,9 @@ const useGuideModalStore = create<{
 }));
 
 export default function QuizPage() {
-  const questionService = useQuestionService();
-  const { data, isLoading, isSuccess } = questionService.getAll();
+  const { getAll } = useQuestionService();
+  const { data: response, isLoading, isError } = getAll();
+  const questions = response.data;
   const [counter, setCounter] = useState(0);
   const MARKS = [
     { value: 0, label: "Tidak" },
@@ -43,7 +44,9 @@ export default function QuizPage() {
   const closeGuideModal = useGuideModalStore(state => state.close);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <p>Loading...</p>;
+
+  if (isError) return <p>Something went wrong.</p>;
 
   return (
     <>
@@ -83,7 +86,7 @@ export default function QuizPage() {
             withCloseButton={false}
             centered
           >
-            <Text> Jika kamu keluar, maka jawabanmu tidak akan tersimpan</Text>
+            <Text>Jika kamu keluar, maka jawabanmu tidak akan tersimpan</Text>
             <Flex gap="8px" justify="end" style={{ marginTop: "24px" }}>
               <Button
                 variant="light"
@@ -100,10 +103,10 @@ export default function QuizPage() {
 
           <section className="top flex items-center gap-4">
             <Text className="font-bold">{`${counter + 1}/${
-              data.data.length
+              questions.length
             }`}</Text>
             <Progress
-              value={((counter + 1) / data.data.length) * 100}
+              value={((counter + 1) / questions.length) * 100}
               size="lg"
               radius="md"
               className="grow"
@@ -133,11 +136,11 @@ export default function QuizPage() {
           </section>
 
           <div className="question grow flex items-center">
-            <Text component="p">{data.data[counter]?.question}</Text>
+            <Text component="p">{questions[counter]?.question}</Text>
           </div>
 
           <div className="answer-choices grid md:grid-cols-2 gap-4 items-end">
-            {data.data[counter]?.answer_choices.map(
+            {questions[counter]?.answer_choices.map(
               (choice: any, index: number) => (
                 <div key={index}>
                   <Text component="p">{choice.answer}</Text>
@@ -171,10 +174,10 @@ export default function QuizPage() {
             >
               Kembali
             </Button>
-            {counter == data.data.length - 1 ? (
+            {counter == questions.length - 1 ? (
               <Button
                 leftIcon={<FontAwesomeIcon icon="check" />}
-                disabled={counter != data.data.length - 1}
+                disabled={counter != questions.length - 1}
               >
                 Submit
               </Button>
@@ -183,7 +186,7 @@ export default function QuizPage() {
                 variant="light"
                 rightIcon={<FontAwesomeIcon icon="arrow-right" />}
                 onClick={() => setCounter(current => current + 1)}
-                disabled={counter == data.data.length - 1}
+                disabled={counter == questions.length - 1}
               >
                 Lanjut
               </Button>
