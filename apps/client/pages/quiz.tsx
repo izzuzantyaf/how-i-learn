@@ -29,8 +29,7 @@ const useGuideModalStore = create<{
 
 export default function QuizPage() {
   const { getAll } = useQuestionService();
-  const { data: response, isLoading, isError } = getAll();
-  const questions = response.data;
+  const { questions, isLoading, isError } = getAll();
   const [counter, setCounter] = useState(0);
   const MARKS = [
     { value: 0, label: "Tidak" },

@@ -7,7 +7,13 @@ function getAll() {
     queryKey: ["questions"],
     queryFn: () => fetchToServer({ path: ApiRoute.QUESTION }),
   });
-  return { isLoading, isError, isSuccess, data };
+  return {
+    isLoading,
+    isError,
+    isSuccess,
+    response: data,
+    questions: data.data,
+  };
 }
 export function useQuestionService() {
   return {
