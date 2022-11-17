@@ -8,12 +8,22 @@ import {
   faArrowLeft,
   faArrowRight,
   faCheck,
+  faEllipsisVertical,
+  faInfo,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 const inter = Inter({ subsets: ["latin"] });
 const queryClient = new QueryClient();
 
-library.add(faArrowRight, faArrowLeft, faCheck);
+library.add(
+  faArrowRight,
+  faArrowLeft,
+  faCheck,
+  faInfo,
+  faXmark,
+  faEllipsisVertical
+);
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -22,8 +32,22 @@ export default function App({ Component, pageProps }: AppProps) {
         <MantineProvider
           withGlobalStyles
           theme={{
+            fontFamily: "__Inter_9c9965, __Inter_Fallback_9c9965;",
+            headings: {
+              fontFamily: "__Inter_9c9965, __Inter_Fallback_9c9965;",
+            },
             primaryColor: "orange",
             components: {
+              Title: {
+                defaultProps: {
+                  color: "dark",
+                },
+              },
+              Text: {
+                defaultProps: {
+                  color: "dark",
+                },
+              },
               Button: {
                 defaultProps: {
                   size: "md",
@@ -40,6 +64,22 @@ export default function App({ Component, pageProps }: AppProps) {
                 defaultProps: {
                   size: "md",
                   radius: "md",
+                },
+              },
+              Menu: {
+                defaultProps: {
+                  radius: "md",
+                },
+              },
+              Modal: {
+                defaultProps: {
+                  radius: "md",
+                  overlayBlur: 3,
+                },
+                styles: {
+                  title: {
+                    fontWeight: "bold",
+                  },
                 },
               },
             },

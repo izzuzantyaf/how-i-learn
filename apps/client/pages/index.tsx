@@ -1,7 +1,8 @@
-import { Button } from "@mantine/core";
+import { Button, Title, Text } from "@mantine/core";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { Route } from "../lib/constant";
 import heroPic from "../public/img/Saly-25.png";
 
 export default function HomePage() {
@@ -18,14 +19,19 @@ export default function HomePage() {
 
       <header className="px-[16px] py-[16px]">
         <div className="my-container flex items-center">
-          <Link href="/" className="brand text-2xl font-black text-gray-500">
+          <Text
+            component={Link}
+            href={Route.HOME}
+            className="brand text-2xl font-black"
+            color="gray"
+          >
             Presisi
-          </Link>
+          </Text>
           <div className="spacer grow"></div>
           <Button className="mr-[16px]" variant="light">
             Masuk
           </Button>
-          <Link href="/signup">
+          <Link href={Route.SIGNUP}>
             <Button>Buat akun</Button>
           </Link>
         </div>
@@ -34,25 +40,25 @@ export default function HomePage() {
       <section className="hero px-[16px] mt-[48px]">
         <div className="my-container grid sm:grid-cols-2 gap-12">
           <div className="headline">
-            <h1 className="hero-title font-extrabold text-4xl lg:text-5xl">
+            <Title className="hero-title font-black text-4xl lg:text-5xl">
               Temukan cara belajar terbaik untukmu
-            </h1>
-            <p className="description mt-[24px] text-gray-500 text-xl">
+            </Title>
+            <Text className="description mt-[24px] text-xl" color="gray">
               Sistem rekomendasi cara belajar berdasarkan model VARK menggunakan
               algoritma Certainty Factor
-            </p>
-            <Link href="/quiz">
+            </Text>
+            <Link href={Route.QUIZ}>
               <Button className="mt-[32px]">Coba sekarang</Button>
             </Link>
           </div>
           <div className="illustration self-center order1">
-            <Image src={heroPic} alt="Hero section image"></Image>
+            <Image src={heroPic} alt="Hero section image" priority></Image>
           </div>
         </div>
       </section>
 
       <footer className="px-[16px] mt-[64px] mb-[32px]">
-        <div className="my-container text-center text-gray-500">
+        <Text className="my-container text-center" color="gray">
           Created by{" "}
           <a
             href="https://izzuzantyaf.space"
@@ -62,7 +68,7 @@ export default function HomePage() {
           >
             izzuzantyaf
           </a>
-        </div>
+        </Text>
       </footer>
     </>
   );

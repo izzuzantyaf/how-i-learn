@@ -36,12 +36,6 @@ export default function SignUpPage() {
               placeholder="Password"
               required
             />
-            <PasswordInput
-              label="Konfirmasi password"
-              name="confirm_password"
-              placeholder="Tulis ulang password"
-              required
-            />
           </form>
           <Button form="user_signup" className="w-full mt-[16px]">
             Buat akun
