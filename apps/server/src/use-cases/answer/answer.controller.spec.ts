@@ -1,18 +1,23 @@
+import { faker } from '@faker-js/faker';
 import { Test, TestingModule } from '@nestjs/testing';
 import { SuccessfulResponse } from 'src/lib/api-response';
 import { LearningRecommendation } from '../learning-recommendation/entities/learning-recommendation.entity';
+import { UserController } from '../user/user.controller';
+import { UserModule } from '../user/user.module';
 import { AnswerController } from './answer.controller';
 import { AnswerModule } from './answer.module';
 
 describe('AnswerController', () => {
   let controller: AnswerController;
+  let userController: UserController;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [AnswerModule],
+      imports: [AnswerModule, UserModule],
     }).compile();
 
     controller = module.get<AnswerController>(AnswerController);
+    userController = module.get<UserController>(UserController);
   });
 
   it('should be defined', () => {
@@ -20,8 +25,19 @@ describe('AnswerController', () => {
   });
 
   describe('submit()', () => {
+    let user_id: number;
+    beforeAll(async () => {
+      user_id = (
+        await userController.create({
+          name: faker.name.fullName(),
+          email: faker.internet.email(),
+          password: faker.internet.password(),
+        })
+      ).data.id;
+    });
+
     const submitAnswerDto = {
-      user_id: 2,
+      user_id: undefined,
       answersWithUserCf: [
         {
           id: 1,
@@ -482,7 +498,10 @@ describe('AnswerController', () => {
     };
 
     it(`should return object instance of ${SuccessfulResponse.name} when user_id is present`, async () => {
-      const result = await controller.submit(submitAnswerDto);
+      const result = await controller.submit({
+        ...submitAnswerDto,
+        user_id: user_id,
+      });
       expect(result).toBeInstanceOf(SuccessfulResponse);
       const { bestLearningStyle, learningRecommendations } = result.data;
       expect(typeof bestLearningStyle === 'string').toBeTruthy();
