@@ -64,8 +64,6 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
   deploy-to-railway:
     needs: db-migration
-    runs-on: ubuntu-latest
-    environment: development
     uses: ./.github/workflows/railway-deploy.yml
     with:
       environment: development
