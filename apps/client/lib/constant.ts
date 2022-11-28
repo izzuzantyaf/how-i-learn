@@ -7,4 +7,5 @@ export enum Route {
 
 export enum ApiRoute {
   QUESTION = "/questions",
+  SUBMIT_ANSWER = "/answers/submit",
 }

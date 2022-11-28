@@ -16,6 +16,19 @@ export class AnswerService {
   }
 
   async submit(submitAnswerDto: SubmitAnswerDto) {
+    this.logger.debug(
+      `sample of submitAnswerDto: ${JSON.stringify(
+        {
+          user_id: submitAnswerDto.user_id,
+          sample_of_answersWithUserCf: submitAnswerDto.answersWithUserCf.slice(
+            0,
+            1,
+          ),
+        },
+        undefined,
+        2,
+      )}`,
+    );
     const { user_id, answersWithUserCf } = submitAnswerDto;
     const newAttempt = await this.dataService.attempt.create({ user_id });
     const learningTypesFinalCF = await this.calculateLearningTypeCf(

@@ -3,8 +3,9 @@ import { ApiRoute } from "../lib/constant";
 import { fetchToServer } from "../lib/helpers/fetcher-to-server.helper";
 
 function getAll() {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { isLoading, isError, isSuccess, data } = useQuery({
-    queryKey: ["questions"],
+    queryKey: ["questions", ApiRoute.QUESTION],
     queryFn: () => fetchToServer({ path: ApiRoute.QUESTION }),
   });
   return {
@@ -12,9 +13,9 @@ function getAll() {
     isError,
     isSuccess,
     response: data,
-    questions: data.data,
   };
 }
+
 export function useQuestionService() {
   return {
     getAll,

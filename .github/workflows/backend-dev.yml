@@ -1,0 +1,73 @@
+name: Backend (development)
+
+on:
+  push:
+    branches-ignore:
+      - main
+    paths:
+      - apps/server/**
+
+jobs:
+  test:
+    name: Testing
+    runs-on: ubuntu-latest
+    environment: testing
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - name: Install dependencies
+        working-directory: apps/server
+        run: pnpm install
+      - name: Reset database
+        working-directory: apps/server
+        run: pnpm prisma migrate reset --force
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - name: Run tests
+        working-directory: apps/server
+        run: pnpm test
+        env:
+          NODE_ENV: ${{ secrets.NODE_ENV }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+  db-migration:
+    needs: test
+    name: Database migration
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 16
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - name: Install dependencies
+        working-directory: apps/server
+        run: pnpm install
+      - name: Run migration
+        working-directory: apps/server
+        run: pnpm prisma migrate dev
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  deploy-to-railway:
+    needs: db-migration
+    runs-on: ubuntu-latest
+    environment: development
+    uses: ./.github/workflows/railway-deploy.yml
+    with:
+      environment: development
+      working-directory: apps/server
+    secrets: inherit
