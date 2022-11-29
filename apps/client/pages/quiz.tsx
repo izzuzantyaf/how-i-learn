@@ -74,8 +74,15 @@ export default function QuizPage() {
     });
   }
 
-  useEffect(() => {
+  /**
+   * Scroll up to the top of the answer choices container
+   */
+  function scrollUpAnswerChoicesView() {
     answerChoicesContainer.current?.scrollTo(0, 0);
+  }
+
+  useEffect(() => {
+    scrollUpAnswerChoicesView();
   }, [counter]);
 
   useEffect(() => {
