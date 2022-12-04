@@ -8,10 +8,12 @@ import {
   faArrowLeft,
   faArrowRight,
   faCheck,
+  faCircleInfo,
   faEllipsisVertical,
   faInfo,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import { NotificationsProvider } from "@mantine/notifications";
 
 const inter = Inter({ subsets: ["latin"] });
 const queryClient = new QueryClient();
@@ -22,7 +24,8 @@ library.add(
   faCheck,
   faInfo,
   faXmark,
-  faEllipsisVertical
+  faEllipsisVertical,
+  faCircleInfo
 );
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -82,12 +85,24 @@ export default function App({ Component, pageProps }: AppProps) {
                   },
                 },
               },
+              Notification: {
+                defaultProps: {
+                  radius: "md",
+                  color: "blue",
+                },
+              },
             },
           }}
         >
-          <main className={inter.className}>
-            <Component {...pageProps} />
-          </main>
+          <NotificationsProvider
+            autoClose={5000}
+            limit={5}
+            position="bottom-center"
+          >
+            <main className={inter.className}>
+              <Component {...pageProps} />
+            </main>
+          </NotificationsProvider>
         </MantineProvider>
       </QueryClientProvider>
     </>
