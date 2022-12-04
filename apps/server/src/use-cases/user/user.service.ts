@@ -34,7 +34,7 @@ export class UserService {
         `User creation failed ${JSON.stringify({ name: createUserDto.name })}`,
       );
       throw new BadRequestException(
-        new ErrorResponse('Data tidak valid', { errors }),
+        new ErrorResponse('Data tidak valid', errors),
       );
     }
     const existingUser = await this.dataService.user.findByEmail(newUser.email);
