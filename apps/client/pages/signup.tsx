@@ -6,11 +6,6 @@ export default function SignUpPage() {
     <>
       <Head>
         <title>Buat akun | Presisi</title>
-        <meta
-          name="description"
-          content="Rekomendasi cara belajar berbasis metode VARK"
-        />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className="signup-page px-[16px] min-h-screen flex flex-col justify-center">

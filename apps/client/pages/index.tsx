@@ -10,11 +10,6 @@ export default function HomePage() {
     <>
       <Head>
         <title>Presisi</title>
-        <meta
-          name="description"
-          content="Rekomendasi cara belajar berbasis metode VARK"
-        />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <header className="px-[16px] py-[16px]">
