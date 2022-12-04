@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { AwsModule } from './aws.module';
 import { AwsService } from './aws.service';
 
 describe('AwsService', () => {
@@ -6,7 +7,7 @@ describe('AwsService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AwsService],
+      imports: [AwsModule],
     }).compile();
 
     service = module.get<AwsService>(AwsService);
