@@ -7,12 +7,14 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { SuccessfulResponse } from 'src/lib/api-response';
 import { AnswerService } from './answer.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { SubmitAnswerDto } from './dto/submit-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
 
+@ApiTags('answer')
 @Controller('api/answers')
 export class AnswerController {
   constructor(private readonly answerService: AnswerService) {}

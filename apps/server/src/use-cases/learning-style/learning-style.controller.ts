@@ -10,7 +10,9 @@ import {
 import { LearningStyleService } from './learning-style.service';
 import { CreateLearningStyleDto } from './dto/create-learning-style.dto';
 import { UpdateLearningStyleDto } from './dto/update-learning-style.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('learning-style')
 @Controller('api/learning-styles')
 export class LearningStyleController {
   constructor(private readonly learningStyleService: LearningStyleService) {}

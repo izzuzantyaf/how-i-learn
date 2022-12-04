@@ -11,7 +11,9 @@ import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 import { SuccessfulResponse } from 'src/lib/api-response';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('question')
 @Controller('api/questions')
 export class QuestionController {
   constructor(private readonly questionService: QuestionService) {}

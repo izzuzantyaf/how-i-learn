@@ -7,10 +7,12 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AttemptResultService } from './attempt-result.service';
 import { CreateAttemptResultDto } from './dto/create-attempt-result.dto';
 import { UpdateAttemptResultDto } from './dto/update-attempt-result.dto';
 
+@ApiTags('attempt-result')
 @Controller('api/attempt-results')
 export class AttemptResultController {
   constructor(private readonly attemptResultService: AttemptResultService) {}

@@ -54,6 +54,12 @@ export class UserController {
     return new SuccessfulResponse('Sukses', users);
   }
 
+  @Get(':id')
+  async getById(@Param('id') id: string) {
+    const user = await this.userService.findById(parseInt(id));
+    return new SuccessfulResponse('Sukses', user);
+  }
+
   @Put()
   @ApiBody({
     type: UpdateUserDto,

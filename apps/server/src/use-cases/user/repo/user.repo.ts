@@ -21,9 +21,12 @@ export class UserRepository implements IUserRepo {
   }
 
   async findById(id: number): Promise<User | null> {
-    const user = await this.prisma.user.findUnique({
-      where: { id },
-    });
+    let user;
+    try {
+      user = await this.prisma.user.findUnique({ where: { id } });
+    } catch (error) {
+      this.logger.debug(error);
+    }
     return isNotEmpty(user) ? new User(user) : null;
   }
 

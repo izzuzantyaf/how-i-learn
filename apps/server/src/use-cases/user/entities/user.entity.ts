@@ -1,6 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import { Exclude } from 'class-transformer';
 import {
+  isDate,
   isEmail,
   isEmpty,
   isNotEmptyObject,
@@ -22,6 +23,7 @@ export class User {
   email: string;
   @ApiHideProperty()
   password: string;
+  email_confirmed?: Date | string;
   created_at?: Date | string;
   updated_at?: Date | string;
 
@@ -101,5 +103,13 @@ export class User {
    */
   async verifyPassword(passwordToBeVerified: string) {
     return await bcrypt.compare(passwordToBeVerified, this.password);
+  }
+
+  /**
+   *
+   * @returns True if email_confirmed property is a date
+   */
+  isEmailConfirmed() {
+    return isDate(this.email_confirmed);
   }
 }

@@ -64,6 +64,18 @@ export class UserService {
     return await this.dataService.user.getAll();
   }
 
+  async findById(id: number) {
+    this.logger.debug(
+      `Find user by id ${JSON.stringify({ id }, undefined, 2)}`,
+    );
+    const user = await this.dataService.user.findById(id);
+    if (!user) {
+      this.logger.log(`User not found ${JSON.stringify({ id }, undefined, 2)}`);
+      throw new BadRequestException(new ErrorResponse('User tidak ditemukan'));
+    }
+    return user;
+  }
+
   async update(updateUserDto: UpdateUserDto) {
     this.logger.debug(
       `updateUserDto ${JSON.stringify(updateUserDto, undefined, 2)}`,

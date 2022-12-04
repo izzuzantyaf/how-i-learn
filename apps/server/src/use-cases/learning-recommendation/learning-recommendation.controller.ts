@@ -10,7 +10,9 @@ import {
 import { LearningRecommendationService } from './learning-recommendation.service';
 import { CreateLearningRecommendationDto } from './dto/create-learning-recommendation.dto';
 import { UpdateLearningRecommendationDto } from './dto/update-learning-recommendation.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('learning-recommendation')
 @Controller('api/learning-recommendations')
 export class LearningRecommendationController {
   constructor(

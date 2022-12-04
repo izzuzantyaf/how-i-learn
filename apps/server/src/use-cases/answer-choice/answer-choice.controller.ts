@@ -7,10 +7,12 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AnswerChoiceService } from './answer-choice.service';
 import { CreateAnswerChoiceDto } from './dto/create-answer-choice.dto';
 import { UpdateAnswerChoiceDto } from './dto/update-answer-choice.dto';
 
+@ApiTags('answer-choice')
 @Controller('api/answer-choices')
 export class AnswerChoiceController {
   constructor(private readonly answerChoiceService: AnswerChoiceService) {}

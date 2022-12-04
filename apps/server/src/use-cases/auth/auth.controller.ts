@@ -3,7 +3,10 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
+  Patch,
   Post,
+  Query,
   Request,
   UseGuards,
 } from '@nestjs/common';
@@ -48,5 +51,24 @@ export class AuthController {
     const access_token = req.headers.authorization.split(' ')[1];
     const decodedPayload = this.authService.verifyAccessToken(access_token);
     return new SuccessfulResponse('Access token valid', decodedPayload);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('send-email-verification-link/:userId')
+  async sendVerificationEmailLink(
+    @Param('userId') userId: string,
+    @Query('url') url: string,
+  ) {
+    const result = await this.authService.sendEmailVerificationLink(
+      parseInt(userId),
+      url,
+    );
+    return new SuccessfulResponse('Link verifikasi terkirim');
+  }
+
+  @Patch('verify-email')
+  async emailVerify(@Query('token') token: string) {
+    const result = await this.authService.verifyEmail(token);
+    return new SuccessfulResponse('Email berhasil diverifikasi', result);
   }
 }

@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 export class CreateUserDto {
   @ApiProperty()
@@ -9,13 +9,8 @@ export class CreateUserDto {
   password: string;
 }
 
-export class UpdateUserDto {
+export class UpdateUserDto extends PartialType(CreateUserDto) {
   @ApiProperty()
   id: number;
-  @ApiProperty()
-  name?: string;
-  @ApiProperty()
-  email?: string;
-  @ApiProperty()
-  password?: string;
+  email_confirmed?: Date | string;
 }

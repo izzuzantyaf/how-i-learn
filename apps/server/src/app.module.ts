@@ -14,9 +14,20 @@ import { AnswerModule } from './use-cases/answer/answer.module';
 import { AttemptResultModule } from './use-cases/attempt-result/attempt-result.module';
 import { LearningRecommendationModule } from './use-cases/learning-recommendation/learning-recommendation.module';
 import { LearningStyleModule } from './use-cases/learning-style/learning-style.module';
+// import { AwsModule } from './lib/aws/aws.module';
 
 @Module({
-  imports: [UserModule, AuthModule, AttemptModule, QuestionModule, AnswerChoiceModule, AnswerModule, AttemptResultModule, LearningRecommendationModule, LearningStyleModule],
+  imports: [
+    UserModule,
+    AuthModule,
+    AttemptModule,
+    QuestionModule,
+    AnswerChoiceModule,
+    AnswerModule,
+    AttemptResultModule,
+    LearningRecommendationModule,
+    LearningStyleModule /*AwsModule*/,
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

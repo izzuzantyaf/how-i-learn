@@ -41,6 +41,7 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.218.0",
     "@faker-js/faker": "^7.3.0",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.0.0",
