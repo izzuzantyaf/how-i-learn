@@ -253,6 +253,10 @@ export default function QuizPage() {
                     name={`answer_${choice.id}_${index}`}
                     label={label}
                     value={value.toString()}
+                    styles={{
+                      label: { cursor: "pointer" },
+                      radio: { cursor: "pointer" },
+                    }}
                   />
                 ))}
               </Radio.Group>
