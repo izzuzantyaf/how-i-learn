@@ -91,6 +91,12 @@ export default function App({ Component, pageProps }: AppProps) {
                   color: "blue",
                 },
               },
+              ActionIcon: {
+                defaultProps: {
+                  size: "lg",
+                  radius: "md",
+                },
+              },
             },
           }}
         >

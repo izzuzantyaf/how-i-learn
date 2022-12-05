@@ -1,10 +1,18 @@
-import { Button, PasswordInput, Text, TextInput } from "@mantine/core";
+import {
+  ActionIcon,
+  Button,
+  PasswordInput,
+  Text,
+  TextInput,
+  Title,
+} from "@mantine/core";
 import Head from "next/head";
 import { CreateUserDto } from "../services/user/dto/create-user.dto";
 import { useUserService } from "../services/user/user.service";
 import { showNotification } from "@mantine/notifications";
 import Link from "next/link";
 import { Route } from "../lib/constant";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function SignUpPage() {
   const {
@@ -32,7 +40,12 @@ export default function SignUpPage() {
 
       <main className="signup-page px-[16px] min-h-screen flex flex-col justify-center">
         <div className="my-container max-w-xs">
-          <h1 className="text-2xl font-bold">Buat akun</h1>
+          <ActionIcon component={Link} href={Route.HOME} variant="light">
+            <FontAwesomeIcon icon="arrow-left" />
+          </ActionIcon>
+          <Title order={2} style={{ marginTop: "16px" }}>
+            Buat akun
+          </Title>
           <form
             id="user_signup"
             className="flex flex-col gap-2 mt-[8px]"
