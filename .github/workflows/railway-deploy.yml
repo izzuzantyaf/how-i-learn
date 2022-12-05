@@ -27,6 +27,7 @@ jobs:
         working-directory: ${{ inputs.working-directory }}
         run: |
           RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set NODE_ENV=${{ secrets.NODE_ENV }}
+          RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set DATABASE_URL=${{ secrets.DATABASE_URL }}
           RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set JWT_SECRET=${{ secrets.JWT_SECRET }}
       - name: Deploy
         working-directory: ${{ inputs.working-directory }}
