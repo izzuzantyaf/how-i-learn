@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ApiRoute } from "../lib/constant";
-import { fetchToServer } from "../lib/helpers/fetcher-to-server.helper";
-import { SubmitAnswerDto } from "./answer/dto/submit-answer.dto";
+import { ApiRoute } from "../../lib/constant";
+import { fetchToServer } from "../../lib/helpers/fetcher-to-server.helper";
+import { SubmitAnswerDto } from "./dto/submit-answer.dto";
 
 export function useAnswerService() {
   const mutation = useMutation({

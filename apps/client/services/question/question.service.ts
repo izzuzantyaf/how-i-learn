@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { ApiRoute } from "../lib/constant";
-import { fetchToServer } from "../lib/helpers/fetcher-to-server.helper";
+import { ApiRoute } from "../../lib/constant";
+import { fetchToServer } from "../../lib/helpers/fetcher-to-server.helper";
 
 export function useQuestionService() {
   const getQuestionsQueryResult = useQuery({

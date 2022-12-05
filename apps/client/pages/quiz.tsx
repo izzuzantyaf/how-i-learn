@@ -13,14 +13,14 @@ import {
 } from "@mantine/core";
 import Head from "next/head";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useQuestionService } from "../services/question.service";
+import { useQuestionService } from "../services/question/question.service";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { Route } from "../lib/constant";
 import create from "zustand";
 import { Question } from "../services/question/question.entity";
 import { AnswerChoice } from "../services/answer-choice/answer-choice.entity";
-import { useAnswerService } from "../services/answer.service";
+import { useAnswerService } from "../services/answer/answer.service";
 
 const useGuideModalStore = create<{
   isOpen: boolean;
