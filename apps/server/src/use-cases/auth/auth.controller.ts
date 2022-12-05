@@ -1,9 +1,9 @@
 import {
+  Body,
   Controller,
   Get,
   HttpCode,
   HttpStatus,
-  Param,
   Patch,
   Post,
   Query,
@@ -54,14 +54,11 @@ export class AuthController {
   }
 
   @HttpCode(HttpStatus.OK)
-  @Post('send-email-verification-link/:userId')
-  async sendVerificationEmailLink(
-    @Param('userId') userId: string,
-    @Query('url') url: string,
-  ) {
+  @Post('send-email-verification-link')
+  async sendVerificationEmailLink(@Body() body) {
     const result = await this.authService.sendEmailVerificationLink(
-      parseInt(userId),
-      url,
+      body.userId,
+      body.url,
     );
     return new SuccessfulResponse('Link verifikasi terkirim');
   }

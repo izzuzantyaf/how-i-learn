@@ -95,7 +95,7 @@ export class AuthService {
     this.logger.debug(
       `User id ${JSON.stringify({ userId, url }, undefined, 2)}`,
     );
-    if (!isURL(url)) {
+    if (!isURL(url, { require_tld: false })) {
       this.logger.debug(`URL invalid ${JSON.stringify({ url }, undefined, 2)}`);
       this.logger.log(
         `Send email verification link failed ${JSON.stringify({ userId })}`,
