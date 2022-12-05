@@ -1,8 +1,10 @@
-import { Button, PasswordInput, TextInput } from "@mantine/core";
+import { Button, PasswordInput, Text, TextInput } from "@mantine/core";
 import Head from "next/head";
 import { CreateUserDto } from "../services/user/dto/create-user.dto";
 import { useUserService } from "../services/user/user.service";
 import { showNotification } from "@mantine/notifications";
+import Link from "next/link";
+import { Route } from "../lib/constant";
 
 export default function SignUpPage() {
   const {
@@ -39,7 +41,7 @@ export default function SignUpPage() {
               const form = event.target as HTMLFormElement;
               const formData = new FormData(form);
               const data = Object.fromEntries(formData.entries());
-              console.log(data);
+              console.log("CreateUserDto", data);
               signUp(data as CreateUserDto);
             }}
           >
@@ -47,7 +49,7 @@ export default function SignUpPage() {
               label="Nama"
               name="name"
               placeholder="Nama kamu"
-              error={signUpResponse?.data?.name}
+              error={signUpResponse?.errors?.name}
               required
             />
             <TextInput
@@ -55,14 +57,14 @@ export default function SignUpPage() {
               label="Email"
               name="email"
               placeholder="Email yang aktif"
-              error={signUpResponse?.data?.email}
+              error={signUpResponse?.errors?.email}
               required
             />
             <PasswordInput
               label="Password"
               name="password"
               placeholder="Password"
-              error={signUpResponse?.data?.password}
+              error={signUpResponse?.errors?.password}
               required
             />
           </form>
@@ -74,6 +76,16 @@ export default function SignUpPage() {
           >
             Buat akun
           </Button>
+          <Text style={{ marginTop: "16px", textAlign: "center" }} fz="sm">
+            Sudah punya akun?.{" "}
+            <Link
+              href={Route.SIGNIN}
+              style={{ cursor: "pointer" }}
+              className="text-blue-500 hover:underline"
+            >
+              Masuk
+            </Link>
+          </Text>
         </div>
       </main>
     </>

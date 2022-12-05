@@ -19,6 +19,6 @@ export async function fetchToServer({
     }
   );
   const responseJson = await response.json();
-  console.log(responseJson);
+  console.log("Server response", responseJson);
   return responseJson;
 }
