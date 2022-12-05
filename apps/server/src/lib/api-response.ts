@@ -1,27 +1,23 @@
-interface AppResponse {
+interface ServerResponse {
   isSuccess: boolean;
   message: string;
-  data: any;
+  data?: any;
+  errors?: any;
 }
 
-export class SuccessfulResponse implements AppResponse {
+export class SuccessfulResponse implements ServerResponse {
   isSuccess = true;
-  message: string;
-  data: any;
+  // message: string;
+  // data: any;
 
-  constructor(message: string = 'Sukses', data?: any) {
-    this.message = message;
-    this.data = data;
+  constructor(public message: string = 'Sukses', public data?: any) {
+    // this.message = message;
+    // this.data = data;
   }
 }
 
-export class ErrorResponse implements AppResponse {
+export class ErrorResponse implements ServerResponse {
   isSuccess = false;
-  message: string;
-  data: null;
 
-  constructor(message: string = 'Gagal', data?: any) {
-    this.message = message;
-    this.data = data;
-  }
+  constructor(public message: string = 'Gagal', public errors?: any) {}
 }

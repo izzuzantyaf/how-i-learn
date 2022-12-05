@@ -47,7 +47,11 @@ export class UserService {
       this.logger.log(
         `User creation failed ${JSON.stringify({ name: createUserDto.name })}`,
       );
-      throw new ConflictException(new ErrorResponse('Email sudah terdaftar'));
+      throw new ConflictException(
+        new ErrorResponse('Email sudah terdaftar', {
+          email: 'Email sudah terdaftar',
+        }),
+      );
     }
     await newUser.hashPassword();
     const storedUser = await this.dataService.user.create(newUser);
