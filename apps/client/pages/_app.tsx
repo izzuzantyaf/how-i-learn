@@ -90,6 +90,25 @@ export default function App({ Component, pageProps }: AppProps) {
                   radius: "md",
                   color: "blue",
                 },
+                styles(theme, params) {
+                  return {
+                    root: {
+                      backgroundColor: theme.colors[params.color][1],
+                      borderColor: theme.colors[params.color][1],
+                      "&::before": {
+                        backgroundColor: theme.colors[params.color][6],
+                      },
+                    },
+                    title: { color: theme.colors[params.color][6] },
+                    description: { color: theme.colors[params.color][6] },
+                    closeButton: {
+                      color: theme.colors[params.color][6],
+                      "&:hover": {
+                        backgroundColor: theme.colors[params.color][2],
+                      },
+                    },
+                  };
+                },
               },
               ActionIcon: {
                 defaultProps: {
