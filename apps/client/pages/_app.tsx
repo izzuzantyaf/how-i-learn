@@ -10,8 +10,10 @@ import {
   faCheck,
   faCircleInfo,
   faEllipsisVertical,
+  faEnvelopeCircleCheck,
   faInfo,
   faXmark,
+  faEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import { NotificationsProvider } from "@mantine/notifications";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,7 +29,9 @@ library.add(
   faXmark,
   faEllipsisVertical,
   faCircleInfo,
-  faCheck
+  faCheck,
+  faEnvelope,
+  faEnvelopeCircleCheck
 );
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -91,6 +95,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 defaultProps: {
                   radius: "md",
                   color: "blue",
+                  icon: <FontAwesomeIcon icon="info" />,
                 },
                 styles: (theme, params) => ({
                   root: {
@@ -113,6 +118,11 @@ export default function App({ Component, pageProps }: AppProps) {
               ActionIcon: {
                 defaultProps: {
                   size: "lg",
+                  radius: "md",
+                },
+              },
+              ThemeIcon: {
+                defaultProps: {
                   radius: "md",
                 },
               },

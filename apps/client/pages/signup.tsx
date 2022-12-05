@@ -13,6 +13,7 @@ import { showNotification } from "@mantine/notifications";
 import Link from "next/link";
 import { Route } from "../lib/constant";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { jose } from "../lib/helpers/jose.helper";
 
 export default function SignUpPage() {
   const {
@@ -29,7 +30,22 @@ export default function SignUpPage() {
       title: signUpResponse.message,
       message: "",
       color: signUpResponse.isSuccess ? "green" : "red",
+      icon: signUpResponse.isSuccess ? (
+        <FontAwesomeIcon icon="check" />
+      ) : (
+        <FontAwesomeIcon icon="xmark" />
+      ),
     });
+    if (signUpResponse.isSuccess) {
+      const token = jose.base64url.encode(
+        JSON.stringify({
+          userId: signUpResponse?.data?.id,
+          userEmail: signUpResponse?.data?.email,
+        })
+      );
+      location.href =
+        location.origin + Route.EMAIL_CONFIRMATION + `?token=${token}`;
+    }
   }
 
   return (
@@ -40,11 +56,9 @@ export default function SignUpPage() {
 
       <main className="signup-page px-[16px] min-h-screen flex flex-col justify-center">
         <div className="my-container max-w-xs">
-          {/* <Link href={Route.HOME}> */}
           <ActionIcon component={Link} href={Route.HOME} variant="light">
             <FontAwesomeIcon icon="arrow-left" />
           </ActionIcon>
-          {/* </Link> */}
           <Title order={2} style={{ marginTop: "16px" }}>
             Buat akun
           </Title>
