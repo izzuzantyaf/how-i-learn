@@ -23,12 +23,17 @@ export default function HomePage() {
             Presisi
           </Text>
           <div className="spacer grow"></div>
-          <Button className="mr-[16px]" variant="light">
+          <Button
+            component={Link}
+            href={Route.SIGNIN}
+            className="mr-[16px]"
+            variant="light"
+          >
             Masuk
           </Button>
-          <Link href={Route.SIGNUP}>
-            <Button>Buat akun</Button>
-          </Link>
+          <Button component={Link} href={Route.SIGNUP}>
+            Buat akun
+          </Button>
         </div>
       </header>
 

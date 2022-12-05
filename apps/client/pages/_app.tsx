@@ -14,6 +14,7 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { NotificationsProvider } from "@mantine/notifications";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const inter = Inter({ subsets: ["latin"] });
 const queryClient = new QueryClient();
@@ -25,7 +26,8 @@ library.add(
   faInfo,
   faXmark,
   faEllipsisVertical,
-  faCircleInfo
+  faCircleInfo,
+  faCheck
 );
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -90,25 +92,23 @@ export default function App({ Component, pageProps }: AppProps) {
                   radius: "md",
                   color: "blue",
                 },
-                styles(theme, params) {
-                  return {
-                    root: {
-                      backgroundColor: theme.colors[params.color][1],
-                      borderColor: theme.colors[params.color][1],
-                      "&::before": {
-                        backgroundColor: theme.colors[params.color][6],
-                      },
+                styles: (theme, params) => ({
+                  root: {
+                    backgroundColor: theme.colors[params.color][1],
+                    borderColor: theme.colors[params.color][1],
+                    "&::before": {
+                      backgroundColor: theme.colors[params.color][6],
                     },
-                    title: { color: theme.colors[params.color][6] },
-                    description: { color: theme.colors[params.color][6] },
-                    closeButton: {
-                      color: theme.colors[params.color][6],
-                      "&:hover": {
-                        backgroundColor: theme.colors[params.color][2],
-                      },
+                  },
+                  title: { color: theme.colors[params.color][6] },
+                  description: { color: theme.colors[params.color][6] },
+                  closeButton: {
+                    color: theme.colors[params.color][6],
+                    "&:hover": {
+                      backgroundColor: theme.colors[params.color][2],
                     },
-                  };
-                },
+                  },
+                }),
               },
               ActionIcon: {
                 defaultProps: {

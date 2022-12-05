@@ -40,9 +40,11 @@ export default function SignUpPage() {
 
       <main className="signup-page px-[16px] min-h-screen flex flex-col justify-center">
         <div className="my-container max-w-xs">
+          {/* <Link href={Route.HOME}> */}
           <ActionIcon component={Link} href={Route.HOME} variant="light">
             <FontAwesomeIcon icon="arrow-left" />
           </ActionIcon>
+          {/* </Link> */}
           <Title order={2} style={{ marginTop: "16px" }}>
             Buat akun
           </Title>
