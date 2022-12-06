@@ -29,6 +29,8 @@ jobs:
           RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set NODE_ENV=${{ secrets.NODE_ENV }}
           RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set DATABASE_URL=${{ secrets.DATABASE_URL }}
           RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set JWT_SECRET=${{ secrets.JWT_SECRET }}
+          RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
+          RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway vars set AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Deploy
         working-directory: ${{ inputs.working-directory }}
         run: RAILWAY_TOKEN=${{ secrets.RAILWAY_TOKEN }} railway run railway up
