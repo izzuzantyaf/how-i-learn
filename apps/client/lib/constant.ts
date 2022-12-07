@@ -12,4 +12,5 @@ export enum ApiRoute {
   QUESTION = "/questions",
   SUBMIT_ANSWER = "/answers/submit",
   SEND_EMAIL_CONFIRMATION = "/auth/send-email-verification-link",
+  VERIFY_EMAIL = "/auth/verify-email",
 }

@@ -16,6 +16,14 @@ export function useAuthService() {
       }),
   });
 
+  const verifyEmailMutation = useMutation({
+    mutationFn: (token: string) =>
+      fetchToServer({
+        path: ApiRoute.VERIFY_EMAIL + `?token=${token}`,
+        method: "PATCH",
+      }),
+  });
+
   return {
     sendConfirmationEmail: {
       run: sendConfirmationEmailMutation.mutate,
@@ -23,6 +31,13 @@ export function useAuthService() {
       isError: sendConfirmationEmailMutation.isError,
       isSuccess: sendConfirmationEmailMutation.isSuccess,
       response: sendConfirmationEmailMutation.data as ServerResponse,
+    },
+    verifyEmail: {
+      run: verifyEmailMutation.mutate,
+      isLoading: verifyEmailMutation.isLoading,
+      isError: verifyEmailMutation.isError,
+      isSuccess: verifyEmailMutation.isSuccess,
+      response: verifyEmailMutation.data as ServerResponse,
     },
   };
 }

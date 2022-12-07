@@ -109,7 +109,7 @@ export default function EmailConfirmationPage({
             Konfirmasi Email
           </Title>
           <Text>
-            Link verifikasi email sudah dikirimkan ke email kamu{" "}
+            Klik link verifikasi email sudah dikirimkan ke email kamu{" "}
             <b>{userEmail}</b>. Jika email sudah terverifikasi kamu bisa{" "}
             <Link href={Route.SIGNIN} className="text-blue-500 hover:underline">
               klik di sini untuk login
