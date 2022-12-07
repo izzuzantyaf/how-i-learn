@@ -4,10 +4,10 @@ import { showNotification } from "@mantine/notifications";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { ApiRoute, Route } from "../lib/constant";
-import { fetchToServer } from "../lib/helpers/fetcher-to-server.helper";
+import { Route } from "../lib/constant";
 import { jose } from "../lib/helpers/jose.helper";
-import { useAuthService } from "../services/auth/auth.service";
+import { authService } from "../services/auth/auth.service";
+import { useAuthService } from "../services/auth/useAuthService";
 
 type Data = {
   userId: number;
@@ -46,14 +46,10 @@ export const getServerSideProps: GetServerSideProps<Data> = async ({
   console.log("Payload", decodedPayload);
   const userId: number = decodedPayload?.userId;
   const userEmail: string = decodedPayload?.userEmail;
-  const url = new URL(req.url as string, `https://${req.headers.host}`);
-  const emailVerifyUrl = url.origin + Route.EMAIL_VERIFIED;
-  console.log("Email verify url", emailVerifyUrl);
-  const result = await fetchToServer({
-    path: ApiRoute.SEND_EMAIL_CONFIRMATION,
-    method: "POST",
-    body: { userId, url: emailVerifyUrl },
-  });
+  const result = await authService.sendConfirmationEmailFromServer(
+    userId,
+    req.headers.host as string
+  );
 
   return {
     props: {

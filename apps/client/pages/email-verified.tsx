@@ -3,9 +3,8 @@ import { ThemeIcon, Title, Text } from "@mantine/core";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { ApiRoute, Route } from "../lib/constant";
-import { fetchToServer } from "../lib/helpers/fetcher-to-server.helper";
-import { ServerResponse } from "../lib/types/server-response.type";
+import { Route } from "../lib/constant";
+import { authService } from "../services/auth/auth.service";
 
 type Data = {
   isVerifyEmailSuccess: boolean;
@@ -17,10 +16,7 @@ export const getServerSideProps: GetServerSideProps<Data> = async ({
   const { token } = query;
   console.log("Token", token);
   // make request to server to verify email
-  const response = (await fetchToServer({
-    path: ApiRoute.VERIFY_EMAIL + `?token=${token}`,
-    method: "PATCH",
-  })) as ServerResponse;
+  const response = await authService.verifyEmail(token as string);
   return {
     props: { isVerifyEmailSuccess: response.isSuccess },
   };

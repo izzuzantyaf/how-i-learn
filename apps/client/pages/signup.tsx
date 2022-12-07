@@ -8,7 +8,7 @@ import {
 } from "@mantine/core";
 import Head from "next/head";
 import { CreateUserDto } from "../services/user/dto/create-user.dto";
-import { useUserService } from "../services/user/user.service";
+import { useUserService } from "../services/user/useUserService";
 import { showNotification } from "@mantine/notifications";
 import Link from "next/link";
 import { Route } from "../lib/constant";

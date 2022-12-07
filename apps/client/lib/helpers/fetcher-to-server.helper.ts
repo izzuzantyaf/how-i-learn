@@ -1,3 +1,5 @@
+import { ServerResponse } from "../types/server-response.type";
+
 export async function fetchToServer({
   path,
   method = "GET",
@@ -18,7 +20,7 @@ export async function fetchToServer({
       body: JSON.stringify(body),
     }
   );
-  const responseJson = await response.json();
+  const responseJson: Promise<ServerResponse> = await response.json();
   console.log("Server response", responseJson);
   return responseJson;
 }

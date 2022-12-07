@@ -1,19 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
 import { ApiRoute } from "../../lib/constant";
 import { fetchToServer } from "../../lib/helpers/fetcher-to-server.helper";
+import { ServerResponse } from "../../lib/types/server-response.type";
+import { Question } from "./question.entity";
 
-export function useQuestionService() {
-  const getQuestionsQueryResult = useQuery({
-    queryKey: ["questions", ApiRoute.QUESTION],
-    queryFn: () => fetchToServer({ path: ApiRoute.QUESTION }),
-  });
-
-  return {
-    getAll: () => ({
-      isLoading: getQuestionsQueryResult.isLoading,
-      isError: getQuestionsQueryResult.isError,
-      isSuccess: getQuestionsQueryResult.isSuccess,
-      response: getQuestionsQueryResult.data,
-    }),
-  };
-}
+export const questionService = {
+  getAll: (): Promise<ServerResponse<Question[]>> =>
+    fetchToServer({ path: ApiRoute.QUESTION }),
+};

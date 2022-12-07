@@ -13,14 +13,14 @@ import {
 } from "@mantine/core";
 import Head from "next/head";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useQuestionService } from "../services/question/question.service";
+import { useQuestionService } from "../services/question/useQuestionService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { Route } from "../lib/constant";
 import create from "zustand";
 import { Question } from "../services/question/question.entity";
 import { AnswerChoice } from "../services/answer-choice/answer-choice.entity";
-import { useAnswerService } from "../services/answer/answer.service";
+import { useAnswerService } from "../services/answer/useAnswerService";
 
 const useGuideModalStore = create<{
   isOpen: boolean;
@@ -98,7 +98,7 @@ export default function QuizPage() {
 
   console.log(`answersWithUserCf[${counter}]: `, answersWithUserCf[counter]);
 
-  if (answerService.submit.isSuccess) {
+  if (answerService.submit.response?.isSuccess) {
     const result = answerService.submit.response.data;
     return (
       <Box
