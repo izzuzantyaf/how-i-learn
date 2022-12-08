@@ -5,6 +5,7 @@ export enum Route {
   QUIZ = "/quiz",
   EMAIL_CONFIRMATION = "/email-confirmation",
   EMAIL_VERIFIED = "/email-verified",
+  PROFILE = "/profile",
 }
 
 export enum ApiRoute {
@@ -13,4 +14,5 @@ export enum ApiRoute {
   SUBMIT_ANSWER = "/answers/submit",
   SEND_EMAIL_CONFIRMATION = "/auth/send-email-verification-link",
   VERIFY_EMAIL = "/auth/verify-email",
+  SIGNIN = "/auth/signin",
 }

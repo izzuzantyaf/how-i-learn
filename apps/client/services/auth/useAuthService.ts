@@ -10,6 +10,10 @@ export function useAuthService() {
     mutationFn: authService.verifyEmail,
   });
 
+  const signInMutation = useMutation({
+    mutationFn: authService.signIn,
+  });
+
   return {
     sendConfirmationEmail: {
       run: sendConfirmationEmailMutation.mutate,
@@ -24,6 +28,13 @@ export function useAuthService() {
       isError: verifyEmailMutation.isError,
       isSuccess: verifyEmailMutation.isSuccess,
       response: verifyEmailMutation.data,
+    },
+    signIn: {
+      run: signInMutation.mutate,
+      isLoading: signInMutation.isLoading,
+      isError: signInMutation.isError,
+      isSuccess: signInMutation.isSuccess,
+      response: signInMutation.data,
     },
   };
 }

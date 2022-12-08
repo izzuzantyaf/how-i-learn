@@ -10,8 +10,66 @@ import {
 import Head from "next/head";
 import Link from "next/link";
 import { Route } from "../lib/constant";
+import { SignInDto } from "../services/auth/dto/signin.dto";
+import { useAuthService } from "../services/auth/useAuthService";
+import jwt from "jsonwebtoken";
+import { useToast } from "../lib/hooks/useToast";
+import { User } from "../services/user/entity/user.entity";
+import { jose } from "../lib/helpers/jose.helper";
 
 export default function SignInPage() {
+  const {
+    signIn: {
+      run: signIn,
+      isLoading: isSignInLoading,
+      isSuccess: isSignInSuccess,
+      isError: isSignInError,
+      response: signInResponse,
+    },
+  } = useAuthService();
+
+  const showToast = useToast();
+
+  if (signInResponse) {
+    if (signInResponse.isSuccess) {
+      // if login success, grab the access token
+      // check if the user is verified
+      // if not verified, redirect to email confirmation page
+      // if verified, store access token to cookies
+
+      const { access_token } = signInResponse.data;
+      let decodedPayload: any;
+      try {
+        // decode the access token
+        decodedPayload = jwt.verify(
+          access_token,
+          process.env.NEXT_PUBLIC_JWT_SECRET as string
+        );
+        console.log("decodedPayload", decodedPayload);
+      } catch (error) {
+        console.log(error);
+        return <p>Something went wrong!</p>;
+      }
+      if (!decodedPayload.email_confirmed) {
+        const token = jose.base64url.encode(
+          JSON.stringify({
+            userId: decodedPayload.id,
+            userEmail: decodedPayload.email,
+          })
+        );
+        location.href =
+          location.origin + Route.EMAIL_CONFIRMATION + `?token=${token}`;
+        return;
+      }
+      location.href = location.origin + Route.PROFILE;
+    } else {
+      showToast.danger({
+        id: "signin",
+        title: signInResponse.message,
+      });
+    }
+  }
+
   return (
     <>
       <Head>
@@ -33,23 +91,21 @@ export default function SignInPage() {
               const form = event.target as HTMLFormElement;
               const formData = new FormData(form);
               const data = Object.fromEntries(formData.entries());
-              console.log("CreateUserDto", data);
-              // signUp(data as CreateUserDto);
+              console.log("Sign in dto", data);
+              signIn(data as SignInDto);
             }}
           >
             <TextInput
               type="email"
               label="Email"
-              name="email"
+              name="username"
               placeholder="Email"
-              // error={signInResponse?.errors?.email}
               required
             />
             <PasswordInput
               label="Password"
               name="password"
               placeholder="Password"
-              // error={signInResponse?.errors?.password}
               required
             />
           </form>
@@ -57,7 +113,7 @@ export default function SignInPage() {
             type="submit"
             form="user_signin"
             className="w-full mt-[16px]"
-            // loading={isSignInLoading}
+            loading={isSignInLoading}
           >
             Masuk
           </Button>

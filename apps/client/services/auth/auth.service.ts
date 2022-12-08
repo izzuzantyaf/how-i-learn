@@ -1,5 +1,7 @@
 import { ApiRoute, Route } from "../../lib/constant";
 import { fetchToServer } from "../../lib/helpers/fetcher-to-server.helper";
+import { ServerResponse } from "../../lib/types/server-response.type";
+import { SignInDto } from "./dto/signin.dto";
 
 export const authService = {
   sendConfirmationEmailFromServer: async (userId: number, host: string) => {
@@ -32,5 +34,17 @@ export const authService = {
     fetchToServer({
       path: ApiRoute.VERIFY_EMAIL + `?token=${token}`,
       method: "PATCH",
+    }),
+  signIn: ({
+    username,
+    password,
+  }: SignInDto): Promise<ServerResponse<{ access_token: string }>> =>
+    fetchToServer({
+      path: ApiRoute.SIGNIN,
+      method: "POST",
+      body: {
+        username,
+        password,
+      },
     }),
 };

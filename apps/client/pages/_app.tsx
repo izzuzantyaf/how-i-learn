@@ -14,6 +14,7 @@ import {
   faInfo,
   faXmark,
   faEnvelope,
+  faExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 import { NotificationsProvider } from "@mantine/notifications";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -33,7 +34,8 @@ library.add(
   faCircleInfo,
   faCheck,
   faEnvelope,
-  faEnvelopeCircleCheck
+  faEnvelopeCircleCheck,
+  faExclamation
 );
 config.autoAddCss = false;
 
