@@ -33,7 +33,7 @@ export function useToast() {
         color: "yellow",
         icon: <FontAwesomeIcon icon="exclamation" />,
       }),
-    danger: ({ id, title, message }: ToastProps) =>
+    error: ({ id, title, message }: ToastProps) =>
       showNotification({
         id,
         title,

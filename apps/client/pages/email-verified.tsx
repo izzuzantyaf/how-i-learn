@@ -48,8 +48,16 @@ export default function EmailVerifiedPage({
         <div className="my-container max-w-screen-sm">
           {isVerifyEmailSuccess ? (
             <>
-              <ThemeIcon size="xl" variant="light" color="green">
-                <FontAwesomeIcon icon="envelope-circle-check" size="xl" />
+              <ThemeIcon
+                style={{
+                  width: "min-content",
+                  height: "min-content",
+                  padding: "8px",
+                }}
+                variant="light"
+                color="green"
+              >
+                <FontAwesomeIcon icon="envelope-circle-check" size="2xl" />
               </ThemeIcon>
               <Title order={3} style={{ marginTop: "8px" }}>
                 Konfirmasi email berhasil

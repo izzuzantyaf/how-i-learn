@@ -12,10 +12,9 @@ import Link from "next/link";
 import { Route } from "../lib/constant";
 import { SignInDto } from "../services/auth/dto/signin.dto";
 import { useAuthService } from "../services/auth/useAuthService";
-import jwt from "jsonwebtoken";
 import { useToast } from "../lib/hooks/useToast";
-import { User } from "../services/user/entity/user.entity";
-import { jose } from "../lib/helpers/jose.helper";
+import { jwt } from "../lib/helpers/jwt.helper";
+import { redirector } from "../lib/helpers/redirector.helper";
 
 export default function SignInPage() {
   const {
@@ -33,37 +32,31 @@ export default function SignInPage() {
   if (signInResponse) {
     if (signInResponse.isSuccess) {
       // if login success, grab the access token
-      // check if the user is verified
-      // if not verified, redirect to email confirmation page
-      // if verified, store access token to cookies
-
       const { access_token } = signInResponse.data;
       let decodedPayload: any;
       try {
         // decode the access token
-        decodedPayload = jwt.verify(
-          access_token,
-          process.env.NEXT_PUBLIC_JWT_SECRET as string
-        );
+        decodedPayload = jwt.verify(access_token);
         console.log("decodedPayload", decodedPayload);
       } catch (error) {
         console.log(error);
         return <p>Something went wrong!</p>;
       }
+      // check if the user is verified
+      // if not verified, redirect to email confirmation page
       if (!decodedPayload.email_confirmed) {
-        const token = jose.base64url.encode(
-          JSON.stringify({
-            userId: decodedPayload.id,
-            userEmail: decodedPayload.email,
-          })
-        );
-        location.href =
-          location.origin + Route.EMAIL_CONFIRMATION + `?token=${token}`;
+        const token = jwt.sign({
+          userId: decodedPayload.id,
+          userEmail: decodedPayload.email,
+        });
+        redirector.toEmailConfirmationPage(token);
         return;
+      } else {
+        // if verified, store access token to cookies
+        redirector.toProfilePage();
       }
-      location.href = location.origin + Route.PROFILE;
     } else {
-      showToast.danger({
+      showToast.error({
         id: "signin",
         title: signInResponse.message,
       });

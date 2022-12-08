@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ThemeIcon, Title, Text, Button } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { Route } from "../lib/constant";
-import { jose } from "../lib/helpers/jose.helper";
+import { jwt } from "../lib/helpers/jwt.helper";
+import { useToast } from "../lib/hooks/useToast";
 import { authService } from "../services/auth/auth.service";
 import { useAuthService } from "../services/auth/useAuthService";
 
@@ -27,11 +27,12 @@ export const getServerSideProps: GetServerSideProps<Data> = async ({
       },
     };
   }
-  let decodedPayload = null;
+  let decodedPayload;
   try {
-    decodedPayload = JSON.parse(
-      jose.base64url.decode((query.token as string) ?? "").toString()
-    );
+    decodedPayload = jwt.verify(query.token as string) as {
+      userId: number;
+      userEmail: string;
+    };
   } catch (error) {
     console.error(error);
     return {
@@ -76,18 +77,22 @@ export default function EmailConfirmationPage({
     },
   } = useAuthService();
 
+  const showToast = useToast();
+
   if (sendConfirmationEmailResponse) {
-    showNotification({
-      id: "send_confirmation_email",
-      title: sendConfirmationEmailResponse.message,
-      message: "",
-      color: sendConfirmationEmailResponse.isSuccess ? "green" : "red",
-      icon: sendConfirmationEmailResponse.isSuccess ? (
-        <FontAwesomeIcon icon="check" />
-      ) : (
-        <FontAwesomeIcon icon="xmark" />
-      ),
-    });
+    if (sendConfirmationEmailResponse.isSuccess) {
+      showToast.success({
+        id: "send_confirmation_email",
+        title: sendConfirmationEmailResponse.message,
+        message: "",
+      });
+    } else {
+      showToast.error({
+        id: "send_confirmation_email",
+        title: sendConfirmationEmailResponse.message,
+        message: "",
+      });
+    }
   }
 
   return (
@@ -97,8 +102,15 @@ export default function EmailConfirmationPage({
       </Head>
       <main className="email-confirmation-page px-[16px] min-h-screen flex flex-col justify-center">
         <div className="my-container max-w-screen-sm">
-          <ThemeIcon size="xl" variant="light">
-            <FontAwesomeIcon icon="envelope" size="xl" />
+          <ThemeIcon
+            variant="light"
+            style={{
+              width: "min-content",
+              height: "min-content",
+              padding: "8px",
+            }}
+          >
+            <FontAwesomeIcon icon="envelope" size="2xl" />
           </ThemeIcon>
           <Title order={3} style={{ marginTop: "8px" }}>
             Konfirmasi Email

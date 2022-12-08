@@ -13,7 +13,9 @@ import { showNotification } from "@mantine/notifications";
 import Link from "next/link";
 import { Route } from "../lib/constant";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { jose } from "../lib/helpers/jose.helper";
+import { jwt } from "../lib/helpers/jwt.helper";
+import { redirect } from "next/dist/server/api-utils";
+import { redirector } from "../lib/helpers/redirector.helper";
 
 export default function SignUpPage() {
   const {
@@ -37,14 +39,11 @@ export default function SignUpPage() {
       ),
     });
     if (signUpResponse.isSuccess) {
-      const token = jose.base64url.encode(
-        JSON.stringify({
-          userId: signUpResponse?.data?.id,
-          userEmail: signUpResponse?.data?.email,
-        })
-      );
-      location.href =
-        location.origin + Route.EMAIL_CONFIRMATION + `?token=${token}`;
+      const token = jwt.sign({
+        userId: signUpResponse?.data?.id,
+        userEmail: signUpResponse?.data?.email,
+      });
+      redirector.toEmailConfirmationPage(token);
     }
   }
 
