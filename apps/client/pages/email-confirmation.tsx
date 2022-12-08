@@ -12,8 +12,6 @@ import { useAuthService } from "../services/auth/useAuthService";
 type Data = {
   userId: number;
   userEmail: string;
-  isSuccess: boolean;
-  message: string;
 };
 
 export const getServerSideProps: GetServerSideProps<Data> = async ({
@@ -50,13 +48,18 @@ export const getServerSideProps: GetServerSideProps<Data> = async ({
     userId,
     req.headers.host as string
   );
+  if (!result.isSuccess)
+    return {
+      redirect: {
+        destination: Route.HOME,
+        permanent: false,
+      },
+    };
 
   return {
     props: {
       userId,
       userEmail,
-      isSuccess: result.isSuccess,
-      message: result.message,
     },
   };
 };
@@ -64,15 +67,11 @@ export const getServerSideProps: GetServerSideProps<Data> = async ({
 export default function EmailConfirmationPage({
   userId,
   userEmail,
-  isSuccess,
-  message,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const {
     sendConfirmationEmail: {
       run: sendConfirmationEmail,
       isLoading: isSendConfirmationEmailLoading,
-      isSuccess: isSendConfirmationEmailSuccess,
-      isError: isSendConfirmationEmailError,
       response: sendConfirmationEmailResponse,
     },
   } = useAuthService();
