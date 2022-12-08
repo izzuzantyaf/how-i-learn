@@ -15,8 +15,22 @@ export const getServerSideProps: GetServerSideProps<Data> = async ({
 }) => {
   const { token } = query;
   console.log("Token", token);
+  if (!token)
+    return {
+      redirect: {
+        destination: Route.HOME,
+        permanent: false,
+      },
+    };
   // make request to server to verify email
   const response = await authService.verifyEmail(token as string);
+  if (!response.isSuccess)
+    return {
+      redirect: {
+        destination: Route.HOME,
+        permanent: false,
+      },
+    };
   return {
     props: { isVerifyEmailSuccess: response.isSuccess },
   };
