@@ -17,6 +17,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { NotificationsProvider } from "@mantine/notifications";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 
 const inter = Inter({ subsets: ["latin"] });
 const queryClient = new QueryClient();
@@ -33,6 +35,7 @@ library.add(
   faEnvelope,
   faEnvelopeCircleCheck
 );
+config.autoAddCss = false;
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
