@@ -53,7 +53,12 @@ export default function SignInPage() {
         return;
       } else {
         // if verified, store access token to cookies
-        redirector.toProfilePage();
+        const expiredDateTime = new Date(
+          decodedPayload.exp * 1000
+        ).toUTCString();
+        // console.log("expiredDateTime", expiredDateTime);
+        document.cookie = `access_token=${access_token}; expires=${expiredDateTime}; path=/`;
+        // redirector.toProfilePage();
       }
     } else {
       showToast.error({
