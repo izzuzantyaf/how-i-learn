@@ -19,6 +19,7 @@ specifiers:
   autoprefixer: ^10.4.13
   eslint: 8.27.0
   eslint-config-next: 13.0.2
+  jose: ^4.11.1
   jsonwebtoken: ^8.5.1
   next: 13.0.2
   postcss: ^8.4.19
@@ -44,6 +45,7 @@ dependencies:
   '@types/react-dom': 18.0.8
   eslint: 8.27.0
   eslint-config-next: 13.0.2_rmayb2veg2btbq6mbmnyivgasy
+  jose: 4.11.1
   jsonwebtoken: 8.5.1
   next: 13.0.2_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
@@ -1967,6 +1969,10 @@ packages:
 
   /isexe/2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
+    dev: false
+
+  /jose/4.11.1:
+    resolution: {integrity: sha512-YRv4Tk/Wlug8qicwqFNFVEZSdbROCHRAC6qu/i0dyNKr5JQdoa2pIGoS04lLO/jXQX7Z9omoNewYIVIxqZBd9Q==}
     dev: false
 
   /js-sdsl/4.1.5:

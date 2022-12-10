@@ -15,6 +15,7 @@ import { useAuthService } from "../services/auth/useAuthService";
 import { useToast } from "../lib/hooks/useToast";
 import { jwt } from "../lib/helpers/jwt.helper";
 import { redirector } from "../lib/helpers/redirector.helper";
+import { setAccessTokenToCookie } from "../lib/helpers/cookie.helper";
 
 export default function SignInPage() {
   const {
@@ -53,11 +54,9 @@ export default function SignInPage() {
         return;
       } else {
         // if verified, store access token to cookies
-        const expiredDateTime = new Date(
-          decodedPayload.exp * 1000
-        ).toUTCString();
-        // console.log("expiredDateTime", expiredDateTime);
-        document.cookie = `access_token=${access_token}; expires=${expiredDateTime}; path=/`;
+        setAccessTokenToCookie(access_token, {
+          expires: decodedPayload.exp * 1000,
+        });
         // redirector.toProfilePage();
       }
     } else {

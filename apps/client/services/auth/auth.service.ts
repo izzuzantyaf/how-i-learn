@@ -1,4 +1,5 @@
 import { ApiRoute, Route } from "../../lib/constant";
+import { removeAccessTokenFromCookie } from "../../lib/helpers/cookie.helper";
 import { fetchToServer } from "../../lib/helpers/fetcher-to-server.helper";
 import { ServerResponse } from "../../lib/types/server-response.type";
 import { SignInDto } from "./dto/signin.dto";
@@ -47,4 +48,7 @@ export const authService = {
         password,
       },
     }),
+  signOut: () => {
+    removeAccessTokenFromCookie();
+  },
 };
