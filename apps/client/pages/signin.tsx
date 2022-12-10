@@ -57,7 +57,7 @@ export default function SignInPage() {
         setAccessTokenToCookie(access_token, {
           expires: decodedPayload.exp * 1000,
         });
-        // redirector.toProfilePage();
+        redirector.toProfilePage();
       }
     } else {
       showToast.error({
