@@ -23,16 +23,17 @@ export async function middleware(request: NextRequest) {
     deniedWhenAuthenticatedRoutes.includes(request.nextUrl.pathname as Route) &&
     access_token
   ) {
-    let decodedJWT;
-    try {
-      decodedJWT = await jose.verify(access_token);
-    } catch (error) {
-      console.error(error);
-    }
-    console.log("decodedJWT: ", decodedJWT);
-    Object.assign(request, { user: decodedJWT?.payload });
     return NextResponse.redirect(new URL(Route.PROFILE, request.url));
   }
+
+  let decodedJWT;
+  try {
+    decodedJWT = await jose.verify(access_token);
+  } catch (error) {
+    console.error(error);
+  }
+  console.log("decodedJWT: ", decodedJWT);
+  Object.assign(request, { user: decodedJWT?.payload });
 }
 
 // See "Matching Paths" below to learn more
