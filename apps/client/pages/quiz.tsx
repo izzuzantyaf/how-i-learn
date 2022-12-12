@@ -21,6 +21,9 @@ import create from "zustand";
 import { Question } from "../services/question/question.entity";
 import { AnswerChoice } from "../services/answer-choice/answer-choice.entity";
 import { useAnswerService } from "../services/answer/useAnswerService";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { jwt } from "../lib/helpers/jwt.helper";
+import { User } from "../services/user/entity/user.entity";
 
 const useGuideModalStore = create<{
   isOpen: boolean;
@@ -40,7 +43,21 @@ const MARKS = [
   { value: 0.8, label: "Pasti" },
 ];
 
-export default function QuizPage() {
+type Data = {
+  user: User;
+};
+
+export const getServerSideProps: GetServerSideProps<Data> = async ({ req }) => {
+  const user = jwt.decode(req.cookies.access_token as string) as User;
+  console.log(`user`, user);
+  return {
+    props: { user },
+  };
+};
+
+export default function QuizPage({
+  user,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const questionService = useQuestionService();
   const answerService = useAnswerService();
   const {
@@ -283,6 +300,7 @@ export default function QuizPage() {
                   console.log(answersWithUserCf);
                   //* Submit user answer to server
                   answerService.submit.submit({
+                    user_id: user?.id,
                     answersWithUserCf: answersWithUserCf.flat(1),
                   });
                 }}

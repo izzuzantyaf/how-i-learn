@@ -46,8 +46,17 @@ export class AttemptRepository implements IAttemptRepo {
     return isNotEmpty(attempt) ? new Attempt(attempt) : null;
   }
 
-  findByUserId(userId: string | number): Promise<Attempt[]> {
-    throw new Error('Method not implemented.');
+  async findByUserId(userId: number): Promise<Attempt[]> {
+    let attempts: Attempt[] = [];
+    try {
+      attempts = await this.prisma.attempt.findMany({
+        select: { id: true, created_at: true, updated_at: true },
+        where: { user_id: userId },
+      });
+    } catch (error) {
+      this.logger.debug(error);
+    }
+    return attempts.map((attempt) => new Attempt(attempt));
   }
   deleteById(id: string | number): Promise<Attempt> {
     throw new Error('Method not implemented.');

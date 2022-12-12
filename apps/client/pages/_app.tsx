@@ -15,6 +15,11 @@ import {
   faXmark,
   faEnvelope,
   faExclamation,
+  faRightFromBracket,
+  faUserPen,
+  faUser,
+  faTrashCan,
+  faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import { NotificationsProvider } from "@mantine/notifications";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -35,7 +40,12 @@ library.add(
   faCheck,
   faEnvelope,
   faEnvelopeCircleCheck,
-  faExclamation
+  faExclamation,
+  faRightFromBracket,
+  faUserPen,
+  faUser,
+  faTrashCan,
+  faEye
 );
 config.autoAddCss = false;
 

@@ -1,11 +1,28 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Title, Text } from "@mantine/core";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { Route } from "../lib/constant";
+import { jwt } from "../lib/helpers/jwt.helper";
 import heroPic from "../public/img/Saly-25.png";
+import { User } from "../services/user/entity/user.entity";
 
-export default function HomePage() {
+type Data = {
+  user: User;
+};
+
+export const getServerSideProps: GetServerSideProps<Data> = async ({ req }) => {
+  const user = jwt.decode(req.cookies.access_token as string) as User;
+  return {
+    props: { user },
+  };
+};
+
+export default function HomePage({
+  user,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Head>
@@ -23,17 +40,31 @@ export default function HomePage() {
             Presisi
           </Text>
           <div className="spacer grow"></div>
-          <Button
-            component={Link}
-            href={Route.SIGNIN}
-            className="mr-[16px]"
-            variant="light"
-          >
-            Masuk
-          </Button>
-          <Button component={Link} href={Route.SIGNUP}>
-            Buat akun
-          </Button>
+          {user ? (
+            <Button
+              component={Link}
+              href={Route.PROFILE}
+              className="mr-[16px]"
+              variant="light"
+              rightIcon={<FontAwesomeIcon icon="user" />}
+            >
+              {user.name.split(" ")[0]}
+            </Button>
+          ) : (
+            <>
+              <Button
+                component={Link}
+                href={Route.SIGNIN}
+                className="mr-[16px]"
+                variant="light"
+              >
+                Masuk
+              </Button>
+              <Button component={Link} href={Route.SIGNUP}>
+                Buat akun
+              </Button>
+            </>
+          )}
         </div>
       </header>
 

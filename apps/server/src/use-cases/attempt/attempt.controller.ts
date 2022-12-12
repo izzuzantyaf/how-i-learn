@@ -8,6 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { SuccessfulResponse } from 'src/lib/api-response';
 import { AttemptService } from './attempt.service';
 import { CreateAttemptDto } from './dto/create-attempt.dto';
 import { UpdateAttemptDto } from './dto/update-attempt.dto';
@@ -30,6 +31,12 @@ export class AttemptController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.attemptService.findOne(+id);
+  }
+
+  @Get('user/:id')
+  async findByUserId(@Param('id') id: string) {
+    const attempts = await this.attemptService.findByUser(parseInt(id));
+    return new SuccessfulResponse('Successfully retrieved attempts', attempts);
   }
 
   @Patch(':id')

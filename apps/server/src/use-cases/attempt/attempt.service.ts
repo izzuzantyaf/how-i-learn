@@ -21,6 +21,11 @@ export class AttemptService {
     return `This action returns a #${id} attempt`;
   }
 
+  async findByUser(userId: number) {
+    const attempts = await this.dataService.attempt.findByUserId(userId);
+    return attempts;
+  }
+
   update(id: number, updateAttemptDto: UpdateAttemptDto) {
     return `This action updates a #${id} attempt`;
   }

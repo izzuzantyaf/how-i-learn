@@ -50,5 +50,6 @@ export const authService = {
     }),
   signOut: () => {
     removeAccessTokenFromCookie();
+    location.reload();
   },
 };
