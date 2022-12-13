@@ -8,6 +8,7 @@ import {
   Menu,
   Box,
   Stack,
+  Skeleton,
 } from "@mantine/core";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
@@ -85,21 +86,32 @@ export default function ProfilePage({
 
         <section className="px-[16px] mt-[16px]">
           <div className="my-container flex flex-col items-center sm:flex-row gap-[24px]">
-            <Avatar
-              alt="user profile pic"
-              size="xl"
-              color="orange"
-              style={{ borderRadius: 9999 }}
+            <Skeleton
+              className="rounded-full"
+              circle
+              visible={!findUserByIdResponse?.data}
             >
-              {findUserByIdResponse?.data.name.charAt(0)}
-            </Avatar>
+              <Avatar
+                alt="user profile pic"
+                size="xl"
+                color="orange"
+                style={{ borderRadius: 9999 }}
+              >
+                {findUserByIdResponse?.data.name.charAt(0)}
+              </Avatar>
+            </Skeleton>
+
             <div>
-              <Title order={2} className="text-center sm:text-left">
-                {findUserByIdResponse?.data.name}
-              </Title>
-              <Text className="text-center sm:text-left" color="gray">
-                {findUserByIdResponse?.data.email}
-              </Text>
+              <Skeleton visible={!findUserByIdResponse?.data}>
+                <Title order={2} className="text-center sm:text-left">
+                  {findUserByIdResponse?.data.name}
+                </Title>
+              </Skeleton>
+              <Skeleton visible={!findUserByIdResponse?.data}>
+                <Text className="text-center sm:text-left" color="gray">
+                  {findUserByIdResponse?.data.email}
+                </Text>{" "}
+              </Skeleton>
             </div>
             <div className="hidden sm:block grow"></div>
             <Button
@@ -116,12 +128,18 @@ export default function ProfilePage({
 
         <section className="history px-[16px] mt-[32px]">
           <div className="my-container">
-            <Title order={3}>History</Title>
-            {attemptHistoryResponse?.data.length === 0 ? (
-              <Text>No data</Text>
-            ) : (
-              <Stack className="mt-[16px]">
-                {attemptHistoryResponse?.data.map(attempt => (
+            <Title order={3}>History</Title>{" "}
+            <Stack className="mt-[16px]">
+              {!attemptHistoryResponse?.data ? (
+                <>
+                  <Skeleton height={52} />
+                  <Skeleton height={52} />
+                  <Skeleton height={52} />
+                  <Skeleton height={52} />
+                  <Skeleton height={52} />
+                </>
+              ) : (
+                attemptHistoryResponse?.data.map(attempt => (
                   <Box
                     key={attempt.id}
                     className="rounded-[8px] p-[8px] flex items-center border border-gray-200 border-solid"
@@ -146,9 +164,9 @@ export default function ProfilePage({
                       <FontAwesomeIcon icon="trash-can" />
                     </ActionIcon>
                   </Box>
-                ))}
-              </Stack>
-            )}
+                ))
+              )}
+            </Stack>
           </div>
         </section>
       </main>
