@@ -22,7 +22,13 @@ export class AttemptService {
   }
 
   async findByUser(userId: number) {
-    const attempts = await this.dataService.attempt.findByUserId(userId);
+    const attempts = (await this.dataService.attempt.findByUserId(userId)).sort(
+      (a, b) => {
+        if (a.created_at > b.created_at) return -1;
+        else if (a.created_at < b.created_at) return 1;
+        else return 0;
+      },
+    );
     return attempts;
   }
 
