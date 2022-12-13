@@ -62,6 +62,8 @@ export default function HomePage({
             // </Button>
             <Avatar
               alt="user profile pic"
+              component={Link}
+              href={Route.PROFILE}
               size="md"
               color="orange"
               style={{ borderRadius: 9999 }}
