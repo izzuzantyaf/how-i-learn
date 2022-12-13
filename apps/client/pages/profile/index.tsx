@@ -102,16 +102,33 @@ export default function ProfilePage({
             </Skeleton>
 
             <div>
-              <Skeleton visible={!findUserByIdResponse?.data} height={35}>
+              {!findUserByIdResponse?.data ? (
+                <Skeleton height={35} width={230} />
+              ) : (
                 <Title order={2} className="text-center sm:text-left">
                   {findUserByIdResponse?.data.name}
                 </Title>
-              </Skeleton>
-              <Skeleton visible={!findUserByIdResponse?.data} height={25}>
+              )}
+              {/* <Skeleton visible={!findUserByIdResponse?.data} height={35}>
+                <Title order={2} className="text-center sm:text-left">
+                  {findUserByIdResponse?.data.name}
+                </Title>
+              </Skeleton> */}
+              {!findUserByIdResponse?.data ? (
+                <Skeleton height={25} width={200} />
+              ) : (
+                <Text className="text-center sm:text-left" color="gray">
+                  {findUserByIdResponse?.data.email}
+                </Text>
+              )}
+              {/* <Skeleton
+                visible={!findUserByIdResponse?.data}
+                height={25}
+              >
                 <Text className="text-center sm:text-left" color="gray">
                   {findUserByIdResponse?.data.email}
                 </Text>{" "}
-              </Skeleton>
+              </Skeleton> */}
             </div>
             <div className="hidden sm:block grow"></div>
             <Button
