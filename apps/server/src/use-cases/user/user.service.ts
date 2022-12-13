@@ -85,7 +85,9 @@ export class UserService {
       `updateUserDto ${JSON.stringify(updateUserDto, undefined, 2)}`,
     );
     const user = this.userFactory.create(updateUserDto);
-    const errors = user.validateProps();
+    const errors = user.validateProps({
+      forUpdatePurpose: true,
+    });
     if (isNotEmpty(errors)) {
       this.logger.debug(
         `User data is not valid ${JSON.stringify(errors, undefined, 2)}`,
@@ -97,10 +99,11 @@ export class UserService {
         new ErrorResponse('Data user tidak valid', errors),
       );
     }
-    await user.hashPassword();
-    const updatedUser = await this.dataService.user.update(
-      user as UpdateUserDto,
-    );
+    // await user.hashPassword();
+    const updatedUser = await this.dataService.user.update({
+      id: updateUserDto.id,
+      name: updateUserDto.name,
+    });
     this.logger.debug(
       `Updated user ${JSON.stringify(updatedUser, undefined, 2)}`,
     );

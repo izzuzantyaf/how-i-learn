@@ -14,7 +14,6 @@ import Link from "next/link";
 import { Route } from "../lib/constant";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { jwt } from "../lib/helpers/jwt.helper";
-import { redirect } from "next/dist/server/api-utils";
 import { redirector } from "../lib/helpers/redirector.helper";
 
 export default function SignUpPage() {

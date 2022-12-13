@@ -35,10 +35,12 @@ export class User {
    * Determine name property is satisfy the validation rule or not
    * @returns True if name property is satisfy the validation rule
    */
-  protected validateName() {
+  protected validateName(options: { forUpdatePurpose?: boolean } = {}) {
+    const { forUpdatePurpose = false } = options;
     const maxNameLength = 100;
-    if (!isString(this.name)) return { name: 'Nama harus bertipe string' };
+    if (forUpdatePurpose && this.name === undefined) return true;
     if (isEmpty(this.name)) return { name: 'Nama harus diisi' };
+    if (!isString(this.name)) return { name: 'Nama harus bertipe string' };
     if (!maxLength(this.name, maxNameLength))
       return { name: `Nama maksimal ${maxNameLength} karakter` };
     return true;
@@ -48,9 +50,11 @@ export class User {
    * Determine email property is satisfy the validation rule or not
    * @returns True if email property is satisfy the validation rule
    */
-  protected validateEmail() {
-    if (!isString(this.email)) return { email: 'Email harus bertipe string' };
+  protected validateEmail(options: { forUpdatePurpose?: boolean } = {}) {
+    const { forUpdatePurpose = false } = options;
+    if (forUpdatePurpose && this.email === undefined) return true;
     if (isEmpty(this.email)) return { email: 'Email harus diisi' };
+    if (!isString(this.email)) return { email: 'Email harus bertipe string' };
     if (!isEmail(this.email)) return { email: 'Email tidak valid' };
     return true;
   }
@@ -59,11 +63,14 @@ export class User {
    * Determine password property is satisfy the validation rule or not
    * @returns True if password property is satisfy the validation rule
    */
-  protected validatePassword() {
+  protected validatePassword(options: { forUpdatePurpose?: boolean } = {}) {
+    const { forUpdatePurpose = false } = options;
+
     const minPasswordLength = 6;
+    if (forUpdatePurpose && this.password === undefined) return true;
+    if (isEmpty(this.password)) return { password: 'Password harus diisi' };
     if (!isString(this.password))
       return { password: 'Password harus bertipe string' };
-    if (isEmpty(this.password)) return { password: 'Password harus diisi' };
     if (!minLength(this.password, minPasswordLength))
       return { password: `Password minimal ${minPasswordLength} karakter` };
     return true;
@@ -73,11 +80,12 @@ export class User {
    * Do validation to all properties against the validation rules
    * @returns True if all properties are satisfy the validation rules
    */
-  validateProps() {
+  validateProps(options: { forUpdatePurpose?: boolean } = {}) {
+    const { forUpdatePurpose } = options;
     const validationResults = [
-      this.validateName(),
-      this.validateEmail(),
-      this.validatePassword(),
+      this.validateName({ forUpdatePurpose }),
+      this.validateEmail({ forUpdatePurpose }),
+      this.validatePassword({ forUpdatePurpose }),
     ];
     const errors = validationResults.reduce(
       (error, result) => (isObject(result) ? { ...error, ...result } : error),

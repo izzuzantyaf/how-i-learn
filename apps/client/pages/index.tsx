@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Title, Text } from "@mantine/core";
+import { Button, Title, Text, Avatar } from "@mantine/core";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -8,6 +8,7 @@ import { Route } from "../lib/constant";
 import { jwt } from "../lib/helpers/jwt.helper";
 import heroPic from "../public/img/Saly-25.png";
 import { User } from "../services/user/entity/user.entity";
+import { useUserService } from "../services/user/useUserService";
 
 type Data = {
   user: User;
@@ -23,6 +24,15 @@ export const getServerSideProps: GetServerSideProps<Data> = async ({ req }) => {
 export default function HomePage({
   user,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const {
+    findById: {
+      isLoading: isFindUserByIdLoading,
+      isSuccess: isFindUserByIdSuccess,
+      isError: isFindUserByIdError,
+      response: findUserByIdResponse,
+    },
+  } = useUserService({ userId: user.id });
+
   return (
     <>
       <Head>
@@ -40,15 +50,25 @@ export default function HomePage({
             Presisi
           </Text>
           <div className="spacer grow"></div>
-          {user ? (
-            <Button
-              component={Link}
-              href={Route.PROFILE}
-              variant="light"
-              rightIcon={<FontAwesomeIcon icon="user" />}
+          {findUserByIdResponse?.data ? (
+            // <Button
+            //   component={Link}
+            //   href={Route.PROFILE}
+            //   variant="light"
+            //   rightIcon={<FontAwesomeIcon icon="user" />}
+            //   compact
+            // >
+            //   {findUserByIdResponse?.data.name.split(" ")[0]}
+            // </Button>
+            <Avatar
+              alt="user profile pic"
+              size="md"
+              color="orange"
+              style={{ borderRadius: 9999 }}
+              variant="filled"
             >
-              {user.name.split(" ")[0]}
-            </Button>
+              {findUserByIdResponse?.data.name.charAt(0)}
+            </Avatar>
           ) : (
             <>
               <Button

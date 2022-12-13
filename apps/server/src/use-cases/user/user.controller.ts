@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Put,
 } from '@nestjs/common';
@@ -60,7 +61,7 @@ export class UserController {
     return new SuccessfulResponse('Sukses', user);
   }
 
-  @Put()
+  @Patch()
   @ApiBody({
     type: UpdateUserDto,
     description: 'Mengupdate user',

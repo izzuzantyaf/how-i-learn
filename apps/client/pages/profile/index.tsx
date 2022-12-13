@@ -12,11 +12,12 @@ import {
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { Route } from "../lib/constant";
-import { jwt } from "../lib/helpers/jwt.helper";
-import { useAttemptService } from "../services/attempt/useAttemptService";
-import { authService } from "../services/auth/auth.service";
-import { User } from "../services/user/entity/user.entity";
+import { Route } from "../../lib/constant";
+import { jwt } from "../../lib/helpers/jwt.helper";
+import { useAttemptService } from "../../services/attempt/useAttemptService";
+import { authService } from "../../services/auth/auth.service";
+import { User } from "../../services/user/entity/user.entity";
+import { useUserService } from "../../services/user/useUserService";
 
 type Data = {
   user: User;
@@ -41,6 +42,15 @@ export default function ProfilePage({
       response: attemptHistoryResponse,
     },
   } = useAttemptService({ userId: user.id });
+
+  const {
+    findById: {
+      isLoading: isFindUserByIdLoading,
+      isSuccess: isFindUserByIdSuccess,
+      isError: isFindUserByIdError,
+      response: findUserByIdResponse,
+    },
+  } = useUserService({ userId: user.id });
 
   return (
     <>
@@ -81,18 +91,20 @@ export default function ProfilePage({
               color="orange"
               style={{ borderRadius: 9999 }}
             >
-              {user.name.charAt(0).toUpperCase()}
+              {findUserByIdResponse?.data.name.charAt(0)}
             </Avatar>
             <div>
               <Title order={2} className="text-center sm:text-left">
-                {user.name}
+                {findUserByIdResponse?.data.name}
               </Title>
               <Text className="text-center sm:text-left" color="gray">
-                {user.email}
+                {findUserByIdResponse?.data.email}
               </Text>
             </div>
             <div className="hidden sm:block grow"></div>
             <Button
+              component={Link}
+              href={Route.EDIT_PROFILE}
               leftIcon={<FontAwesomeIcon icon="user-pen" />}
               variant="subtle"
               className="mt-[-8px] sm:mt-0"
