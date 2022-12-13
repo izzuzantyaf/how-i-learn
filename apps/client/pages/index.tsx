@@ -49,21 +49,6 @@ export default function HomePage({
             Presisi
           </Text>
           <div className="spacer grow"></div>
-          {isFindUserByIdLoading ? (
-            <Skeleton height={38} circle />
-          ) : findUserByIdResponse?.isSuccess && findUserByIdResponse?.data ? (
-            <Avatar
-              alt="user profile pic"
-              component={Link}
-              href={Route.PROFILE}
-              size="md"
-              color="orange"
-              style={{ borderRadius: 9999 }}
-              variant="filled"
-            >
-              {findUserByIdResponse?.data.name.charAt(0)}
-            </Avatar>
-          ) : null}
           {!user ? (
             <>
               <Button
@@ -78,6 +63,20 @@ export default function HomePage({
                 Buat akun
               </Button>
             </>
+          ) : isFindUserByIdLoading ? (
+            <Skeleton height={38} circle />
+          ) : findUserByIdResponse?.data ? (
+            <Avatar
+              alt="user profile pic"
+              component={Link}
+              href={Route.PROFILE}
+              size="md"
+              color="orange"
+              style={{ borderRadius: 9999 }}
+              variant="filled"
+            >
+              {findUserByIdResponse?.data.name.charAt(0)}
+            </Avatar>
           ) : null}
         </div>
       </header>
