@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Title, Text, Avatar } from "@mantine/core";
+import { Button, Title, Text, Avatar, Skeleton } from "@mantine/core";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -11,7 +10,7 @@ import { User } from "../services/user/entity/user.entity";
 import { useUserService } from "../services/user/useUserService";
 
 type Data = {
-  user: User;
+  user?: User;
 };
 
 export const getServerSideProps: GetServerSideProps<Data> = async ({ req }) => {
@@ -31,7 +30,7 @@ export default function HomePage({
       isError: isFindUserByIdError,
       response: findUserByIdResponse,
     },
-  } = useUserService({ userId: user.id });
+  } = useUserService({ userId: user?.id });
 
   return (
     <>
@@ -50,16 +49,9 @@ export default function HomePage({
             Presisi
           </Text>
           <div className="spacer grow"></div>
-          {findUserByIdResponse?.data ? (
-            // <Button
-            //   component={Link}
-            //   href={Route.PROFILE}
-            //   variant="light"
-            //   rightIcon={<FontAwesomeIcon icon="user" />}
-            //   compact
-            // >
-            //   {findUserByIdResponse?.data.name.split(" ")[0]}
-            // </Button>
+          {isFindUserByIdLoading ? (
+            <Skeleton height={38} circle />
+          ) : findUserByIdResponse?.isSuccess && findUserByIdResponse?.data ? (
             <Avatar
               alt="user profile pic"
               component={Link}
@@ -71,7 +63,8 @@ export default function HomePage({
             >
               {findUserByIdResponse?.data.name.charAt(0)}
             </Avatar>
-          ) : (
+          ) : null}
+          {!user ? (
             <>
               <Button
                 component={Link}
@@ -85,7 +78,7 @@ export default function HomePage({
                 Buat akun
               </Button>
             </>
-          )}
+          ) : null}
         </div>
       </header>
 
