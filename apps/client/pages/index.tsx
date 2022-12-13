@@ -44,7 +44,6 @@ export default function HomePage({
             <Button
               component={Link}
               href={Route.PROFILE}
-              className="mr-[16px]"
               variant="light"
               rightIcon={<FontAwesomeIcon icon="user" />}
             >
