@@ -102,12 +102,12 @@ export default function ProfilePage({
             </Skeleton>
 
             <div>
-              <Skeleton visible={!findUserByIdResponse?.data}>
+              <Skeleton visible={!findUserByIdResponse?.data} height={35}>
                 <Title order={2} className="text-center sm:text-left">
                   {findUserByIdResponse?.data.name}
                 </Title>
               </Skeleton>
-              <Skeleton visible={!findUserByIdResponse?.data}>
+              <Skeleton visible={!findUserByIdResponse?.data} height={25}>
                 <Text className="text-center sm:text-left" color="gray">
                   {findUserByIdResponse?.data.email}
                 </Text>{" "}
