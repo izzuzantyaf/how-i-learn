@@ -60,11 +60,8 @@ export default function QuizPage({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const questionService = useQuestionService();
   const answerService = useAnswerService();
-  const {
-    isLoading: isGetQuestionsLoading,
-    isError: isGetQuestionsError,
-    response: getQuestionsResponse,
-  } = questionService.getAll();
+  const { isGetQuestionsLoading, isGetQuestionsError, getQuestionsResponse } =
+    questionService.getAll();
   const questions = useMemo(
     () => (getQuestionsResponse?.data as Question[]) ?? [],
     [getQuestionsResponse]

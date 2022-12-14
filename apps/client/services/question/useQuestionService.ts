@@ -1,19 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import { ApiRoute } from "../../lib/constant";
 import { questionService } from "./question.service";
 
 export function useQuestionService() {
   const getQuestionsQueryResult = useQuery({
-    queryKey: ["questions", ApiRoute.QUESTION],
+    queryKey: ["questions"],
     queryFn: questionService.getAll,
   });
 
   return {
     getAll: () => ({
-      isLoading: getQuestionsQueryResult.isLoading,
-      isError: getQuestionsQueryResult.isError,
-      isSuccess: getQuestionsQueryResult.isSuccess,
-      response: getQuestionsQueryResult.data,
+      isGetQuestionsLoading: getQuestionsQueryResult.isLoading,
+      isGetQuestionsError: getQuestionsQueryResult.isError,
+      isGetQuestionsSuccess: getQuestionsQueryResult.isSuccess,
+      getQuestionsResponse: getQuestionsQueryResult.data,
     }),
   };
 }
