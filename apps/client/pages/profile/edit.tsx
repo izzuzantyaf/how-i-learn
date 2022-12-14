@@ -90,56 +90,50 @@ export default function EditProfilePage({
         </header>
 
         <main className="px-[16px] mt-[16px]">
-          <Title order={3}>Edit profil</Title>
-          <form
-            id="edit_profile"
-            className="flex flex-col gap-2 mt-[8px]"
-            onSubmit={async event => {
-              event.preventDefault();
-              const form = event.target as HTMLFormElement;
-              const formData = new FormData(form);
-              const data = Object.fromEntries(formData.entries());
-              console.log("User update data", data);
-              const updateUserDto = {
-                id: user.id,
-                ...data,
-              };
-              updateUser(updateUserDto);
-            }}
-          >
-            <TextInput
-              label="Nama"
-              name="name"
-              placeholder="Nama kamu"
-              defaultValue={findUserByIdResponse?.data?.name}
-              error={updateUserResponse?.errors?.name}
-              required
-            />
-            <TextInput
-              type="email"
-              label="Email"
-              name="email"
-              placeholder="Email yang aktif"
-              defaultValue={findUserByIdResponse?.data?.email}
-              // error={signUpResponse?.errors?.email}
-              disabled
-            />
-            {/* <PasswordInput
-              label="Password"
-              name="password"
-              placeholder="Password"
-              error={signUpResponse?.errors?.password}
-              required
-            /> */}
-          </form>
-          <Button
-            type="submit"
-            form="edit_profile"
-            className="w-full mt-[16px]"
-            loading={isUpdateUserLoading}
-          >
-            Simpan
-          </Button>
+          <div className="my-container">
+            <Title order={3}>Edit profil</Title>
+            <form
+              id="edit_profile"
+              className="flex flex-col gap-2 mt-[8px]"
+              onSubmit={async event => {
+                event.preventDefault();
+                const form = event.target as HTMLFormElement;
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+                console.log("User update data", data);
+                const updateUserDto = {
+                  id: user.id,
+                  ...data,
+                };
+                updateUser(updateUserDto);
+              }}
+            >
+              <TextInput
+                label="Nama"
+                name="name"
+                placeholder="Nama kamu"
+                defaultValue={findUserByIdResponse?.data?.name}
+                error={updateUserResponse?.errors?.name}
+                required
+              />
+              <TextInput
+                type="email"
+                label="Email"
+                name="email"
+                placeholder="Email yang aktif"
+                defaultValue={findUserByIdResponse?.data?.email}
+                disabled
+              />
+            </form>
+            <Button
+              type="submit"
+              form="edit_profile"
+              className="w-full mt-[16px]"
+              loading={isUpdateUserLoading}
+            >
+              Simpan
+            </Button>
+          </div>
         </main>
       </div>
     </>
