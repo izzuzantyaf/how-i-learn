@@ -147,7 +147,7 @@ export default function ProfilePage({
                 attemptHistoryResponse?.data.map(attempt => (
                   <Box
                     key={attempt.id}
-                    className="rounded-[8px] p-[8px] flex items-center border border-gray-200 border-solid"
+                    className="rounded-[8px] p-[8px] flex items-center border shadow border-gray-200 border-solid"
                   >
                     <Text>
                       {new Date(
