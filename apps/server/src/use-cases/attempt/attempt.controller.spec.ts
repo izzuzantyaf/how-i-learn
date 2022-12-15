@@ -521,9 +521,7 @@ describe('AttemptController', () => {
     it(`should return an array of attempts`, async () => {
       const response = await controller.findByUserId(user.id.toString());
       const attempts = response.data as Attempt[];
-      expect(
-        attempts.some((attempt) => attempt instanceof Attempt),
-      ).toBeTruthy();
+      expect(attempts.length).toBeGreaterThan(0);
     });
   });
 });
