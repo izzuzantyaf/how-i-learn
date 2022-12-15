@@ -1,3 +1,10 @@
+import {
+  faArrowLeft,
+  faEllipsisVertical,
+  faRightFromBracket,
+  faTrashCan,
+  faUserPen,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Avatar,
@@ -62,19 +69,19 @@ export default function ProfilePage({
         <header className="px-[16px]">
           <div className="my-container flex items-center">
             <ActionIcon component={Link} href={Route.HOME}>
-              <FontAwesomeIcon icon="arrow-left" />
+              <FontAwesomeIcon icon={faArrowLeft} />
             </ActionIcon>
             <div className="spacer grow"></div>
             <Menu shadow="xl" position="bottom-end" width="192px">
               <Menu.Target>
                 <ActionIcon title="profile-menu" radius="md">
-                  <FontAwesomeIcon icon="ellipsis-vertical" />
+                  <FontAwesomeIcon icon={faEllipsisVertical} />
                 </ActionIcon>
               </Menu.Target>
               <Menu.Dropdown style={{ padding: "8px" }}>
                 <Menu.Item
                   color="red"
-                  icon={<FontAwesomeIcon icon="right-from-bracket" />}
+                  icon={<FontAwesomeIcon icon={faRightFromBracket} />}
                   onClick={authService.signOut}
                 >
                   Keluar
@@ -122,7 +129,7 @@ export default function ProfilePage({
             <Button
               component={Link}
               href={Route.EDIT_PROFILE}
-              leftIcon={<FontAwesomeIcon icon="user-pen" />}
+              leftIcon={<FontAwesomeIcon icon={faUserPen} />}
               variant="subtle"
               className="mt-[-8px] sm:mt-0"
             >
@@ -166,7 +173,7 @@ export default function ProfilePage({
                       Detail
                     </Button> */}
                     <ActionIcon color="red" variant="subtle">
-                      <FontAwesomeIcon icon="trash-can" />
+                      <FontAwesomeIcon icon={faTrashCan} />
                     </ActionIcon>
                   </Box>
                 ))

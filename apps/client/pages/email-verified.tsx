@@ -1,3 +1,4 @@
+import { faEnvelopeCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ThemeIcon, Title, Text } from "@mantine/core";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
@@ -57,7 +58,7 @@ export default function EmailVerifiedPage({
                 variant="light"
                 color="green"
               >
-                <FontAwesomeIcon icon="envelope-circle-check" size="2xl" />
+                <FontAwesomeIcon icon={faEnvelopeCircleCheck} size="2xl" />
               </ThemeIcon>
               <Title order={3} style={{ marginTop: "8px" }}>
                 Konfirmasi email berhasil

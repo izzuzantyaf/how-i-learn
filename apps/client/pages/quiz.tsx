@@ -24,6 +24,14 @@ import { useAnswerService } from "../services/answer/useAnswerService";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { jwt } from "../lib/helpers/jwt.helper";
 import { User } from "../services/user/entity/user.entity";
+import {
+  faArrowLeft,
+  faArrowRight,
+  faCheck,
+  faEllipsisVertical,
+  faInfo,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
 const useGuideModalStore = create<{
   isOpen: boolean;
@@ -215,19 +223,19 @@ export default function QuizPage({
             <Menu shadow="xl" position="bottom-end" width="192px">
               <Menu.Target>
                 <ActionIcon title="quiz-menu" radius="md">
-                  <FontAwesomeIcon icon="ellipsis-vertical" />
+                  <FontAwesomeIcon icon={faEllipsisVertical} />
                 </ActionIcon>
               </Menu.Target>
               <Menu.Dropdown style={{ padding: "8px" }}>
                 <Menu.Item
-                  icon={<FontAwesomeIcon icon="info" />}
+                  icon={<FontAwesomeIcon icon={faInfo} />}
                   onClick={openGuideModal}
                 >
                   Panduan
                 </Menu.Item>
                 <Menu.Item
                   color="red"
-                  icon={<FontAwesomeIcon icon="xmark" />}
+                  icon={<FontAwesomeIcon icon={faXmark} />}
                   onClick={() => setIsCancelModalOpen(true)}
                 >
                   Keluar
@@ -249,6 +257,7 @@ export default function QuizPage({
                 key={choice.id}
                 name={`answer_${choice.id}`}
                 label={choice.answer}
+                size="md"
                 defaultValue={choice.user_cf.toString()}
                 styles={{ label: { fontWeight: "bold" } }}
                 onChange={value => {
@@ -274,7 +283,7 @@ export default function QuizPage({
 
           <div className="quiz-navigation flex gap-4 justify-between items-center">
             <Button
-              leftIcon={<FontAwesomeIcon icon="arrow-left" />}
+              leftIcon={<FontAwesomeIcon icon={faArrowLeft} />}
               variant="outline"
               onClick={() => {
                 window.scrollTo(0, 0);
@@ -287,7 +296,7 @@ export default function QuizPage({
             </Button>
             {counter == questions.length - 1 ? (
               <Button
-                leftIcon={<FontAwesomeIcon icon="check" />}
+                leftIcon={<FontAwesomeIcon icon={faCheck} />}
                 disabled={
                   counter != questions.length - 1 ||
                   answerService.submit.isSuccess
@@ -307,7 +316,7 @@ export default function QuizPage({
             ) : (
               <Button
                 variant="outline"
-                rightIcon={<FontAwesomeIcon icon="arrow-right" />}
+                rightIcon={<FontAwesomeIcon icon={faArrowRight} />}
                 onClick={() => {
                   window.scrollTo(0, 0);
                   setCounter(current => current + 1);

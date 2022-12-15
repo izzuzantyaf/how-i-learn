@@ -9,6 +9,13 @@ import { useToast } from "../../lib/hooks/useToast";
 import { authService } from "../../services/auth/auth.service";
 import { User } from "../../services/user/entity/user.entity";
 import { useUserService } from "../../services/user/useUserService";
+import { useForm } from "@mantine/form";
+import { useEffect, useMemo } from "react";
+import {
+  faArrowLeft,
+  faEllipsisVertical,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 
 type Data = {
   user: User;
@@ -41,21 +48,36 @@ export default function EditProfilePage({
     },
   } = useUserService({ userId: user.id });
 
-  const showToast = useToast();
+  // const form = useForm({
+  //   initialValues: { name: findUserByIdResponse?.data.name },
+  // });
+  // useEffect(() => {
+  //   form.setFieldValue("name", findUserByIdResponse?.data.name);
+  // }, [findUserByIdResponse?.data.name]);
 
-  if (isUpdateUserSuccess && updateUserResponse) {
-    if (updateUserResponse.isSuccess) {
-      showToast.success({
-        id: "update_user",
-        title: updateUserResponse.message,
-      });
-    } else {
-      showToast.error({
-        id: "update_user",
-        title: updateUserResponse.message,
-      });
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const showToast = useMemo(() => useToast(), []);
+
+  useEffect(() => {
+    if (isUpdateUserSuccess && updateUserResponse) {
+      if (updateUserResponse?.isSuccess) {
+        showToast.success({
+          id: "update_user",
+          title: updateUserResponse?.message,
+        });
+      } else {
+        showToast.error({
+          id: "update_user",
+          title: updateUserResponse?.message,
+        });
+      }
     }
-  }
+  }, [isUpdateUserSuccess, showToast, updateUserResponse]);
+
+  // Reset form dirty state when update user success
+  // useEffect(() => {
+  //   if (updateUserResponse?.isSuccess) form.resetDirty();
+  // }, [updateUserResponse?.isSuccess]);
 
   return (
     <>
@@ -67,19 +89,19 @@ export default function EditProfilePage({
         <header className="px-[16px]">
           <div className="my-container flex items-center">
             <ActionIcon component={Link} href={Route.PROFILE}>
-              <FontAwesomeIcon icon="arrow-left" />
+              <FontAwesomeIcon icon={faArrowLeft} />
             </ActionIcon>
             <div className="spacer grow"></div>
             <Menu shadow="xl" position="bottom-end" width="192px">
               <Menu.Target>
                 <ActionIcon title="profile-menu" radius="md">
-                  <FontAwesomeIcon icon="ellipsis-vertical" />
+                  <FontAwesomeIcon icon={faEllipsisVertical} />
                 </ActionIcon>
               </Menu.Target>
               <Menu.Dropdown style={{ padding: "8px" }}>
                 <Menu.Item
                   color="red"
-                  icon={<FontAwesomeIcon icon="right-from-bracket" />}
+                  icon={<FontAwesomeIcon icon={faRightFromBracket} />}
                   onClick={authService.signOut}
                 >
                   Keluar
@@ -109,6 +131,7 @@ export default function EditProfilePage({
               }}
             >
               <TextInput
+                // {...form.getInputProps("name")}
                 label="Nama"
                 name="name"
                 placeholder="Nama kamu"
@@ -130,6 +153,7 @@ export default function EditProfilePage({
               form="edit_profile"
               className="w-full mt-[16px]"
               loading={isUpdateUserLoading}
+              // disabled={!form.isDirty("name")}
             >
               Simpan
             </Button>

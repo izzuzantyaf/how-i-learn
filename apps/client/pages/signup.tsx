@@ -9,42 +9,48 @@ import {
 import Head from "next/head";
 import { CreateUserDto } from "../services/user/dto/create-user.dto";
 import { useUserService } from "../services/user/useUserService";
-import { showNotification } from "@mantine/notifications";
 import Link from "next/link";
 import { Route } from "../lib/constant";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { jwt } from "../lib/helpers/jwt.helper";
 import { redirector } from "../lib/helpers/redirector.helper";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useToast } from "../lib/hooks/useToast";
+import { useEffect, useMemo } from "react";
 
 export default function SignUpPage() {
   const {
     signup: {
       run: signUp,
       isLoading: isSignUpLoading,
+      isSuccess: isSignUpSuccess,
       response: signUpResponse,
     },
   } = useUserService();
 
-  if (signUpResponse) {
-    showNotification({
-      id: "signup",
-      title: signUpResponse.message,
-      message: "",
-      color: signUpResponse.isSuccess ? "green" : "red",
-      icon: signUpResponse.isSuccess ? (
-        <FontAwesomeIcon icon="check" />
-      ) : (
-        <FontAwesomeIcon icon="xmark" />
-      ),
-    });
-    if (signUpResponse.isSuccess) {
-      const token = jwt.sign({
-        userId: signUpResponse?.data?.id,
-        userEmail: signUpResponse?.data?.email,
-      });
-      redirector.toEmailConfirmationPage(token);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const showToast = useMemo(() => useToast(), []);
+
+  useEffect(() => {
+    if (signUpResponse) {
+      if (signUpResponse.isSuccess) {
+        showToast.success({
+          id: "signup",
+          title: signUpResponse.message,
+        });
+        const token = jwt.sign({
+          userId: signUpResponse?.data?.id,
+          userEmail: signUpResponse?.data?.email,
+        });
+        redirector.toEmailConfirmationPage(token);
+      } else {
+        showToast.error({
+          id: "signup",
+          title: signUpResponse.message,
+        });
+      }
     }
-  }
+  }, [showToast, signUpResponse]);
 
   return (
     <>
@@ -55,7 +61,7 @@ export default function SignUpPage() {
       <main className="signup-page px-[16px] min-h-screen flex flex-col justify-center">
         <div className="my-container max-w-xs">
           <ActionIcon component={Link} href={Route.HOME} variant="light">
-            <FontAwesomeIcon icon="arrow-left" />
+            <FontAwesomeIcon icon={faArrowLeft} />
           </ActionIcon>
           <Title order={2} style={{ marginTop: "16px" }}>
             Buat akun
@@ -99,7 +105,7 @@ export default function SignUpPage() {
             type="submit"
             form="user_signup"
             className="w-full mt-[16px]"
-            loading={isSignUpLoading}
+            loading={isSignUpLoading || isSignUpSuccess}
           >
             Buat akun
           </Button>

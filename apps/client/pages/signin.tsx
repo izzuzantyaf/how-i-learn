@@ -16,6 +16,7 @@ import { useToast } from "../lib/hooks/useToast";
 import { jwt } from "../lib/helpers/jwt.helper";
 import { redirector } from "../lib/helpers/redirector.helper";
 import { setAccessTokenToCookie } from "../lib/helpers/cookie.helper";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function SignInPage() {
   const {
@@ -75,7 +76,7 @@ export default function SignInPage() {
       <main className="signin-page px-[16px] min-h-screen flex flex-col justify-center">
         <div className="my-container max-w-xs">
           <ActionIcon component={Link} href={Route.HOME} variant="light">
-            <FontAwesomeIcon icon="arrow-left" />
+            <FontAwesomeIcon icon={faArrowLeft} />
           </ActionIcon>
           <Title order={2} style={{ marginTop: "16px" }}>
             Masuk

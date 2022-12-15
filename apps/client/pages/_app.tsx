@@ -3,24 +3,7 @@ import type { AppProps } from "next/app";
 import { MantineProvider } from "@mantine/core";
 import { Inter } from "@next/font/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faArrowLeft,
-  faArrowRight,
-  faCheck,
-  faCircleInfo,
-  faEllipsisVertical,
-  faEnvelopeCircleCheck,
-  faInfo,
-  faXmark,
-  faEnvelope,
-  faExclamation,
-  faRightFromBracket,
-  faUserPen,
-  faUser,
-  faTrashCan,
-  faEye,
-} from "@fortawesome/free-solid-svg-icons";
+import { faInfo } from "@fortawesome/free-solid-svg-icons";
 import { NotificationsProvider } from "@mantine/notifications";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { config } from "@fortawesome/fontawesome-svg-core";
@@ -29,24 +12,24 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 const inter = Inter({ subsets: ["latin"] });
 const queryClient = new QueryClient();
 
-library.add(
-  faArrowRight,
-  faArrowLeft,
-  faCheck,
-  faInfo,
-  faXmark,
-  faEllipsisVertical,
-  faCircleInfo,
-  faCheck,
-  faEnvelope,
-  faEnvelopeCircleCheck,
-  faExclamation,
-  faRightFromBracket,
-  faUserPen,
-  faUser,
-  faTrashCan,
-  faEye
-);
+// library.add(
+//   faArrowRight,
+//   faArrowLeft,
+//   faCheck,
+//   faInfo,
+//   faXmark,
+//   faEllipsisVertical,
+//   faCircleInfo,
+//   faCheck,
+//   faEnvelope,
+//   faEnvelopeCircleCheck,
+//   faExclamation,
+//   faRightFromBracket,
+//   faUserPen,
+//   faUser,
+//   faTrashCan,
+//   faEye
+// );
 config.autoAddCss = false;
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -110,7 +93,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 defaultProps: {
                   radius: "md",
                   color: "blue",
-                  icon: <FontAwesomeIcon icon="info" />,
+                  icon: <FontAwesomeIcon icon={faInfo} />,
                 },
                 styles: (theme, params) => ({
                   root: {

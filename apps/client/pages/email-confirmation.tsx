@@ -1,3 +1,4 @@
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ThemeIcon, Title, Text, Button } from "@mantine/core";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
@@ -110,7 +111,7 @@ export default function EmailConfirmationPage({
               padding: "8px",
             }}
           >
-            <FontAwesomeIcon icon="envelope" size="2xl" />
+            <FontAwesomeIcon icon={faEnvelope} size="2xl" />
           </ThemeIcon>
           <Title order={3} style={{ marginTop: "8px" }}>
             Konfirmasi Email
