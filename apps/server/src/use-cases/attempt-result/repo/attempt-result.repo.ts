@@ -9,6 +9,18 @@ export class AttemptResultRepository implements IAttemptResultRepo {
   private readonly logger = new Logger(AttemptResultRepository.name);
 
   constructor(private prisma: PrismaClientService) {}
+  async deleteByAttemptId(attempt_id: number): Promise<number> {
+    let count: number = 0;
+    try {
+      count = (
+        await this.prisma.attemptResult.deleteMany({ where: { attempt_id } })
+      ).count;
+    } catch (error) {
+      this.logger.debug(error);
+      throw error;
+    }
+    return count;
+  }
 
   async findMany(): Promise<AttemptResult[]> {
     const attempt_results = await this.prisma.attemptResult.findMany();

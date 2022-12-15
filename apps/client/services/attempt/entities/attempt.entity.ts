@@ -1,5 +1,6 @@
 export type Attempt = {
   id?: number;
-  created_at: string;
-  updated_at: string;
+  type_result?: string;
+  created_at?: string;
+  updated_at?: string;
 };

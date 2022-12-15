@@ -9,6 +9,17 @@ export class AnswerRepository implements IAnswerRepo {
   private readonly logger = new Logger(AnswerRepository.name);
 
   constructor(private prisma: PrismaClientService) {}
+  async deleteByAttemptId(attempt_id: number): Promise<number> {
+    let count: number = 0;
+    try {
+      count = (await this.prisma.answer.deleteMany({ where: { attempt_id } }))
+        .count;
+    } catch (error) {
+      this.logger.debug(error);
+      throw error;
+    }
+    return count;
+  }
 
   async createMany(data: CreateAnswerDto[]): Promise<Answer[] | number> {
     const storedAnswers = await this.prisma.answer

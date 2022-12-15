@@ -1,3 +1,5 @@
+import { LearningStyle } from 'src/use-cases/learning-style/entities/learning-style.entity';
+
 export type AttemptResultConstructorProps = Partial<
   Pick<
     AttemptResult,
@@ -14,6 +16,7 @@ export class AttemptResult {
   id?: number;
   attempt_id: number;
   learning_style_id: string;
+  learning_style?: LearningStyle;
   final_cf: number;
   created_at?: Date;
   updated_at?: Date;

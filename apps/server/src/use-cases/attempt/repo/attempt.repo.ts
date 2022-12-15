@@ -50,7 +50,24 @@ export class AttemptRepository implements IAttemptRepo {
     let attempts: Attempt[] = [];
     try {
       attempts = await this.prisma.attempt.findMany({
-        select: { id: true, created_at: true, updated_at: true },
+        select: {
+          id: true,
+          created_at: true,
+          updated_at: true,
+          attempt_results: {
+            select: {
+              final_cf: true,
+              learning_style_id: true,
+              attempt_id: true,
+              learning_style: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          },
+        },
         where: { user_id: userId },
       });
     } catch (error) {
@@ -58,7 +75,15 @@ export class AttemptRepository implements IAttemptRepo {
     }
     return attempts.map((attempt) => new Attempt(attempt));
   }
-  deleteById(id: string | number): Promise<Attempt> {
-    throw new Error('Method not implemented.');
+
+  async deleteById(id: number): Promise<Attempt> {
+    let attempt: Attempt;
+    try {
+      attempt = await this.prisma.attempt.delete({ where: { id } });
+    } catch (error) {
+      this.logger.debug(error);
+      throw error;
+    }
+    return attempt;
   }
 }

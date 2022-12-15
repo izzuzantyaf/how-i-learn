@@ -18,5 +18,6 @@ export enum ApiRoute {
   SEND_EMAIL_CONFIRMATION = "/auth/send-email-verification-link",
   VERIFY_EMAIL = "/auth/verify-email",
   SIGNIN = "/auth/signin",
+  ATTEMPT = "/attempts",
   ATTEMPT_BY_USER_ID = "/attempts/user",
 }

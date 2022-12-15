@@ -16,12 +16,16 @@ import {
   Box,
   Stack,
   Skeleton,
+  Flex,
+  Modal,
 } from "@mantine/core";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Route } from "../../lib/constant";
 import { jwt } from "../../lib/helpers/jwt.helper";
+import { useToast } from "../../lib/hooks/useToast";
 import { useAttemptService } from "../../services/attempt/useAttemptService";
 import { authService } from "../../services/auth/auth.service";
 import { User } from "../../services/user/entity/user.entity";
@@ -49,6 +53,14 @@ export default function ProfilePage({
       isSuccess: isAttemptHistorySuccess,
       response: attemptHistoryResponse,
     },
+    deleteById: {
+      isDeleteAttemptByIdError,
+      isDeleteAttemptByIdLoading,
+      isDeleteAttemptByIdSuccess,
+      deleteAttemptById,
+      deleteAttemptByIdResponse,
+    },
+    invalidateAttemptHistory,
   } = useAttemptService({ userId: user.id });
 
   const {
@@ -59,6 +71,34 @@ export default function ProfilePage({
       response: findUserByIdResponse,
     },
   } = useUserService({ userId: user.id });
+
+  const [attemptIdWantToDeleted, setAttemptIdWantToDeleted] =
+    useState<number>();
+  const [isDeleteHistoryModalOpen, setIsDeleteHistoryModalOpen] =
+    useState(false);
+
+  const showToast = useToast();
+
+  useEffect(() => {
+    if (deleteAttemptByIdResponse?.isSuccess) invalidateAttemptHistory();
+  }, [deleteAttemptByIdResponse?.isSuccess]);
+
+  useEffect(() => {
+    if (deleteAttemptByIdResponse) {
+      setIsDeleteHistoryModalOpen(false);
+      if (deleteAttemptByIdResponse.isSuccess) {
+        showToast.success({
+          id: "delete_attempt",
+          title: deleteAttemptByIdResponse.message,
+        });
+      } else {
+        showToast.error({
+          id: "delete_attempt",
+          title: deleteAttemptByIdResponse.message,
+        });
+      }
+    }
+  }, [deleteAttemptByIdResponse]);
 
   return (
     <>
@@ -144,11 +184,11 @@ export default function ProfilePage({
             <Stack className="mt-[16px]">
               {!attemptHistoryResponse?.data ? (
                 <>
-                  <Skeleton height={52} />
-                  <Skeleton height={52} />
-                  <Skeleton height={52} />
-                  <Skeleton height={52} />
-                  <Skeleton height={52} />
+                  <Skeleton height={67.6} />
+                  <Skeleton height={67.6} />
+                  <Skeleton height={67.6} />
+                  <Skeleton height={67.6} />
+                  <Skeleton height={67.6} />
                 </>
               ) : (
                 attemptHistoryResponse?.data.map(attempt => (
@@ -156,14 +196,20 @@ export default function ProfilePage({
                     key={attempt.id}
                     className="rounded-[8px] p-[8px] flex items-center border shadow border-gray-200 border-solid"
                   >
-                    <Text>
-                      {new Date(
-                        attempt.created_at as unknown as string
-                      ).toLocaleString("id-ID", {
-                        dateStyle: "medium",
-                        timeStyle: "long",
-                      })}
-                    </Text>
+                    <div>
+                      <Text>
+                        Hasil: <b>{attempt.type_result}</b>
+                      </Text>
+                      <Text size="md">
+                        {new Date(
+                          attempt.created_at as unknown as string
+                        ).toLocaleString("id-ID", {
+                          dateStyle: "medium",
+                          timeStyle: "long",
+                        })}
+                      </Text>
+                    </div>
+
                     <div className="spacer grow"></div>
                     {/* <Button
                       leftIcon={<FontAwesomeIcon icon="eye" />}
@@ -172,7 +218,14 @@ export default function ProfilePage({
                     >
                       Detail
                     </Button> */}
-                    <ActionIcon color="red" variant="subtle">
+                    <ActionIcon
+                      color="red"
+                      variant="subtle"
+                      onClick={() => {
+                        setAttemptIdWantToDeleted(attempt.id as number);
+                        setIsDeleteHistoryModalOpen(true);
+                      }}
+                    >
                       <FontAwesomeIcon icon={faTrashCan} />
                     </ActionIcon>
                   </Box>
@@ -181,6 +234,34 @@ export default function ProfilePage({
             </Stack>
           </div>
         </section>
+
+        <Modal
+          opened={isDeleteHistoryModalOpen}
+          onClose={() => setIsDeleteHistoryModalOpen(false)}
+          title="Hapus history"
+          withCloseButton={false}
+          centered
+        >
+          <Text>Yakin untuk mengapus history?</Text>
+          <Flex gap="8px" justify="end" style={{ marginTop: "24px" }}>
+            <Button
+              variant="light"
+              color="gray"
+              onClick={() => setIsDeleteHistoryModalOpen(false)}
+            >
+              Batal
+            </Button>
+            <Button
+              onClick={() =>
+                deleteAttemptById(attemptIdWantToDeleted as number)
+              }
+              color="red"
+              loading={isDeleteAttemptByIdLoading}
+            >
+              Ya, hapus
+            </Button>
+          </Flex>
+        </Modal>
       </main>
     </>
   );

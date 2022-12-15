@@ -45,7 +45,8 @@ export class AttemptController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.attemptService.remove(+id);
+  async remove(@Param('id') id: string) {
+    await this.attemptService.remove(parseInt(id));
+    return new SuccessfulResponse('History berhasil dihapus');
   }
 }
