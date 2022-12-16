@@ -18,6 +18,7 @@ export function useUserService(
   const findByIdQuery = useQuery({
     queryKey: ["user_by_id", userId],
     queryFn: () => userService.findById(userId as number),
+    enabled: userId ? true : false,
   });
 
   return {
@@ -39,6 +40,7 @@ export function useUserService(
       isLoading: findByIdQuery.isLoading,
       isError: findByIdQuery.isError,
       isSuccess: findByIdQuery.isSuccess,
+      isRefetching: findByIdQuery.isRefetching,
       response: findByIdQuery.data,
     },
   };
