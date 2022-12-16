@@ -105,7 +105,7 @@ export default function SignUpPage() {
             type="submit"
             form="user_signup"
             className="w-full mt-[16px]"
-            loading={isSignUpLoading || isSignUpSuccess}
+            loading={isSignUpLoading || signUpResponse?.isSuccess}
           >
             Buat akun
           </Button>
