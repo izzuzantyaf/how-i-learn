@@ -120,48 +120,7 @@ export default function QuizPage({
 
   console.log(`answersWithUserCf[${counter}]: `, answersWithUserCf[counter]);
 
-  if (answerService.submit.response?.isSuccess) {
-    const result = answerService.submit.response.data;
-    return (
-      <Box
-        component="main"
-        className="result min-h-screen"
-        style={{ backgroundColor: "whitesmoke" }}
-      >
-        <div className="my-container px-[16px] py-[16px]">
-          <Title order={3}>Tipe belajar kamu</Title>
-          <Box className="flex flex-col items-center justify-center min-h-[92px] bg-white shadow-md rounded-lg mt-2">
-            <Text className="font-black text-xl">
-              {result.bestLearningStyle}
-            </Text>
-          </Box>
-          <Title order={3} style={{ marginTop: "16px" }}>
-            Rekomendasi cara belajar
-          </Title>
-          <div className="grid sm:grid-cols-2 gap-[8px] mt-[8px]">
-            {result.learningRecommendations.map(
-              (recommendation: any, index: number) => (
-                <div
-                  key={index}
-                  className="p-[8px] px-[12px] rounded-[8px] bg-white"
-                >
-                  {recommendation.name}
-                </div>
-              )
-            )}
-          </div>
-          <Button
-            component={Link}
-            href={Route.HOME}
-            style={{ marginTop: "24px" }}
-            className="w-full sm:w-auto"
-          >
-            Kembali ke Beranda
-          </Button>
-        </div>
-      </Box>
-    );
-  }
+  const result = answerService.submit.response?.data;
 
   return (
     <>
@@ -169,166 +128,206 @@ export default function QuizPage({
         <title>Quiz | Presisi</title>
       </Head>
 
-      <main className="quiz-page">
-        <div className="my-container h-screen px-[16px] py-[16px] flex flex-col gap-4">
-          <Modal
-            opened={isGuideModalOpen}
-            onClose={closeGuideModal}
-            title="Panduan"
-          >
-            <List type="ordered">
-              <List.Item>
-                Berikan nilai tingkat keyakinanmu pada jawaban yang sesuai
-                dengan kamu
-              </List.Item>
-              <List.Item>Kamu boleh memilih lebih dari 1 jawaban</List.Item>
-              <List.Item>
-                Jika tidak ingin memilih suatu jawaban, pilih <q>Tidak</q>
-              </List.Item>
-            </List>
-          </Modal>
-
-          <Modal
-            opened={isCancelModalOpen}
-            onClose={() => setIsCancelModalOpen(false)}
-            title="Keluar"
-            withCloseButton={false}
-            centered
-          >
-            <Text>Jika kamu keluar, maka jawabanmu tidak akan tersimpan</Text>
-            <Flex gap="8px" justify="end" style={{ marginTop: "24px" }}>
-              <Button
-                variant="light"
-                color="gray"
-                onClick={() => setIsCancelModalOpen(false)}
-              >
-                Batal
-              </Button>
-              <Button component={Link} href={Route.HOME} color="red">
-                Keluar
-              </Button>
-            </Flex>
-          </Modal>
-
-          <section className="top flex items-center gap-4">
-            <Text className="font-bold">{`${counter + 1}/${
-              questions.length
-            }`}</Text>
-            <Progress
-              value={((counter + 1) / questions.length) * 100}
-              size="lg"
-              radius="md"
-              className="grow"
-            />
-            <Menu shadow="xl" position="bottom-end" width="192px">
-              <Menu.Target>
-                <ActionIcon title="quiz-menu" radius="md">
-                  <FontAwesomeIcon icon={faEllipsisVertical} />
-                </ActionIcon>
-              </Menu.Target>
-              <Menu.Dropdown style={{ padding: "8px" }}>
-                <Menu.Item
-                  icon={<FontAwesomeIcon icon={faInfo} />}
-                  onClick={openGuideModal}
-                >
-                  Panduan
-                </Menu.Item>
-                <Menu.Item
-                  color="red"
-                  icon={<FontAwesomeIcon icon={faXmark} />}
-                  onClick={() => setIsCancelModalOpen(true)}
-                >
-                  Keluar
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
-          </section>
-
-          <div className="question grow flex items-center min-h-[30vh]">
-            <Text component="p">{questions[counter]?.question}</Text>
-          </div>
-
-          <div
-            ref={answerChoicesContainer}
-            className="answer-choices grid md:grid-cols-2 gap-4 overflow-y-auto items-end"
-          >
-            {answersWithUserCf[counter]?.map(choice => (
-              <Radio.Group
-                key={choice.id}
-                name={`answer_${choice.id}`}
-                label={choice.answer}
-                size="md"
-                defaultValue={choice.user_cf.toString()}
-                styles={{ label: { fontWeight: "bold" } }}
-                onChange={value => {
-                  console.log("Clicked value: " + value);
-                  updateAnswers(counter, choice.id, value);
-                }}
-              >
-                {MARKS.map(({ label, value }, index) => (
-                  <Radio
-                    key={`answer_${choice.id}_${index}`}
-                    name={`answer_${choice.id}_${index}`}
-                    label={label}
-                    value={value.toString()}
-                    styles={{
-                      label: { cursor: "pointer" },
-                      radio: { cursor: "pointer" },
-                    }}
-                  />
-                ))}
-              </Radio.Group>
-            ))}
-          </div>
-
-          <div className="quiz-navigation flex gap-4 justify-between items-center">
+      {answerService.submit.response?.isSuccess ? (
+        <Box
+          component="main"
+          className="result min-h-screen"
+          style={{ backgroundColor: "whitesmoke" }}
+        >
+          <div className="my-container px-[16px] py-[16px]">
+            <Title order={3}>Tipe belajar kamu</Title>
+            <Box className="flex flex-col items-center justify-center min-h-[92px] bg-white shadow-md rounded-lg mt-2">
+              <Text className="font-black text-xl">
+                {result.bestLearningStyle}
+              </Text>
+            </Box>
+            <Title order={3} style={{ marginTop: "16px" }}>
+              Rekomendasi cara belajar
+            </Title>
+            <div className="grid sm:grid-cols-2 gap-[8px] mt-[8px]">
+              {result.learningRecommendations.map(
+                (recommendation: any, index: number) => (
+                  <div
+                    key={index}
+                    className="p-[8px] px-[12px] rounded-[8px] bg-white"
+                  >
+                    {recommendation.name}
+                  </div>
+                )
+              )}
+            </div>
             <Button
-              leftIcon={<FontAwesomeIcon icon={faArrowLeft} />}
-              variant="outline"
-              onClick={() => {
-                window.scrollTo(0, 0);
-                setCounter(current => current - 1);
-              }}
-              disabled={counter == 0}
-              style={{ visibility: counter == 0 ? "hidden" : "visible" }}
+              component={Link}
+              href={Route.HOME}
+              style={{ marginTop: "24px" }}
+              className="w-full sm:w-auto"
             >
-              Kembali
+              Kembali ke Beranda
             </Button>
-            {counter == questions.length - 1 ? (
+          </div>
+        </Box>
+      ) : (
+        <main className="quiz-page">
+          <div className="my-container h-screen px-[16px] py-[16px] flex flex-col gap-4">
+            <Modal
+              opened={isGuideModalOpen}
+              onClose={closeGuideModal}
+              title="Panduan"
+            >
+              <List type="ordered">
+                <List.Item>
+                  Berikan nilai tingkat keyakinanmu pada jawaban yang sesuai
+                  dengan kamu
+                </List.Item>
+                <List.Item>Kamu boleh memilih lebih dari 1 jawaban</List.Item>
+                <List.Item>
+                  Jika tidak ingin memilih suatu jawaban, pilih <q>Tidak</q>
+                </List.Item>
+              </List>
+            </Modal>
+
+            <Modal
+              opened={isCancelModalOpen}
+              onClose={() => setIsCancelModalOpen(false)}
+              title="Keluar"
+              withCloseButton={false}
+              centered
+            >
+              <Text>Jika kamu keluar, maka jawabanmu tidak akan tersimpan</Text>
+              <Flex gap="8px" justify="end" style={{ marginTop: "24px" }}>
+                <Button
+                  variant="light"
+                  color="gray"
+                  onClick={() => setIsCancelModalOpen(false)}
+                >
+                  Batal
+                </Button>
+                <Button component={Link} href={Route.HOME} color="red">
+                  Keluar
+                </Button>
+              </Flex>
+            </Modal>
+
+            <section className="top flex items-center gap-4">
+              <Text className="font-bold">{`${counter + 1}/${
+                questions.length
+              }`}</Text>
+              <Progress
+                value={((counter + 1) / questions.length) * 100}
+                size="lg"
+                radius="md"
+                className="grow"
+              />
+              <Menu shadow="xl" position="bottom-end" width="192px">
+                <Menu.Target>
+                  <ActionIcon title="quiz-menu" radius="md">
+                    <FontAwesomeIcon icon={faEllipsisVertical} />
+                  </ActionIcon>
+                </Menu.Target>
+                <Menu.Dropdown style={{ padding: "8px" }}>
+                  <Menu.Item
+                    icon={<FontAwesomeIcon icon={faInfo} />}
+                    onClick={openGuideModal}
+                  >
+                    Panduan
+                  </Menu.Item>
+                  <Menu.Item
+                    color="red"
+                    icon={<FontAwesomeIcon icon={faXmark} />}
+                    onClick={() => setIsCancelModalOpen(true)}
+                  >
+                    Keluar
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            </section>
+
+            <div className="question grow flex items-center min-h-[30vh]">
+              <Text component="p">{questions[counter]?.question}</Text>
+            </div>
+
+            <div
+              ref={answerChoicesContainer}
+              className="answer-choices grid md:grid-cols-2 gap-4 overflow-y-auto items-end"
+            >
+              {answersWithUserCf[counter]?.map(choice => (
+                <Radio.Group
+                  key={choice.id}
+                  name={`answer_${choice.id}`}
+                  label={choice.answer}
+                  size="md"
+                  defaultValue={choice.user_cf.toString()}
+                  styles={{ label: { fontWeight: "bold" } }}
+                  onChange={value => {
+                    console.log("Clicked value: " + value);
+                    updateAnswers(counter, choice.id, value);
+                  }}
+                >
+                  {MARKS.map(({ label, value }, index) => (
+                    <Radio
+                      key={`answer_${choice.id}_${index}`}
+                      name={`answer_${choice.id}_${index}`}
+                      label={label}
+                      value={value.toString()}
+                      styles={{
+                        label: { cursor: "pointer" },
+                        radio: { cursor: "pointer" },
+                      }}
+                    />
+                  ))}
+                </Radio.Group>
+              ))}
+            </div>
+
+            <div className="quiz-navigation flex gap-4 justify-between items-center">
               <Button
-                leftIcon={<FontAwesomeIcon icon={faCheck} />}
-                disabled={
-                  counter != questions.length - 1 ||
-                  answerService.submit.isSuccess
-                }
-                loading={answerService.submit.isLoading}
-                onClick={async () => {
-                  console.log(answersWithUserCf);
-                  //* Submit user answer to server
-                  answerService.submit.submit({
-                    user_id: user?.id,
-                    answersWithUserCf: answersWithUserCf.flat(1),
-                  });
-                }}
-              >
-                Submit
-              </Button>
-            ) : (
-              <Button
+                leftIcon={<FontAwesomeIcon icon={faArrowLeft} />}
                 variant="outline"
-                rightIcon={<FontAwesomeIcon icon={faArrowRight} />}
                 onClick={() => {
                   window.scrollTo(0, 0);
-                  setCounter(current => current + 1);
+                  setCounter(current => current - 1);
                 }}
-                disabled={counter == questions.length - 1}
+                disabled={counter == 0}
+                style={{ visibility: counter == 0 ? "hidden" : "visible" }}
               >
-                Lanjut
+                Kembali
               </Button>
-            )}
+              {counter == questions.length - 1 ? (
+                <Button
+                  leftIcon={<FontAwesomeIcon icon={faCheck} />}
+                  disabled={
+                    counter != questions.length - 1 ||
+                    answerService.submit.isSuccess
+                  }
+                  loading={answerService.submit.isLoading}
+                  onClick={async () => {
+                    console.log(answersWithUserCf);
+                    //* Submit user answer to server
+                    answerService.submit.submit({
+                      user_id: user?.id,
+                      answersWithUserCf: answersWithUserCf.flat(1),
+                    });
+                  }}
+                >
+                  Submit
+                </Button>
+              ) : (
+                <Button
+                  variant="outline"
+                  rightIcon={<FontAwesomeIcon icon={faArrowRight} />}
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                    setCounter(current => current + 1);
+                  }}
+                  disabled={counter == questions.length - 1}
+                >
+                  Lanjut
+                </Button>
+              )}
+            </div>
           </div>
-        </div>
-      </main>
+        </main>
+      )}
     </>
   );
 }

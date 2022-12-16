@@ -186,16 +186,16 @@ export default function ProfilePage({
             <Stack className="mt-[16px]">
               {!attemptHistoryResponse?.data || isAttemptHistoryRefetching ? (
                 <>
-                  <Skeleton height={67.6} />
-                  <Skeleton height={67.6} />
-                  <Skeleton height={67.6} />
-                  <Skeleton height={67.6} />
-                  <Skeleton height={67.6} />
+                  {Array(5)
+                    .fill(undefined)
+                    .map((value, index) => (
+                      <Skeleton key={index} height={67.6} />
+                    ))}
                 </>
               ) : attemptHistoryResponse.data.length == 0 ? (
                 <div className="bg-gray-100 py-[32px] rounded-[8px] flex flex-col items-center justify-center gap-[8px]">
                   <Text className="text-gray-500">Belum ada data</Text>
-                  <Button component={Link} href={Route.QUIZ} size="xs">
+                  <Button component={Link} href={Route.QUIZ} size="sm">
                     Ambil Tes
                   </Button>
                 </div>
