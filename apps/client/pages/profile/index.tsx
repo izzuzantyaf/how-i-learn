@@ -1,6 +1,7 @@
 import {
   faArrowLeft,
   faEllipsisVertical,
+  faEye,
   faRightFromBracket,
   faTrashCan,
   faUserPen,
@@ -203,7 +204,7 @@ export default function ProfilePage({
                 attemptHistoryResponse?.data.map(attempt => (
                   <Box
                     key={attempt.id}
-                    className="rounded-[8px] p-[8px] flex items-center border shadow border-gray-200 border-solid"
+                    className="rounded-[8px] p-[8px] flex flex-col gap-[4px] sm:flex-row sm:items-center border shadow-md border-gray-100 border-solid"
                   >
                     <div>
                       <Text>
@@ -220,23 +221,26 @@ export default function ProfilePage({
                     </div>
 
                     <div className="spacer grow"></div>
-                    {/* <Button
-                      leftIcon={<FontAwesomeIcon icon="eye" />}
-                      variant="light"
-                      color="gray"
-                    >
-                      Detail
-                    </Button> */}
-                    <ActionIcon
-                      color="red"
-                      variant="subtle"
-                      onClick={() => {
-                        setAttemptIdWantToDeleted(attempt.id as number);
-                        setIsDeleteHistoryModalOpen(true);
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faTrashCan} />
-                    </ActionIcon>
+                    <div className="flex gap-[8px]">
+                      <Button
+                        className="grow"
+                        variant="outline"
+                        // color="gray"
+                        size="sm"
+                      >
+                        Detail
+                      </Button>
+                      <ActionIcon
+                        color="red"
+                        variant="light"
+                        onClick={() => {
+                          setAttemptIdWantToDeleted(attempt.id as number);
+                          setIsDeleteHistoryModalOpen(true);
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faTrashCan} />
+                      </ActionIcon>
+                    </div>
                   </Box>
                 ))
               )}

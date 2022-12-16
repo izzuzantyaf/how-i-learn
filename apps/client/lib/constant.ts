@@ -7,6 +7,7 @@ export enum Route {
   EMAIL_VERIFIED = "/email-verified",
   PROFILE = "/profile",
   EDIT_PROFILE = "/profile/edit",
+  ATTEMPT_RESULT = "/attempt-result",
 }
 
 export enum ApiRoute {

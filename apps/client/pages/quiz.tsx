@@ -129,15 +129,14 @@ export default function QuizPage({
       </Head>
 
       {answerService.submit.response?.isSuccess ? (
-        <Box
-          component="main"
-          className="result min-h-screen"
-          style={{ backgroundColor: "whitesmoke" }}
-        >
+        <Box component="main" className="result min-h-screen bg-gray-100">
           <div className="my-container px-[16px] py-[16px]">
             <Title order={3}>Tipe belajar kamu</Title>
-            <Box className="flex flex-col items-center justify-center min-h-[92px] bg-white shadow-md rounded-lg mt-2">
-              <Text className="font-black text-xl">
+            <Box
+              className="flex flex-col items-center justify-center min-h-[92px] shadow rounded-lg mt-2"
+              bg="orange.1"
+            >
+              <Text className="font-black text-xl" color="orange.6">
                 {result.bestLearningStyle}
               </Text>
             </Box>
@@ -149,21 +148,32 @@ export default function QuizPage({
                 (recommendation: any, index: number) => (
                   <div
                     key={index}
-                    className="p-[8px] px-[12px] rounded-[8px] bg-white"
+                    className="p-[8px] px-[12px] rounded-[8px] shadow bg-white border border-gray-100 border-solid"
                   >
                     {recommendation.name}
                   </div>
                 )
               )}
             </div>
-            <Button
-              component={Link}
-              href={Route.HOME}
-              style={{ marginTop: "24px" }}
-              className="w-full sm:w-auto"
-            >
-              Kembali ke Beranda
-            </Button>
+            <div className="flex flex-col mt-[24px] gap-[8px] sm:flex-row">
+              {user ? (
+                <Button
+                  component={Link}
+                  href={Route.PROFILE}
+                  className="w-full sm:w-auto"
+                >
+                  Lihat History
+                </Button>
+              ) : null}
+              <Button
+                component={Link}
+                href={Route.HOME}
+                className="w-full sm:w-auto"
+                variant="outline"
+              >
+                Kembali ke Beranda
+              </Button>
+            </div>
           </div>
         </Box>
       ) : (
