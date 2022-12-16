@@ -51,6 +51,7 @@ export default function ProfilePage({
       isLoading: isAttemptHistoryLoading,
       isError: isAttemptHistoryError,
       isSuccess: isAttemptHistorySuccess,
+      isRefetching: isAttemptHistoryRefetching,
       response: attemptHistoryResponse,
     },
     deleteById: {
@@ -68,6 +69,7 @@ export default function ProfilePage({
       isLoading: isFindUserByIdLoading,
       isSuccess: isFindUserByIdSuccess,
       isError: isFindUserByIdError,
+      isRefetching: isFindUserByIdRefetching,
       response: findUserByIdResponse,
     },
   } = useUserService({ userId: user.id });
@@ -136,7 +138,7 @@ export default function ProfilePage({
             <Skeleton
               className="rounded-full"
               circle
-              visible={!findUserByIdResponse?.data}
+              visible={!findUserByIdResponse?.data || isFindUserByIdRefetching}
             >
               <Avatar
                 alt="user profile pic"
@@ -149,7 +151,7 @@ export default function ProfilePage({
             </Skeleton>
 
             <div className="flex flex-col items-center sm:items-start">
-              {!findUserByIdResponse?.data ? (
+              {!findUserByIdResponse?.data || isFindUserByIdRefetching ? (
                 <Skeleton height={31} width={230} />
               ) : (
                 <Title order={2} className="text-center sm:text-left">
@@ -157,7 +159,7 @@ export default function ProfilePage({
                 </Title>
               )}
 
-              {!findUserByIdResponse?.data ? (
+              {!findUserByIdResponse?.data || isFindUserByIdRefetching ? (
                 <Skeleton height={21} width={200} className="mt-[8px]" />
               ) : (
                 <Text className="text-center sm:text-left" color="gray">
@@ -182,7 +184,7 @@ export default function ProfilePage({
           <div className="my-container">
             <Title order={3}>History</Title>{" "}
             <Stack className="mt-[16px]">
-              {!attemptHistoryResponse?.data ? (
+              {!attemptHistoryResponse?.data || isAttemptHistoryRefetching ? (
                 <>
                   <Skeleton height={67.6} />
                   <Skeleton height={67.6} />
@@ -190,6 +192,13 @@ export default function ProfilePage({
                   <Skeleton height={67.6} />
                   <Skeleton height={67.6} />
                 </>
+              ) : attemptHistoryResponse.data.length == 0 ? (
+                <div className="bg-gray-100 py-[32px] rounded-[8px] flex flex-col items-center justify-center gap-[8px]">
+                  <Text className="text-gray-500">Belum ada data</Text>
+                  <Button component={Link} href={Route.QUIZ} size="xs">
+                    Ambil Tes
+                  </Button>
+                </div>
               ) : (
                 attemptHistoryResponse?.data.map(attempt => (
                   <Box
