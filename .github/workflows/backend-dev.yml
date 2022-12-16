@@ -59,7 +59,8 @@ jobs:
         run: pnpm install
       - name: Run migration
         working-directory: apps/server
-        run: pnpm prisma migrate dev
+        # run: pnpm prisma migrate dev
+        run: pnpm prisma migrate deploy
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
   deploy-to-railway:
