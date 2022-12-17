@@ -52,6 +52,7 @@ export default function ProfilePage({
       isLoading: isAttemptHistoryLoading,
       isError: isAttemptHistoryError,
       isSuccess: isAttemptHistorySuccess,
+      isFetching: isAttemptHistoryFetching,
       isRefetching: isAttemptHistoryRefetching,
       response: attemptHistoryResponse,
     },
@@ -139,7 +140,7 @@ export default function ProfilePage({
             <Skeleton
               className="rounded-full"
               circle
-              visible={!findUserByIdResponse?.data || isFindUserByIdRefetching}
+              visible={!findUserByIdResponse?.data}
             >
               <Avatar
                 alt="user profile pic"
@@ -152,7 +153,7 @@ export default function ProfilePage({
             </Skeleton>
 
             <div className="flex flex-col items-center sm:items-start">
-              {!findUserByIdResponse?.data || isFindUserByIdRefetching ? (
+              {!findUserByIdResponse?.data ? (
                 <Skeleton height={31} width={230} />
               ) : (
                 <Title order={2} className="text-center sm:text-left">
@@ -160,7 +161,7 @@ export default function ProfilePage({
                 </Title>
               )}
 
-              {!findUserByIdResponse?.data || isFindUserByIdRefetching ? (
+              {!findUserByIdResponse?.data ? (
                 <Skeleton height={21} width={200} className="mt-[8px]" />
               ) : (
                 <Text className="text-center sm:text-left" color="gray">
@@ -185,7 +186,7 @@ export default function ProfilePage({
           <div className="my-container">
             <Title order={3}>History</Title>{" "}
             <Stack className="mt-[16px]">
-              {!attemptHistoryResponse?.data || isAttemptHistoryRefetching ? (
+              {!attemptHistoryResponse?.data ? (
                 <>
                   {Array(5)
                     .fill(undefined)

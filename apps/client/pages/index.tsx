@@ -59,7 +59,11 @@ export default function HomePage({
               >
                 Masuk
               </Button>
-              <Button component={Link} href={Route.SIGNUP}>
+              <Button
+                component={Link}
+                href={Route.SIGNUP}
+                className="capitalize"
+              >
                 Buat akun
               </Button>
             </>
@@ -92,7 +96,7 @@ export default function HomePage({
               algoritma Certainty Factor
             </Text>
             <Link href={Route.QUIZ}>
-              <Button className="mt-[32px]">Coba sekarang</Button>
+              <Button className="mt-[32px] capitalize">Coba sekarang</Button>
             </Link>
           </div>
           <div className="illustration self-center order1">

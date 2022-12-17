@@ -20,6 +20,7 @@ export function useAttemptService({ userId }: { userId: number }) {
       isLoading: attemptByUserIdQuery.isLoading,
       isError: attemptByUserIdQuery.isError,
       isSuccess: attemptByUserIdQuery.isSuccess,
+      isFetching: attemptByUserIdQuery.isFetching,
       isRefetching: attemptByUserIdQuery.isRefetching,
       response: attemptByUserIdQuery.data,
     },

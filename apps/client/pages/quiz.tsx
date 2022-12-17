@@ -177,8 +177,8 @@ export default function QuizPage({
           </div>
         </Box>
       ) : (
-        <main className="quiz-page">
-          <div className="my-container h-screen px-[16px] py-[16px] flex flex-col gap-4">
+        <main className="quiz-page bg-white">
+          <div className="h-screen flex flex-col gap-4">
             <Modal
               opened={isGuideModalOpen}
               onClose={closeGuideModal}
@@ -218,122 +218,130 @@ export default function QuizPage({
               </Flex>
             </Modal>
 
-            <section className="top flex items-center gap-4">
-              <Text className="font-bold">{`${counter + 1}/${
-                questions.length
-              }`}</Text>
-              <Progress
-                value={((counter + 1) / questions.length) * 100}
-                size="lg"
-                radius="md"
-                className="grow"
-              />
-              <Menu shadow="xl" position="bottom-end" width="192px">
-                <Menu.Target>
-                  <ActionIcon title="quiz-menu" radius="md">
-                    <FontAwesomeIcon icon={faEllipsisVertical} />
-                  </ActionIcon>
-                </Menu.Target>
-                <Menu.Dropdown style={{ padding: "8px" }}>
-                  <Menu.Item
-                    icon={<FontAwesomeIcon icon={faInfo} />}
-                    onClick={openGuideModal}
-                  >
-                    Panduan
-                  </Menu.Item>
-                  <Menu.Item
-                    color="red"
-                    icon={<FontAwesomeIcon icon={faXmark} />}
-                    onClick={() => setIsCancelModalOpen(true)}
-                  >
-                    Keluar
-                  </Menu.Item>
-                </Menu.Dropdown>
-              </Menu>
+            <section className="top p-[16px] sticky top-0 z-[2] bg-white/30 backdrop-blur-sm">
+              <div className="my-container flex items-center gap-4">
+                <Text className="font-bold">{`${counter + 1}/${
+                  questions.length
+                }`}</Text>
+                <Progress
+                  value={((counter + 1) / questions.length) * 100}
+                  size="lg"
+                  radius="md"
+                  className="grow"
+                />
+                <Menu shadow="xl" position="bottom-end" width="192px">
+                  <Menu.Target>
+                    <ActionIcon title="quiz-menu" radius="md">
+                      <FontAwesomeIcon icon={faEllipsisVertical} />
+                    </ActionIcon>
+                  </Menu.Target>
+                  <Menu.Dropdown style={{ padding: "8px" }}>
+                    <Menu.Item
+                      icon={<FontAwesomeIcon icon={faInfo} />}
+                      onClick={openGuideModal}
+                    >
+                      Panduan
+                    </Menu.Item>
+                    <Menu.Item
+                      color="red"
+                      icon={<FontAwesomeIcon icon={faXmark} />}
+                      onClick={() => setIsCancelModalOpen(true)}
+                    >
+                      Keluar
+                    </Menu.Item>
+                  </Menu.Dropdown>
+                </Menu>
+              </div>
             </section>
 
-            <div className="question grow flex items-center min-h-[30vh]">
-              <Text component="p">{questions[counter]?.question}</Text>
+            <div className="question p-[16px] grow flex items-center min-h-[30vh]">
+              <div className="my-container">
+                <Text component="p">{questions[counter]?.question}</Text>
+              </div>
             </div>
 
             <div
               ref={answerChoicesContainer}
-              className="answer-choices grid md:grid-cols-2 gap-4 overflow-y-auto items-end"
+              className="answer-choices p-[16px]"
             >
-              {answersWithUserCf[counter]?.map(choice => (
-                <Radio.Group
-                  key={choice.id}
-                  name={`answer_${choice.id}`}
-                  label={choice.answer}
-                  size="md"
-                  defaultValue={choice.user_cf.toString()}
-                  styles={{ label: { fontWeight: "bold" } }}
-                  onChange={value => {
-                    console.log("Clicked value: " + value);
-                    updateAnswers(counter, choice.id, value);
-                  }}
-                >
-                  {MARKS.map(({ label, value }, index) => (
-                    <Radio
-                      key={`answer_${choice.id}_${index}`}
-                      name={`answer_${choice.id}_${index}`}
-                      label={label}
-                      value={value.toString()}
-                      styles={{
-                        label: { cursor: "pointer" },
-                        radio: { cursor: "pointer" },
-                      }}
-                    />
-                  ))}
-                </Radio.Group>
-              ))}
+              <div className="my-container grid md:grid-cols-2 gap-4 items-end">
+                {answersWithUserCf[counter]?.map(choice => (
+                  <Radio.Group
+                    key={choice.id}
+                    name={`answer_${choice.id}`}
+                    label={choice.answer}
+                    size="md"
+                    defaultValue={choice.user_cf.toString()}
+                    styles={{ label: { fontWeight: "bold" } }}
+                    onChange={value => {
+                      console.log("Clicked value: " + value);
+                      updateAnswers(counter, choice.id, value);
+                    }}
+                  >
+                    {MARKS.map(({ label, value }, index) => (
+                      <Radio
+                        key={`answer_${choice.id}_${index}`}
+                        name={`answer_${choice.id}_${index}`}
+                        label={label}
+                        value={value.toString()}
+                        styles={{
+                          label: { cursor: "pointer" },
+                          radio: { cursor: "pointer" },
+                        }}
+                      />
+                    ))}
+                  </Radio.Group>
+                ))}
+              </div>
             </div>
 
-            <div className="quiz-navigation flex gap-4 justify-between items-center">
-              <Button
-                leftIcon={<FontAwesomeIcon icon={faArrowLeft} />}
-                variant="outline"
-                onClick={() => {
-                  window.scrollTo(0, 0);
-                  setCounter(current => current - 1);
-                }}
-                disabled={counter == 0}
-                style={{ visibility: counter == 0 ? "hidden" : "visible" }}
-              >
-                Kembali
-              </Button>
-              {counter == questions.length - 1 ? (
+            <div className="quiz-navigation p-[16px] sticky bottom-0 bg-white/30 backdrop-blur-sm">
+              <div className="my-container flex gap-4 justify-between items-center">
                 <Button
-                  leftIcon={<FontAwesomeIcon icon={faCheck} />}
-                  disabled={
-                    counter != questions.length - 1 ||
-                    answerService.submit.isSuccess
-                  }
-                  loading={answerService.submit.isLoading}
-                  onClick={async () => {
-                    console.log(answersWithUserCf);
-                    //* Submit user answer to server
-                    answerService.submit.submit({
-                      user_id: user?.id,
-                      answersWithUserCf: answersWithUserCf.flat(1),
-                    });
-                  }}
-                >
-                  Submit
-                </Button>
-              ) : (
-                <Button
+                  leftIcon={<FontAwesomeIcon icon={faArrowLeft} />}
                   variant="outline"
-                  rightIcon={<FontAwesomeIcon icon={faArrowRight} />}
                   onClick={() => {
                     window.scrollTo(0, 0);
-                    setCounter(current => current + 1);
+                    setCounter(current => current - 1);
                   }}
-                  disabled={counter == questions.length - 1}
+                  disabled={counter == 0}
+                  style={{ visibility: counter == 0 ? "hidden" : "visible" }}
                 >
-                  Lanjut
+                  Kembali
                 </Button>
-              )}
+                {counter == questions.length - 1 ? (
+                  <Button
+                    leftIcon={<FontAwesomeIcon icon={faCheck} />}
+                    disabled={
+                      counter != questions.length - 1 ||
+                      answerService.submit.isSuccess
+                    }
+                    loading={answerService.submit.isLoading}
+                    onClick={async () => {
+                      console.log(answersWithUserCf);
+                      //* Submit user answer to server
+                      answerService.submit.submit({
+                        user_id: user?.id,
+                        answersWithUserCf: answersWithUserCf.flat(1),
+                      });
+                    }}
+                  >
+                    Submit
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outline"
+                    rightIcon={<FontAwesomeIcon icon={faArrowRight} />}
+                    onClick={() => {
+                      window.scrollTo(0, 0);
+                      setCounter(current => current + 1);
+                    }}
+                    disabled={counter == questions.length - 1}
+                  >
+                    Lanjut
+                  </Button>
+                )}{" "}
+              </div>
             </div>
           </div>
         </main>

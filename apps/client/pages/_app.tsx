@@ -82,6 +82,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 defaultProps: {
                   radius: "md",
                   overlayBlur: 3,
+                  overlayOpacity: 0.3,
                 },
                 styles: {
                   title: {

@@ -104,7 +104,7 @@ export default function SignUpPage() {
           <Button
             type="submit"
             form="user_signup"
-            className="w-full mt-[16px]"
+            className="w-full mt-[16px] capitalize"
             loading={isSignUpLoading || signUpResponse?.isSuccess}
           >
             Buat akun
