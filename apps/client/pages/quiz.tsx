@@ -218,7 +218,7 @@ export default function QuizPage({
               </Flex>
             </Modal>
 
-            <section className="top p-[16px] sticky top-0 z-[2] bg-white/30 backdrop-blur-sm">
+            <section className="top p-[16px] sticky top-0 z-[2] bg-white/50 backdrop-blur-sm">
               <div className="my-container flex items-center gap-4">
                 <Text className="font-bold">{`${counter + 1}/${
                   questions.length
@@ -295,7 +295,7 @@ export default function QuizPage({
               </div>
             </div>
 
-            <div className="quiz-navigation p-[16px] sticky bottom-0 bg-white/30 backdrop-blur-sm">
+            <div className="quiz-navigation p-[16px] sticky bottom-0 bg-white/50 backdrop-blur-sm">
               <div className="my-container flex gap-4 justify-between items-center">
                 <Button
                   leftIcon={<FontAwesomeIcon icon={faArrowLeft} />}
