@@ -21,6 +21,10 @@ export function useUserService(
     enabled: userId === null || userId === undefined ? false : true,
   });
 
+  const deleteUserMutation = useMutation({
+    mutationFn: userService.deleteById,
+  });
+
   return {
     signup: {
       run: signUpMutation.mutate,
@@ -42,6 +46,13 @@ export function useUserService(
       isSuccess: findByIdQuery.isSuccess,
       isRefetching: findByIdQuery.isRefetching,
       response: findByIdQuery.data,
+    },
+    deleteById: {
+      run: deleteUserMutation.mutate,
+      isLoading: deleteUserMutation.isLoading,
+      isError: deleteUserMutation.isError,
+      isSuccess: deleteUserMutation.isSuccess,
+      response: deleteUserMutation.data,
     },
   };
 }

@@ -23,4 +23,9 @@ export const userService = {
       path: ApiRoute.USER + `/${id}`,
       method: "GET",
     }),
+  deleteById: (id: number): Promise<ServerResponse<User>> =>
+    fetchToServer({
+      path: ApiRoute.USER + `/${id}`,
+      method: "DELETE",
+    }),
 };

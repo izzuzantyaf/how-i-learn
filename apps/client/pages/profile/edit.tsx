@@ -1,5 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ActionIcon, Button, Menu, TextInput, Title } from "@mantine/core";
+import {
+  ActionIcon,
+  Button,
+  Flex,
+  Menu,
+  Modal,
+  TextInput,
+  Title,
+  Text,
+} from "@mantine/core";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -9,13 +18,13 @@ import { useToast } from "../../lib/hooks/useToast";
 import { authService } from "../../services/auth/auth.service";
 import { User } from "../../services/user/entity/user.entity";
 import { useUserService } from "../../services/user/useUserService";
-import { useForm } from "@mantine/form";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   faArrowLeft,
   faEllipsisVertical,
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
+import { useAuthService } from "../../services/auth/useAuthService";
 
 type Data = {
   user: User;
@@ -46,14 +55,16 @@ export default function EditProfilePage({
       isError: isFindUserByIdError,
       response: findUserByIdResponse,
     },
+    deleteById: {
+      run: deleteUser,
+      isLoading: isDeleteUserLoading,
+      isSuccess: isDeleteUserSuccess,
+      isError: isDeleteUserError,
+      response: deleteUserResponse,
+    },
   } = useUserService({ userId: user.id });
 
-  // const form = useForm({
-  //   initialValues: { name: findUserByIdResponse?.data.name },
-  // });
-  // useEffect(() => {
-  //   form.setFieldValue("name", findUserByIdResponse?.data.name);
-  // }, [findUserByIdResponse?.data.name]);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const showToast = useMemo(() => useToast(), []);
@@ -74,10 +85,11 @@ export default function EditProfilePage({
     }
   }, [isUpdateUserSuccess, showToast, updateUserResponse]);
 
-  // Reset form dirty state when update user success
-  // useEffect(() => {
-  //   if (updateUserResponse?.isSuccess) form.resetDirty();
-  // }, [updateUserResponse?.isSuccess]);
+  useEffect(() => {
+    if (deleteUserResponse?.isSuccess) {
+      authService.signOut();
+    }
+  }, [deleteUserResponse?.isSuccess]);
 
   return (
     <>
@@ -157,8 +169,47 @@ export default function EditProfilePage({
             >
               Simpan
             </Button>
+            <Button
+              form="delete_user"
+              className="w-full mt-[16px]"
+              color="red"
+              variant="light"
+              // loading={isDeleteUserLoading}
+              onClick={() => setIsDeleteModalOpen(true)}
+              // disabled={!form.isDirty("name")}
+            >
+              Hapus Akun
+            </Button>
           </div>
         </main>
+
+        <Modal
+          opened={isDeleteModalOpen}
+          onClose={() => setIsDeleteModalOpen(false)}
+          title="Hapus Akun"
+          withCloseButton={false}
+          centered
+        >
+          <Text>
+            Data history tes juga akan hilang. Yakin untuk hapus akun?
+          </Text>
+          <Flex gap="8px" justify="end" style={{ marginTop: "24px" }}>
+            <Button
+              variant="light"
+              color="gray"
+              onClick={() => setIsDeleteModalOpen(false)}
+            >
+              Batal
+            </Button>
+            <Button
+              onClick={() => deleteUser(user.id)}
+              color="red"
+              loading={isDeleteUserLoading}
+            >
+              Ya, hapus
+            </Button>
+          </Flex>
+        </Modal>
       </div>
     </>
   );

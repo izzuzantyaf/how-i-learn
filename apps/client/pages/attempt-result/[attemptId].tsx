@@ -34,8 +34,8 @@ export default function AttemptResultPage() {
         <title>History | Presisi</title>
       </Head>
 
-      <div className="history-detail bg-gray-100">
-        <header className="p-[16px]">
+      <div className="history-detail bg-gray-100 py-[16px]">
+        <header className="px-[16px]">
           <div className="my-container flex items-center">
             <ActionIcon component={Link} href={Route.PROFILE}>
               <FontAwesomeIcon icon={faArrowLeft} />
@@ -60,7 +60,10 @@ export default function AttemptResultPage() {
           </div>
         </header>
 
-        <Box component="main" className="result min-h-screen px-[16px]">
+        <Box
+          component="main"
+          className="result min-h-screen mt-[8px] px-[16px]"
+        >
           <div className="my-container">
             <Title order={3}>Tipe belajar kamu</Title>
             {!attemptResultResponse?.data ? (
