@@ -2,7 +2,7 @@ name: Frontend (production)
 
 on:
   push:
-    branches-ignore:
+    branches:
       - main
     paths:
       - apps/client/**

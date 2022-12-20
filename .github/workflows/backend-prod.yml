@@ -2,7 +2,7 @@ name: Backend (production)
 
 on:
   push:
-    branches-ignore:
+    branches:
       - main
     paths:
       - apps/server/**
