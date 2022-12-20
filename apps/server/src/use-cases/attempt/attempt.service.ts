@@ -12,7 +12,7 @@ export class AttemptService {
   constructor(private dataService: DataServiceService) {}
 
   async create(createAttemptDto: CreateAttemptDto) {
-    return 'This action adds a new attempt';
+    return await this.dataService.attempt.create(createAttemptDto);
   }
 
   async findAll() {
@@ -21,6 +21,12 @@ export class AttemptService {
 
   findOne(id: number) {
     return `This action returns a #${id} attempt`;
+  }
+
+  findById(id: number) {
+    return this.dataService.attempt.findWithBestLearningTypeAndRecommendation(
+      id,
+    );
   }
 
   async findByUser(userId: number) {

@@ -4,7 +4,11 @@ import type { NextRequest } from "next/server";
 import { Route } from "./lib/constant";
 import { jose } from "./lib/helpers/jose.helper";
 
-const mustAuthenticatedRoutes = [Route.PROFILE, Route.EDIT_PROFILE];
+const mustAuthenticatedRoutes = [
+  Route.PROFILE,
+  Route.EDIT_PROFILE,
+  Route.ATTEMPT_RESULT,
+];
 const deniedWhenAuthenticatedRoutes = [Route.SIGNIN, Route.SIGNUP];
 
 // This function can be marked `async` if using `await` inside

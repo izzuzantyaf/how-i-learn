@@ -224,12 +224,14 @@ export default function ProfilePage({
                     <div className="spacer grow"></div>
                     <div className="flex gap-[8px]">
                       <Button
+                        component={Link}
+                        href={`${Route.ATTEMPT_RESULT}/${attempt.id}`}
                         className="grow"
                         variant="outline"
                         // color="gray"
                         size="sm"
                       >
-                        Detail
+                        Lihat Detail
                       </Button>
                       <ActionIcon
                         color="red"

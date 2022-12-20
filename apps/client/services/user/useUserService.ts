@@ -18,7 +18,7 @@ export function useUserService(
   const findByIdQuery = useQuery({
     queryKey: ["user_by_id", userId],
     queryFn: () => userService.findById(userId as number),
-    enabled: userId ? true : false,
+    enabled: userId === null || userId === undefined ? false : true,
   });
 
   return {

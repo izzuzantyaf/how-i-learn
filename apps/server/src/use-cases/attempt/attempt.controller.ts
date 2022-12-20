@@ -20,7 +20,8 @@ export class AttemptController {
 
   @Post()
   async create(@Body() createAttemptDto: CreateAttemptDto) {
-    return await this.attemptService.create(createAttemptDto);
+    const attempt = await this.attemptService.create(createAttemptDto);
+    return new SuccessfulResponse('History berhasil disimpan', attempt);
   }
 
   @Get()
@@ -29,8 +30,9 @@ export class AttemptController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.attemptService.findOne(+id);
+  async findById(@Param('id') id: string) {
+    const attempt = await this.attemptService.findById(parseInt(id));
+    return new SuccessfulResponse('Successfully retrieved attempt', attempt);
   }
 
   @Get('user/:id')

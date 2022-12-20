@@ -14,4 +14,9 @@ export const attemptService = {
       path: ApiRoute.ATTEMPT + `/${id}`,
       method: "DELETE",
     }) as Promise<ServerResponse<Attempt>>,
+  findById: (id: number) =>
+    fetchToServer({
+      path: ApiRoute.ATTEMPT + `/${id}`,
+      method: "GET",
+    }),
 };

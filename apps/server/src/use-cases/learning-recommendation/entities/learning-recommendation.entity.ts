@@ -1,7 +1,7 @@
 export class LearningRecommendation {
   id?: number;
   learning_style_id?: string;
-  name: string;
+  name?: string;
   created_at?: Date;
   updated_at?: Date;
 

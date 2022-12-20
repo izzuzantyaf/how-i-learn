@@ -76,6 +76,7 @@ export class AnswerService {
       );
 
     return {
+      attemptId: newAttempt.id,
       bestLearningStyle: bestLearningStyle.name,
       learningRecommendations,
     };

@@ -1,15 +1,56 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { isNotEmpty } from 'class-validator';
 import { PrismaClientService } from 'src/database/prisma/prisma-client.service';
 import { CreateAttemptDto } from '../dto/create-attempt.dto';
 import { Attempt } from '../entities/attempt.entity';
 import { IAttemptRepo } from '../interfaces/attempt-repo.interface';
+import { LearningRecommendation } from 'src/use-cases/learning-recommendation/entities/learning-recommendation.entity';
+import { ErrorResponse } from 'src/lib/api-response';
 
 @Injectable()
 export class AttemptRepository implements IAttemptRepo {
   private readonly logger = new Logger(AttemptRepository.name);
 
   constructor(private prisma: PrismaClientService) {}
+
+  async findWithBestLearningTypeAndRecommendation(
+    id: number,
+  ): Promise<{
+    id: number;
+    bestLearningType: string;
+    learningRecommendations: LearningRecommendation[];
+  }> {
+    try {
+      const attempt = await this.prisma.attempt.findUnique({ where: { id } });
+      const attemptResults = await this.prisma.attemptResult.findMany({
+        where: { attempt_id: attempt.id },
+        include: {
+          learning_style: true,
+        },
+      });
+      const maxFinalCF = Math.max(
+        ...attemptResults.map((attemptResult) => attemptResult.final_cf),
+      );
+      const bestLearningTypeId = attemptResults.find(
+        (attemptResult) => attemptResult.final_cf === maxFinalCF,
+      ).learning_style.id;
+      const bestLearningType = attemptResults.find(
+        (attemptResult) => attemptResult.final_cf === maxFinalCF,
+      ).learning_style.name;
+      const learningRecommendations =
+        await this.prisma.learningRecommendation.findMany({
+          where: { learning_style_id: bestLearningTypeId },
+        });
+      return {
+        id: attempt.id,
+        bestLearningType,
+        learningRecommendations,
+      };
+    } catch (error) {
+      this.logger.debug(error);
+      throw new NotFoundException(new ErrorResponse('Attempt not found'));
+    }
+  }
 
   async create(data: CreateAttemptDto): Promise<Attempt> {
     const createdAttempt = await this.prisma.attempt

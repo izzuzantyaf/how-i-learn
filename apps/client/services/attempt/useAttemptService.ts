@@ -1,13 +1,22 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { attemptService } from "./attempt.service";
 
-export function useAttemptService({ userId }: { userId: number }) {
+export function useAttemptService(
+  props: { userId?: number; attemptId?: number } = {}
+) {
+  const { userId, attemptId } = props;
   const queryClient = useQueryClient();
 
   const attemptByUserIdQuery = useQuery({
     queryKey: ["attempts_by_user_id", attemptService.findByUserId, userId],
-    queryFn: () => attemptService.findByUserId(userId),
-    enabled: userId ? true : false,
+    queryFn: () => attemptService.findByUserId(userId as number),
+    enabled: userId === null || userId === undefined ? false : true,
+  });
+
+  const attemptByIdQuery = useQuery({
+    queryKey: ["attempt_by_id", attemptService.findById, attemptId],
+    queryFn: () => attemptService.findById(attemptId as number),
+    enabled: attemptId === null || attemptId === undefined ? false : true,
   });
 
   // delete attempt mutation
@@ -16,6 +25,14 @@ export function useAttemptService({ userId }: { userId: number }) {
   });
 
   return {
+    findById: {
+      isLoading: attemptByIdQuery.isLoading,
+      isError: attemptByIdQuery.isError,
+      isSuccess: attemptByIdQuery.isSuccess,
+      isFetching: attemptByIdQuery.isFetching,
+      isRefetching: attemptByIdQuery.isRefetching,
+      response: attemptByIdQuery.data,
+    },
     findByUserId: {
       isLoading: attemptByUserIdQuery.isLoading,
       isError: attemptByUserIdQuery.isError,
