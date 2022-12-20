@@ -1,48 +1,26 @@
 {
   "name": "presisi",
   "version": "0.1.0",
-  "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
+  "description": "Learning method recommendation web app based on VARK model",
+  "keywords": [
+    "vark",
+    "learning",
+    "method",
+    "recommendation",
+    "reactjs",
+    "nextjs",
+    "nestjs"
   ],
-  "scripts": {
-    "build": "turbo run build",
-    "build:client": "turbo run build --scope=*presisi-client*",
-    "build:server": "turbo run build --scope=*presisi-server*",
-    "heroku-postbuild": "npm run build:server",
-    "dev": "turbo run dev --parallel",
-    "dev:client": "turbo run dev --parallel --scope=*presisi-client*",
-    "dev:server": "turbo run dev --parallel --scope=*presisi-server*",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  "homepage": "https://presisi.vercel.app",
+  "bugs": {
+    "url": "https://github.com/izzuzantyaf/presisi/issues"
   },
-  "devDependencies": {
-    "prettier": "^2.5.1",
-    "turbo": "latest"
+  "license": "GPL-3.0",
+  "author": "Izzu Zantya Fawwas <izzuzantyaf@gmail.com> (https://izzuzantyaf.space)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/izzuzantyaf/presisi.git"
   },
-  "turbo": {
-    "baseBranch": "origin/main",
-    "pipeline": {
-      "build": {
-        "dependsOn": [
-          "^build"
-        ],
-        "outputs": [
-          "dist/**",
-          ".next/**"
-        ]
-      },
-      "lint": {
-        "outputs": []
-      },
-      "dev": {
-        "cache": false
-      }
-    }
-  },
-  "engines": {
-    "npm": ">=7.0.0",
-    "node": ">=14.0.0"
-  }
+  "private": true,
+  "scripts": {}
 }

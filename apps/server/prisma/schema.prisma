@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int       @id @default(autoincrement())
+  name            String
+  email           String    @unique
+  password        String
+  email_confirmed DateTime?
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  attempts        Attempt[]
+
+  @@map("users")
+}
+
+model Question {
+  id             Int            @id @default(autoincrement())
+  question       String
+  created_at     DateTime       @default(now())
+  updated_at     DateTime       @updatedAt
+  answer_choices AnswerChoice[]
+
+  @@map("questions")
+}
+
+model LearningStyle {
+  id                       String                   @unique
+  name                     String
+  created_at               DateTime                 @default(now())
+  updated_at               DateTime                 @updatedAt
+  learning_recommendations LearningRecommendation[]
+  answer_choices           AnswerChoice[]
+  attempt_results          AttemptResult[]
+
+  @@map("learning_styles")
+}
+
+model LearningRecommendation {
+  id                Int           @id @default(autoincrement())
+  learning_style_id String
+  learning_style    LearningStyle @relation(fields: [learning_style_id], references: [id])
+  name              String
+  created_at        DateTime      @default(now())
+  updated_at        DateTime      @updatedAt
+
+  @@map("learning_recommendations")
+}
+
+model AnswerChoice {
+  id                Int           @id @default(autoincrement())
+  question_id       Int
+  question          Question      @relation(fields: [question_id], references: [id])
+  learning_style_id String
+  learning_style    LearningStyle @relation(fields: [learning_style_id], references: [id])
+  answer            String
+  expert_cf         Float
+  created_at        DateTime      @default(now())
+  updated_at        DateTime      @updatedAt
+  answers           Answer[]
+
+  @@map("answer_choices")
+}
+
+model Attempt {
+  id              Int             @id @default(autoincrement())
+  user_id         Int?
+  user            User?           @relation(fields: [user_id], references: [id])
+  created_at      DateTime        @default(now())
+  updated_at      DateTime        @updatedAt
+  answers         Answer[]
+  attempt_results AttemptResult[]
+
+  @@map("attempts")
+}
+
+model Answer {
+  id               Int          @id @default(autoincrement())
+  attempt_id       Int
+  attempt          Attempt      @relation(fields: [attempt_id], references: [id])
+  answer_choice_id Int
+  answer_choice    AnswerChoice @relation(fields: [answer_choice_id], references: [id])
+  user_cf          Float
+  created_at       DateTime     @default(now())
+  updated_at       DateTime     @updatedAt
+
+  @@map("answers")
+}
+
+model AttemptResult {
+  id                Int           @id @default(autoincrement())
+  attempt_id        Int
+  attempt           Attempt       @relation(fields: [attempt_id], references: [id])
+  learning_style_id String
+  learning_style    LearningStyle @relation(fields: [learning_style_id], references: [id])
+  final_cf          Float
+  created_at        DateTime      @default(now())
+  updated_at        DateTime      @updatedAt
+
+  @@map("attempt_results")
+}

@@ -1,29 +1,39 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import configuration from 'config/configuration';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { MongooseModule } from '@nestjs/mongoose';
-import { QuestionnairesModule } from './questionnaires/questionnaires.module';
-import { PlaygroundModule } from './playground/playground.module';
-import { MemberModule } from './member/member.module';
-import { RespondentModule } from './respondent/respondent.module';
+import {
+  Module,
+  NestModule,
+  MiddlewareConsumer,
+  RequestMethod,
+} from '@nestjs/common';
+import { UserModule } from './use-cases/user/user.module';
+import { AuthModule } from './use-cases/auth/auth.module';
+import { LoggerMiddleware } from './middleware/logger.middleware';
+import { AttemptModule } from './use-cases/attempt/attempt.module';
+import { QuestionModule } from './use-cases/question/question.module';
+import { AnswerChoiceModule } from './use-cases/answer-choice/answer-choice.module';
+import { AnswerModule } from './use-cases/answer/answer.module';
+import { AttemptResultModule } from './use-cases/attempt-result/attempt-result.module';
+import { LearningRecommendationModule } from './use-cases/learning-recommendation/learning-recommendation.module';
+import { LearningStyleModule } from './use-cases/learning-style/learning-style.module';
+// import { AwsModule } from './lib/aws/aws.module';
 
 @Module({
-  // setiap module yang dibuat wajib didaftarkan ke dalam imports agar bisa digunakan
   imports: [
-    ConfigModule.forRoot({
-      load: [configuration],
-    }),
-    // MongooseModule dipakai untuk interaksi ke database
-    MongooseModule.forRoot(process.env.MONGO_URI),
-    QuestionnairesModule,
-    PlaygroundModule,
-    MemberModule,
-    RespondentModule,
+    UserModule,
+    AuthModule,
+    AttemptModule,
+    QuestionModule,
+    AnswerChoiceModule,
+    AnswerModule,
+    AttemptResultModule,
+    LearningRecommendationModule,
+    LearningStyleModule /*AwsModule*/,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
-// eslint-disable-next-line prettier/prettier
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes({
+      path: '*',
+      method: RequestMethod.ALL,
+    });
+  }
+}
