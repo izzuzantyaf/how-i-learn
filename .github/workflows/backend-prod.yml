@@ -1,0 +1,41 @@
+name: Backend (production)
+
+on:
+  push:
+    branches-ignore:
+      - main
+    paths:
+      - apps/server/**
+
+jobs:
+  db-migration:
+    name: Database migration
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 16
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - name: Install dependencies
+        working-directory: apps/server
+        run: pnpm install
+      - name: Run migration
+        working-directory: apps/server
+        # run: pnpm prisma migrate dev
+        run: pnpm prisma migrate deploy
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  deploy-to-railway:
+    needs: db-migration
+    uses: ./.github/workflows/railway-deploy.yml
+    with:
+      environment: production
+      working-directory: apps/server
+    secrets: inherit

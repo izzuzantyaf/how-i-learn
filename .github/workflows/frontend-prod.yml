@@ -1,0 +1,17 @@
+name: Frontend (production)
+
+on:
+  push:
+    branches-ignore:
+      - main
+    paths:
+      - apps/client/**
+
+jobs:
+  deploy-to-vercel:
+    uses: ./.github/workflows/vercel-deploy.yml
+    with:
+      environment: production
+      vercel-environment: production
+      working-directory: apps/client
+    secrets: inherit
