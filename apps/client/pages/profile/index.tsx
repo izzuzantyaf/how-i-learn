@@ -205,7 +205,7 @@ export default function ProfilePage({
                 attemptHistoryResponse?.data.map(attempt => (
                   <Box
                     key={attempt.id}
-                    className="rounded-[8px] p-[8px] flex flex-col gap-[4px] sm:flex-row sm:items-center border shadow-md border-gray-100 border-solid"
+                    className="rounded-[8px] p-[8px] flex flex-col gap-[4px] sm:flex-row sm:items-center border shadow-md border-gray-200 border-solid"
                   >
                     <div>
                       <Text>
