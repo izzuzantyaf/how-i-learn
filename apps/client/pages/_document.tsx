@@ -8,7 +8,7 @@ export default function Document() {
           name="description"
           content="Rekomendasi cara belajar berbasis metode VARK"
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/Favicon 128-min.png" />
       </Head>
       <body>
         <Main />
